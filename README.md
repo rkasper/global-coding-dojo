@@ -1,19 +1,12 @@
 Global Coding Dojo
 
-2024-09-23
-- We're practicing mobbing with CodeWithMe
-- Andrew Doyle
-- Christina Molodowitch
-- Yu Lai
-- Mark Aylward
-- Veronika Post
-- Follow me - write your name here
-- Art
-- Tulio Perez
-- ...
-- Shelby
-- ...
-- Josh
+2024-10-09
+- 4 asisistimos.
+- Continuamos el (Reverse) Roman Numerals kata.
+- Usamos https://mobtime.fly.dev/calm-house? como nuestro temporizador.
+  - Próxima vez, no use el rol "Navigator" - queremos que todos sean navegadores juntos.
+- Usamos 'git commit' al fin de cada backlog item.
+- Fue divertido!
 
 2024-09-18
 - 6 of as attended.
