@@ -1,5 +1,10 @@
 Global Coding Dojo
 
+2024-11-13
+- 5 of us attended.
+- We completed the (Reverse) Roman Numerals kata.
+- It was fun!
+
 2024-10-09
 - 4 asisistimos.
 - Continuamos el (Reverse) Roman Numerals kata.
@@ -9,7 +14,7 @@ Global Coding Dojo
 - Fue divertido!
 
 2024-09-18
-- 6 of as attended.
+- 6 of us attended.
 - We did the (Reverse) Roman Numerals kata.
 - We used https://mobti.me/global-dojo as our timer.
 - It was fun!
