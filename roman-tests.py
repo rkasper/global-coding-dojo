@@ -38,3 +38,14 @@ def test_resta(roman, expected):
 ])
 def test_adicion_y_resta_mixta(roman, expected):
     assert convert(roman) == expected
+
+@pytest.mark.parametrize("roman", [
+    "A",
+    "B",
+    "",
+    "IIX",
+    "IIIIVX",
+    "VM",
+])
+def test_entradas_invalidas(roman):
+    assert convert(roman) == -1
