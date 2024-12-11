@@ -1,5 +1,10 @@
 Global Coding Dojo
 
+2024-12-11
+- 2 asistimos
+- Hicimos la Validador de Contraseñas kata
+- Fue divertido!
+
 2024-11-13
 - 5 of us attended.
 - We completed the (Reverse) Roman Numerals kata.
