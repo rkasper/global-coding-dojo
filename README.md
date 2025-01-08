@@ -1,4 +1,12 @@
-Global Coding Dojo
+# Global Coding Dojo
+
+2025-01-08
+- 4 of us attended
+- We played together on the URL Shortener kata
+- We had fun!
+- For next time:
+  - Improve the Eventbrite email and event page that brings attendees to the Zoom URL for the dojo
+  - Make sure all the "welcome to today's dojo" slides are in English
 
 2024-12-11
 - 2 asistimos
