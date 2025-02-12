@@ -26,6 +26,6 @@ Deno.test(function shortenAndUniqueTest() {
 Deno.test(function storeAndRetrieveTest() {
   const originalUrl = "https://example.com/";
   const actualShortenedUrl = shorten(originalUrl);
-  const longUrl=getOriginalUrl(actualShortenedUrl);
+  const longUrl= getOriginalUrl(actualShortenedUrl);
   assertEquals(longUrl, originalUrl);
 });

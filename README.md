@@ -1,6 +1,11 @@
 # Global Coding Dojo
 
-2025-01-08
+2025-02-12
+- 3 of us attended
+- We played together on the URL Shortener kata
+- We had fun!
+
+  - 2025-01-08
 - 4 of us attended
 - We played together on the URL Shortener kata
 - We had fun!
