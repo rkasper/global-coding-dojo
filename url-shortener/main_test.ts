@@ -1,5 +1,5 @@
-import {assert, assertEquals, assertNotEquals, assertThrows} from "@std/assert";
-import { shorten, getOriginalUrl } from "./main.ts";
+import {assert, assertEquals, assertNotEquals, assertThrows,} from "@std/assert";
+import {getOriginalUrl, shorten} from "./main.ts";
 
 Deno.test(function shortenAndUniqueTest() {
   const originalUrl = "https://example.com/";
@@ -26,13 +26,22 @@ Deno.test(function shortenAndUniqueTest() {
 Deno.test(function storeAndRetrieveTest() {
   const originalUrl = "https://example.com/";
   const actualShortenedUrl = shorten(originalUrl);
-  const longUrl= getOriginalUrl(actualShortenedUrl);
+  const longUrl = getOriginalUrl(actualShortenedUrl);
   assertEquals(longUrl, originalUrl);
 
-  const bogusOriginalUrl = "poop";
+  const bogusOriginalUrl = "https://poop.com/";
   assertThrows(
     () => getOriginalUrl(bogusOriginalUrl),
     Error,
-    "Short URL not found: The provided URL has not been shortened by this service or does not exist"
+    "Short URL not found: The provided URL has not been shortened by this service or does not exist",
+  );
+});
+
+Deno.test(function handleBasicErrorCasesTest() {
+  const invalidUrl = "poop";
+  assertThrows(
+    () => shorten(invalidUrl),
+    Error,
+    "Invalid URL format: The provided string is not a valid URL",
   );
 });
