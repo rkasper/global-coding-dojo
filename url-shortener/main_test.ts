@@ -1,4 +1,4 @@
-import { assert , assertEquals, assertNotEquals} from "@std/assert";
+import {assert, assertEquals, assertNotEquals, assertThrows} from "@std/assert";
 import { shorten, getOriginalUrl } from "./main.ts";
 
 Deno.test(function shortenAndUniqueTest() {
@@ -28,4 +28,11 @@ Deno.test(function storeAndRetrieveTest() {
   const actualShortenedUrl = shorten(originalUrl);
   const longUrl= getOriginalUrl(actualShortenedUrl);
   assertEquals(longUrl, originalUrl);
+
+  const bogusOriginalUrl = "poop";
+  assertThrows(
+    () => getOriginalUrl(bogusOriginalUrl),
+    Error,
+    "Short URL not found: The provided URL has not been shortened by this service or does not exist"
+  );
 });

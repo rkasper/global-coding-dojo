@@ -10,9 +10,8 @@ export function shorten(originalUrl: string): string {
 
 export function getOriginalUrl(shortUrl:string): string {
   const originalUrl = originalUrls.get(shortUrl);
-  // TODO Add a test for this case, improve the error message
   if (!originalUrl) {
-    throw new Error('poop');
+    throw new Error('Short URL not found: The provided URL has not been shortened by this service or does not exist');
   }
   return originalUrl;
 }
