@@ -1,5 +1,10 @@
 # Global Coding Dojo
 
+2025-04-09
+- 3 of us attended
+- We practiced the FizzBuzz kata.
+- We had fun!
+
 2025-03-12
 - 1 of us attended
 - I completed Level 1 of the URL Shortener kata and added additional levels to its README
