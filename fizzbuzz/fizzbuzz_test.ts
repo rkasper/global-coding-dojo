@@ -6,9 +6,9 @@ Deno.test(function deno_tests_work_properly() {
 });
 
 Deno.test(function number_returns_itself_test() {
-  var input = 1;
-  var expected = "1";
-  var actual = fizzbuzz(input);
+  let input = 1;
+  let expected = "1";
+  let actual = fizzbuzz(input);
   assertEquals(actual, expected);
 
   input = 2;
