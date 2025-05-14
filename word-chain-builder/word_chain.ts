@@ -16,10 +16,18 @@ async function loadWordList(filePath: string): Promise<string[]> {
 
 const wordList = await loadWordList("./words_alpha.txt");
 
-export function word_chain_builder(start: string, end: string) {
+// Returns a word chain from 'start' to 'end'. Or returns empty list for error.
+export function word_chain_builder(start: string, end: string): string[] {
   try {
-    return wordList.includes(start) && wordList.includes(end);
+    if (wordList.includes(start) && wordList.includes(end)) {
+      if (start === end) {
+        return [start];
+      }
+      return [""];
+    } else {
+      return [];
+    }
   } catch (error) {
-    return false;
+    return [];
   }
 }
