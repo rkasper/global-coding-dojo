@@ -1,4 +1,4 @@
-import {assert, assertEquals, assertFalse} from "https://deno.land/std/assert/mod.ts";
+import {assert, assertEquals, assertFalse} from "https://deno.land/std@0.224.0/assert/mod.ts";
 import {word_chain_builder} from "./word_chain.ts";
 
 Deno.test(function deno_tests_work_properly() {

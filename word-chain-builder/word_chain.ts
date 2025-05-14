@@ -1,10 +1,9 @@
 async function loadWordList(filePath: string): Promise<string[]> {
   try {
     const text = await Deno.readTextFile(filePath);
-    const words = text.split("\n")
+    return text.split("\n")
       .map(word => word.trim().toLowerCase())
       .filter(word => word.length > 0);
-    return words;
   } catch (error) {
     if (error instanceof Error) {
       console.error(`Error loading word list: ${error.message}`);
