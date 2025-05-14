@@ -17,7 +17,6 @@ export function word_chain_builder(start: string, end: string): string[] {
       const visited = new Set<string>([start]);
       const result = findChain(start, end, visited, [start]);
       return result || [];
-      // return [""];
     } else {
       return [];
     }
