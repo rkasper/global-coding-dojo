@@ -28,7 +28,6 @@ Deno.test(function both_inputs_are_dictionary_words() {
   assertEquals(word_chain_builder("dictionary", "aisnthinote").length, 0);
 });
 
-// TODO
 Deno.test(function start_and_end_are_same_word() {
   const chain = word_chain_builder("word", "word");
   assertEquals(chain.length, 1);
@@ -36,6 +35,12 @@ Deno.test(function start_and_end_are_same_word() {
 });
 
 // TODO start_and_end_are_1_letter_apart
+Deno.test(function start_and_end_are_1_letter_apart() {
+  const chain = word_chain_builder("dot", "dog");
+  assertEquals(chain.length, 2);
+  assertEquals(chain[0], "dot");
+  assertEquals(chain[1], "dog");
+});
 
 // TODO start_and_end_are_2_letters_apart
 
