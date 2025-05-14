@@ -21,6 +21,7 @@ export function word_chain_builder(start: string, end: string): string[] {
     } else {
       return [];
     }
+  // deno-lint-ignore no-unused-vars
   } catch (error) {
     return [];
   }
