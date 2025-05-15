@@ -1,5 +1,4 @@
 // TODO Make wordList a dictionary with O(1) lookup time
-// TODO Use a smaller dictionary of English words
 const wordList = await loadWordList("./words_alpha.txt");
 
 // Returns a word chain from 'start' to 'end'. Or returns empty list if there is no chain, or if there's an error.
