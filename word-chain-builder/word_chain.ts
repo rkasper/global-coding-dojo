@@ -2,7 +2,7 @@
 // TODO Use a smaller dictionary of English words
 const wordList = await loadWordList("./words_alpha.txt");
 
-// Returns a word chain from 'start' to 'end'. Or returns empty list for error.
+// Returns a word chain from 'start' to 'end'. Or returns empty list if there is no chain, or if there's an error.
 export function word_chain_builder(start: string, end: string): string[] {
   try {
     if (wordList.includes(start) && wordList.includes(end)) {
@@ -92,6 +92,8 @@ function findChain(
       return result;
     }
 
+    // Optimization: Once we've visited a word and know that it doesn't lead to a solution, leave it in the `visited`
+    // set so we don't try it again.
     // If no result through this path, backtrack (remove from visited)
     // visited.delete(nextWord); // Uncomment this for backtracking
   }
