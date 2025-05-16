@@ -18,7 +18,7 @@ In this chain, we changed one letter at a time to form a new valid word.
 2. ✅ It should output a valid word chain connecting these words (if possible).
 3. ✅ Each word in the chain must be a valid dictionary word.
 4. ✅ Each transition changes exactly one letter while maintaining the same word length.
-5. If no valid chain exists, return an appropriate message.
+5. 🧁 If no valid chain exists, return an appropriate message. (We'll pass on this requirement because it's more UI than algorithm.)
 
 ## Extensions (for advanced participants)
 
