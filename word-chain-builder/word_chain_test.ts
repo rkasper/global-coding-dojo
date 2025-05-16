@@ -57,8 +57,18 @@ Deno.test(function can_find_6_letter_word_chains() {
   console.log(chain);
 });
 
+Deno.test(function can_find_13_letter_word_chains() {
+  const chain = word_chain_builder("thinking", "drinking");
+  assert(chain.length > 2);
+  assertEquals(chain[0], "thinking");
+  assertEquals(chain[chain.length-1], "drinking");
+  console.log(chain);
+});
+
 
 // TODO assert that the inputs are not empty strings
 // TODO assert that the inputs are the same length as each other
 
-// TODO advanced kata options, like find the minimum word chain
+// TODO advanced kata options, like find the minimum word chain. Idea: optimize the search space -
+//  go from cat -> [cd][ao][tg] -> dog. Idea2: find the arbitrary length word chain, then filter it to make it shorter.
+// Idea3: would a breadth-first search find a shorter word chain?
