@@ -1,10 +1,29 @@
-// TODO Make wordList a dictionary with O(1) lookup time
-const wordList = await loadWordList("./words_alpha.txt");
+let wordSet = new Set<string>();
+
+async function loadWordList(filePath: string): Promise<void> {
+  try {
+    const text = await Deno.readTextFile(filePath);
+    const words = text.split("\n")
+      .map(word => word.trim().toLowerCase())
+      .filter(word => word.length > 0);
+
+    wordSet = new Set(words);
+    console.log(`Loaded ${wordSet.size} words from dictionary`);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error loading word list: ${error.message}`);
+    } else {
+      console.error(`Unknown error loading word list: ${String(error)}`);
+    }
+  }
+}
+
+await loadWordList("./words_alpha.txt");
 
 // Returns a word chain from 'start' to 'end'. Or returns empty list if there is no chain, or if there's an error.
 export function word_chain_builder(start: string, end: string): string[] {
   try {
-    if (wordList.includes(start) && wordList.includes(end)) {
+    if (wordSet.has(start) && wordSet.has(end)) {
       if (start === end) {
         return [start];
       }
@@ -19,24 +38,8 @@ export function word_chain_builder(start: string, end: string): string[] {
     } else {
       return [];
     }
-  // deno-lint-ignore no-unused-vars
   } catch (error) {
-    return [];
-  }
-}
-
-async function loadWordList(filePath: string): Promise<string[]> {
-  try {
-    const text = await Deno.readTextFile(filePath);
-    return text.split("\n")
-      .map(word => word.trim().toLowerCase())
-      .filter(word => word.length > 0);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(`Error loading word list: ${error.message}`);
-    } else {
-      console.error(`Unknown error loading word list: ${String(error)}`);
-    }
+    console.error(`Error building word chain: ${error}`);
     return [];
   }
 }
@@ -66,12 +69,26 @@ function findChain(
   visited: Set<string>,
   chain: string[]
 ): string[] | null {
-  // Find all valid next words (same length, one letter different, in dictionary, not visited)
-  const candidates = wordList.filter(word =>
-    word.length === current.length &&
-    areWordsOneDifferent(current, word) &&
-    !visited.has(word)
-  );
+  // Optimization: Instead of filtering the entire wordList,
+  // generate possible one-letter variations and check if they exist
+  const candidates: string[] = [];
+
+  // Try changing each position one by one
+  for (let i = 0; i < current.length; i++) {
+    // Try each letter of the alphabet
+    for (let charCode = 97; charCode <= 122; charCode++) {
+      const letter = String.fromCharCode(charCode);
+      if (letter === current[i]) continue; // Skip the same letter
+
+      // Create new word with this letter changed
+      const newWord = current.substring(0, i) + letter + current.substring(i + 1);
+
+      // Check if it's a valid word and not visited
+      if (wordSet.has(newWord) && !visited.has(newWord)) {
+        candidates.push(newWord);
+      }
+    }
+  }
 
   // Try each candidate
   for (const nextWord of candidates) {
@@ -90,11 +107,6 @@ function findChain(
     if (result) {
       return result;
     }
-
-    // Optimization: Once we've visited a word and know that it doesn't lead to a solution, leave it in the `visited`
-    // set so we don't try it again.
-    // If no result through this path, backtrack (remove from visited)
-    // visited.delete(nextWord); // Uncomment this for backtracking
   }
 
   // If we've tried all options and found nothing, return null

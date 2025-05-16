@@ -41,15 +41,22 @@ Deno.test(function start_and_end_are_1_letter_apart() {
   assertEquals(chain[1], "dog");
 });
 
-Deno.test(function can_find_longer_word_chains() {
+Deno.test(function can_find_3_letter_word_chains() {
   const chain = word_chain_builder("cat", "dog");
   assert(chain.length > 2);
   assertEquals(chain[0], "cat");
-  assert(chain.includes("cot"));
-  assert(chain.includes("cog"));
   assertEquals(chain[chain.length-1], "dog");
-  // console.log(chain);
+  console.log(chain);
 });
+
+Deno.test(function can_find_6_letter_word_chains() {
+  const chain = word_chain_builder("planet", "rocket");
+  assert(chain.length > 2);
+  assertEquals(chain[0], "planet");
+  assertEquals(chain[chain.length-1], "rocket");
+  console.log(chain);
+});
+
 
 // TODO assert that the inputs are not empty strings
 // TODO assert that the inputs are the same length as each other
