@@ -1,31 +1,36 @@
 # Global Coding Dojo
 
-2025-04-09
+2025-05-14
+- 5 of us attended.
+- We practiced the Word Chain Builder kata.
+- We had fun!
+
+2025-04-09.
 - 3 of us attended
 - We practiced the FizzBuzz kata.
 - We had fun!
 
 2025-03-12
-- 1 of us attended
-- I completed Level 1 of the URL Shortener kata and added additional levels to its README
+- 1 of us attended.
+- I completed Level 1 of the URL Shortener kata and added additional levels to its README.
 - I had fun!
 
 2025-02-12
-- 3 of us attended
-- We played together on the URL Shortener kata
+- 3 of us attended.
+- We played together on the URL Shortener kata.
 - We had fun!
 
-  - 2025-01-08
-- 4 of us attended
-- We played together on the URL Shortener kata
+2025-01-08
+- 4 of us attended.
+- We played together on the URL Shortener kata.
 - We had fun!
 - For next time:
   - Improve the Eventbrite email and event page that brings attendees to the Zoom URL for the dojo
   - Make sure all the "welcome to today's dojo" slides are in English
 
 2024-12-11
-- 2 asistimos
-- Hicimos la Validador de Contraseñas kata
+- 2 asistimos.
+- Hicimos la Validador de Contraseñas kata.
 - Fue divertido!
 
 2024-11-13
