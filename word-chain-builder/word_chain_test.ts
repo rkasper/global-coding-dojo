@@ -1,9 +1,12 @@
-import {assert, assertEquals} from "https://deno.land/std@0.224.0/assert/mod.ts";
-import {word_chain_builder} from "./word_chain.ts";
+import {
+  assert,
+  assertEquals,
+} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import { word_chain_builder } from "./word_chain.ts";
 
 Deno.test(function deno_tests_work_properly() {
   assert(true);
-  assertEquals(6*7, 42);
+  assertEquals(6 * 7, 42);
 });
 
 Deno.test(function input1_cannot_be_a_number() {
@@ -45,7 +48,7 @@ Deno.test(function can_find_3_letter_word_chains() {
   const chain = word_chain_builder("cat", "dog");
   assert(chain.length > 2);
   assertEquals(chain[0], "cat");
-  assertEquals(chain[chain.length-1], "dog");
+  assertEquals(chain[chain.length - 1], "dog");
   console.log(chain);
 });
 
@@ -53,7 +56,7 @@ Deno.test(function can_find_6_letter_word_chains() {
   const chain = word_chain_builder("planet", "rocket");
   assert(chain.length > 2);
   assertEquals(chain[0], "planet");
-  assertEquals(chain[chain.length-1], "rocket");
+  assertEquals(chain[chain.length - 1], "rocket");
   console.log(chain);
 });
 
@@ -61,10 +64,9 @@ Deno.test(function can_find_13_letter_word_chains() {
   const chain = word_chain_builder("thinking", "drinking");
   assert(chain.length > 2);
   assertEquals(chain[0], "thinking");
-  assertEquals(chain[chain.length-1], "drinking");
+  assertEquals(chain[chain.length - 1], "drinking");
   console.log(chain);
 });
-
 
 // TODO assert that the inputs are not empty strings
 // TODO assert that the inputs are the same length as each other

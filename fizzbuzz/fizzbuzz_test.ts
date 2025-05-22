@@ -52,6 +52,3 @@ Deno.test(function FizzBuzz_test() {
   assertEquals(fizzbuzz(60), "FizzBuzz");
   assertEquals(fizzbuzz(300), "FizzBuzz");
 });
-
-
-
