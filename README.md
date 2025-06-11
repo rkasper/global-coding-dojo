@@ -1,8 +1,13 @@
 # Global Coding Dojo
 
-2025-06-11
+2025-07-09
 - The next dojo will be on Wednesday, June 11. Register at https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539 .
-- We'll consider using the mob programming timer at https://mobtime.hadrienmp.fr , following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
+ 
+2025-06-11
+- 5 of us attended.
+- We practiced the Vending Machine kata.
+- We used the mob programming timer at https://mobtime.hadrienmp.fr , following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
+- We had fun!
 
 2025-05-14
 - 5 of us attended.
