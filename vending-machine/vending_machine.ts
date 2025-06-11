@@ -29,6 +29,6 @@ export function get_inventory(): Inventory {
   return {"soda": 10, "chips": 10, "candy": 10};
 }
 
-export function buyProduct() {
-
-}
+// export function buyProduct() {
+//
+// }

@@ -1,4 +1,4 @@
-import {assert, assertEquals} from "https://deno.land/std/assert/mod.ts";
+import {assert, assertEquals} from "https://deno.land/st@d0.224.0/assert/mod.ts";
 import {
   AcceptedCoins,
   balance,
@@ -6,7 +6,7 @@ import {
   returnAllCoins,
   display,
   get_inventory,
-  buyProduct
+  // buyProduct
 } from "./vending_machine.ts";
 
 Deno.test(function deno_tests_work_properly() {
