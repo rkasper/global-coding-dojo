@@ -1,8 +1,16 @@
 # Global Coding Dojo
 
+2025-08-13
+- The next dojo will be on Wednesday, August 13.
+  - Live f2f in Mexico City!
+  - Register at https://www.eventbrite.com/e/dojo-de-codificacion-global-ciudad-de-mexico-tickets-1422540229119 .
+
 2025-07-09
-- The next dojo will be on Wednesday, June 11. Register at https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539 .
- 
+- 4 of us attended.
+- We practiced the FizzBuzz kata.
+- We used the mob programming timer at https://mobtime.hadrienmp.fr , following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
+- We had fun!
+
 2025-06-11
 - 5 of us attended.
 - We practiced the Vending Machine kata.

@@ -17,7 +17,7 @@
 - Handle different ranges (1-50, 1-200)
 
 ### **Level 2 (Intermediate):**
-- Custom rules via configuration/parameters
+- ⏳Custom rules via configuration/parameters
 - Add "Bang" if number contains the digit 3
 - Multiple output formats (array, string, etc.)
 
