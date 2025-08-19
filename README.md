@@ -1,6 +1,6 @@
 # Global Coding Dojo
 
-2025-08-13
+2025-09-10
 - The next dojo will be on Wednesday, September 10.
     - Online
     - Register at https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539 .
