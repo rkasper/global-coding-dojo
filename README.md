@@ -1,9 +1,14 @@
 # Global Coding Dojo
 
 2025-08-13
-- The next dojo will be on Wednesday, August 13.
-  - Live f2f in Mexico City!
-  - Register at https://www.eventbrite.com/e/dojo-de-codificacion-global-ciudad-de-mexico-tickets-1422540229119 .
+- The next dojo will be on Wednesday, September 10.
+    - Online
+    - Register at https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539 .
+
+2025-08-13
+- 26 asistimos, presencial en CDMX.
+- Hicimos la Números Romanos kata.
+- Fue divertido!
 
 2025-07-09
 - 4 of us attended.
