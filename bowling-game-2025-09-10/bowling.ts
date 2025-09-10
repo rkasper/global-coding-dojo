@@ -10,13 +10,16 @@ export class BowlingGame {
     this.frameScore += pinsKnockedDown;
 
     if (this.ball === 1) {
-      // console.log(this.totalPinsKnockedDown);
+      // console.log(this.totalPinsKnockedDown + "TOTAL PINS");
       // console.log(this.frameScore);
       this.ball = 2;
       if(this.strikeBonusActive) {
         this.totalPinsKnockedDown += pinsKnockedDown;
+        // if(pinsKnockedDown === 10) {
+        //   this.totalPinsKnockedDown += pinsKnockedDown;
+        // }
       }
-      if(pinsKnockedDown === 10) {
+      if(pinsKnockedDown === 10) { // we rolled a strike
         this.strikeBonusActive = true;
         this.ball = 1;
       }
@@ -30,7 +33,7 @@ export class BowlingGame {
       }
       this.strikeBonusActive = false;
       this.ball = 1;
-      if (this.frameScore === 10) {
+      if (this.frameScore === 10) { // we rolled a spare
         this.spareBonusActive = true;
       }
       this.frameScore = 0;

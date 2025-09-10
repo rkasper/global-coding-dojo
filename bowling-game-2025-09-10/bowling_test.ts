@@ -120,6 +120,7 @@ Deno.test(function last_frame_is_a_strike_game() {
   assertEquals(game.score(), 24);
 });
 
+// TODO
 // // Perfect Game
 // // All strikes (12 strikes total - 10 frames plus 2 bonus)
 // // Score = 300

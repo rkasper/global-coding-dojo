@@ -6,7 +6,7 @@
     - Register at https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539 .
 
 2025-09-10
-- x of us attended.
+- 2 of us attended.
 - We practiced the Bowling Game kata.
 - We used the mob programming timer at https://mobtime.hadrienmp.fr, following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
 - We had fun!
