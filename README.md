@@ -1,9 +1,15 @@
 # Global Coding Dojo
 
-2025-09-10
-- The next dojo will be on Wednesday, September 10.
+2025-10-08
+- The next dojo will be on Wednesday, October 8.
     - Online
     - Register at https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539 .
+
+2025-09-10
+- x of us attended.
+- We practiced the Bowling Game kata.
+- We used the mob programming timer at https://mobtime.hadrienmp.fr, following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
+- We had fun!
 
 2025-08-13
 - 26 asistimos, presencial en CDMX.
@@ -13,13 +19,13 @@
 2025-07-09
 - 4 of us attended.
 - We practiced the FizzBuzz kata.
-- We used the mob programming timer at https://mobtime.hadrienmp.fr , following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
+- We used the mob programming timer at https://mobtime.hadrienmp.fr, following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
 - We had fun!
 
 2025-06-11
 - 5 of us attended.
 - We practiced the Vending Machine kata.
-- We used the mob programming timer at https://mobtime.hadrienmp.fr , following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
+- We used the mob programming timer at https://mobtime.hadrienmp.fr, following the example of the [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io).
 - We had fun!
 
 2025-05-14
