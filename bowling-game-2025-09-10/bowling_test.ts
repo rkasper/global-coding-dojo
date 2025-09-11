@@ -69,6 +69,27 @@ Deno.test(function two_spare_game() {
   assertEquals(game.score(), 31);
 });
 
+Deno.test(function two_consecutive_spares_game() {
+  const game: BowlingGame = new BowlingGame();
+  game.roll(5);
+  assertEquals(game.score(), 5);
+  game.roll(5);
+  assertEquals(game.score(), 10);
+
+  game.roll(5);
+  assertEquals(game.score(), 20);
+  game.roll(5);
+  assertEquals(game.score(), 25);
+
+  game.roll(1);
+  assertEquals(game.score(), 27);
+
+  for (let i = 0; i < 15; i++) {
+    game.roll(0);
+  }
+  assertEquals(game.score(), 27);
+});
+
 // One Strike
 // First roll: 10 pins (strike)
 // Next two rolls: 3 and 4
@@ -119,6 +140,18 @@ Deno.test(function last_frame_is_a_strike_game() {
   game.roll(4); // End of bonus balls
   assertEquals(game.score(), 24);
 });
+
+// TODO
+// A game with 2 consecutive strikes
+
+// TODO
+// A game with 3 consecutive strikes
+
+// TODO
+// A game with 4 consecutive strikes
+
+// TODO
+// A game with 5 consecutive strikes
 
 // TODO
 // // Perfect Game
