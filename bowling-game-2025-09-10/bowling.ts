@@ -28,7 +28,6 @@ export class BowlingGame {
         this.previousFrameWasASpare = false;
       }
     } else if (this.ball === 2) { // second ball of the frame
-
       if (this.previousFrameWasAStrike || this.twoFramesAgoWasAStrike) {
         this.totalPinsKnockedDown += pinsKnockedDown;
         this.twoFramesAgoWasAStrike = false;
@@ -36,7 +35,7 @@ export class BowlingGame {
       this.previousFrameWasAStrike = false;
 
       if (this.frameScore === 10) { // we rolled a spare
-        this.previousFrameWasASpare = true;
+        this.handleSpare();
       }
       this.ball = 1;
       this.frameScore = 0;
@@ -47,6 +46,10 @@ export class BowlingGame {
     this.previousFrameWasAStrike = true;
     this.ball = 1;
     this.frameScore = 0;
+  }
+
+  private handleSpare(): void {
+    this.previousFrameWasASpare = true;
   }
 
   public score(): number {
