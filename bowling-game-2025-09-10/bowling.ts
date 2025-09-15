@@ -12,14 +12,7 @@ export class BowlingGame {
 
     if (this.ball === 1) {  // First ball of the frame
       this.ball = 2;
-      if (this.twoFramesAgoWasAStrike) {
-        this.totalPinsKnockedDown += pinsKnockedDown;
-        this.twoFramesAgoWasAStrike = false;
-      }
-      if (this.previousFrameWasAStrike) {
-        this.totalPinsKnockedDown += pinsKnockedDown;
-        this.twoFramesAgoWasAStrike = true;
-      }
+      this.updateStrikeBonusForFirstBall(pinsKnockedDown);
       if (pinsKnockedDown === 10) {
         this.handleStrike();
       }
@@ -28,10 +21,7 @@ export class BowlingGame {
         this.previousFrameWasASpare = false;
       }
     } else if (this.ball === 2) { // second ball of the frame
-      if (this.previousFrameWasAStrike || this.twoFramesAgoWasAStrike) {
-        this.totalPinsKnockedDown += pinsKnockedDown;
-        this.twoFramesAgoWasAStrike = false;
-      }
+      this.updateStrikeBonusForSecondBall(pinsKnockedDown);
       this.previousFrameWasAStrike = false;
 
       if (this.frameScore === 10) { // we rolled a spare
@@ -50,6 +40,24 @@ export class BowlingGame {
 
   private handleSpare(): void {
     this.previousFrameWasASpare = true;
+  }
+
+  private updateStrikeBonusForFirstBall(pinsKnockedDown: number): void {
+    if (this.twoFramesAgoWasAStrike) {
+      this.totalPinsKnockedDown += pinsKnockedDown;
+      this.twoFramesAgoWasAStrike = false;
+    }
+    if (this.previousFrameWasAStrike) {
+      this.totalPinsKnockedDown += pinsKnockedDown;
+      this.twoFramesAgoWasAStrike = true;
+    }
+  }
+
+  private updateStrikeBonusForSecondBall(pinsKnockedDown: number): void {
+    if (this.previousFrameWasAStrike || this.twoFramesAgoWasAStrike) {
+      this.totalPinsKnockedDown += pinsKnockedDown;
+      this.twoFramesAgoWasAStrike = false;
+    }
   }
 
   public score(): number {
