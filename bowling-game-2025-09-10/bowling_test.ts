@@ -111,16 +111,20 @@ Deno.test(function one_strike_game() {
 
 Deno.test(function two_strike_game() {
   const game: BowlingGame = new BowlingGame();
-  game.roll(10); // End of first frame
+  game.roll(10); // Frame 1, ball 1, end of frame 1
+  assertEquals(game.score(), 10);
 
-  game.roll(3);
-  game.roll(4); // End of second frame
+  game.roll(3); // Frame 2, ball 1
+  assertEquals(game.score(), 16);
+  game.roll(4); // Frame 2, ball 2, end of frame 2
   assertEquals(game.score(), 24);
 
-  game.roll(10); // End of third frame
+  game.roll(10); // Frame 3, ball 1, end of frame 3
+  assertEquals(game.score(), 34); // TODO fix test failure here. actual value is 44
 
-  game.roll(3);
-  game.roll(4); // End of fourth frame
+  game.roll(3); // Frame 4, ball 1
+  assertEquals(game.score(), 40);
+  game.roll(4); // Frame 4, ball 2, end of frame 4
   assertEquals(game.score(), 48);
 
   for (let i = 0; i < 12; i++) {
@@ -141,8 +145,20 @@ Deno.test(function last_frame_is_a_strike_game() {
   assertEquals(game.score(), 24);
 });
 
-// TODO
-// A game with 2 consecutive strikes
+Deno.test(function two_consecutive_strikes_game() {
+  const game: BowlingGame = new BowlingGame();
+  game.roll(10); // Frame 1 - frame score 24 - total score 10
+  assertEquals(game.score(), 10);
+
+  // TODO After this roll(), we need twoFramesAgoWasAStrike to be true
+  game.roll(10); // Frame 2 - frame score 17 - total score 30
+  assertEquals(game.score(), 30);
+
+  game.roll(4); // Frame 3 - frame score 7 - total score 48
+  assertEquals(game.score(), 42);
+  game.roll(3);
+  assertEquals(game.score(), 48);
+});
 
 // TODO
 // A game with 3 consecutive strikes
@@ -164,3 +180,5 @@ Deno.test(function last_frame_is_a_strike_game() {
 //   }
 //   assertEquals(game.score(), 300);
 // });
+
+// TODO Mixed game with spares, strikes, no-bonus rolls, gutter balls
