@@ -157,8 +157,23 @@ Deno.test(function two_consecutive_strikes_game() {
   assertEquals(game.score(), 48);
 });
 
-// TODO
-// A game with 3 consecutive strikes
+Deno.test(function three_consecutive_strikes_game() {
+  const game: BowlingGame = new BowlingGame();
+  game.roll(10); // Frame 1: Strike           X + 10 + 10 == 30
+  assertEquals(game.score(), 10);
+
+  game.roll(10); // Frame 2: Strike           X + 10 +  4 == 24
+  assertEquals(game.score(), 30);
+
+  game.roll(10); // Frame 3: Strike (turkey!) X +  4 +  3 == 17
+  assertEquals(game.score(), 60);
+
+  game.roll(4); // Frame 4: First ball        4
+  assertEquals(game.score(), 72);
+
+  game.roll(3); // Frame 4: Second ball        +  3 == 7
+  assertEquals(game.score(), 78);
+});
 
 // TODO
 // A game with 4 consecutive strikes
