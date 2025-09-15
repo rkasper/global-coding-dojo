@@ -247,4 +247,55 @@ Deno.test(function perfect_game() {
   assertEquals(game.score(), 300);
 });
 
-// TODO Mixed game with spares, strikes, no-bonus rolls, gutter balls
+Deno.test(function mixed_game() {
+  const game: BowlingGame = new BowlingGame();
+
+  // Frame 1: Strike (X)
+  game.roll(10);
+  assertEquals(game.score(), 10);
+
+  // Frame 2: Spare (7, /)
+  game.roll(7);
+  game.roll(3);
+  assertEquals(game.score(), 30);
+
+  // Frame 3: Regular (5, 3)
+  game.roll(5);
+  game.roll(3);
+  assertEquals(game.score(), 43);
+
+  // Frame 4: Gutter balls (0, 0)
+  game.roll(0);
+  game.roll(0);
+  assertEquals(game.score(), 43);
+
+  // Frame 5: Strike (X) + 10 + 4
+  game.roll(10);
+  assertEquals(game.score(), 53);
+
+  // Frame 6: Strike (X) + 4
+  game.roll(10);
+  assertEquals(game.score(), 73);
+
+  // Frame 7: Regular (4, 2)
+  game.roll(4);
+  game.roll(2);
+  assertEquals(game.score(), 89);
+
+  // Frame 8: Spare (8, /)
+  game.roll(8);
+  // assertEquals(game.score(), 99);
+  game.roll(2);
+  assertEquals(game.score(), 99);
+
+  // Frame 9: Regular (6, 3)
+  game.roll(6);
+  game.roll(3);
+  assertEquals(game.score(), 114);
+
+  // Frame 10: Strike with bonus balls
+  game.roll(10);
+  game.roll(7);
+  game.roll(3);
+  assertEquals(game.score(), 134);
+});
