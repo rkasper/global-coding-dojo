@@ -6,12 +6,15 @@ export class BowlingGame {
   private previousFrameWasASpare: boolean = false;
   private previousFrameWasAStrike: boolean = false;
   private twoFramesAgoWasAStrike: boolean = false;
+  private frame10Ball: number = 0;
 
   public roll(pinsKnockedDown: number): void {
     this.totalPinsKnockedDown += pinsKnockedDown;
     this.frameScore += pinsKnockedDown;
 
-    if (this.ball === 1) {
+    if (this.frame === 10) {
+      this.handleFrame10Ball(pinsKnockedDown);
+    } else if (this.ball === 1) {
       this.handleFirstBall(pinsKnockedDown);
     } else if (this.ball === 2) {
       this.handleSecondBall(pinsKnockedDown);
@@ -66,6 +69,18 @@ export class BowlingGame {
     if (this.previousFrameWasAStrike || this.twoFramesAgoWasAStrike) {
       this.totalPinsKnockedDown += pinsKnockedDown;
       this.twoFramesAgoWasAStrike = false;
+    }
+  }
+
+  private handleFrame10Ball(pinsKnockedDown: number): void {
+    this.frame10Ball++;
+
+    if (this.frame10Ball === 1) {
+      this.updateStrikeBonusForFirstBall(pinsKnockedDown);
+    } else if (this.frame10Ball === 2) {
+      if (this.previousFrameWasAStrike || this.twoFramesAgoWasAStrike) {
+        this.totalPinsKnockedDown += pinsKnockedDown;
+      }
     }
   }
 
