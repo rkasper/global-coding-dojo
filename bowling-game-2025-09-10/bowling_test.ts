@@ -4,8 +4,6 @@ import {
 } from "https://deno.land/std@0.224.0/assert/mod.ts";
 import { BowlingGame } from "./bowling.ts";
 
-// Our pair programming timer: https://mobtime.hadrienmp.fr/mob/ontarioisawesome
-
 Deno.test(function deno_tests_work_properly() {
   assert(true);
   assertEquals(6 * 7, 42);
@@ -150,7 +148,6 @@ Deno.test(function two_consecutive_strikes_game() {
   game.roll(10); // Frame 1 - frame score 24 - total score 10
   assertEquals(game.score(), 10);
 
-  // TODO After this roll(), we need twoFramesAgoWasAStrike to be true
   game.roll(10); // Frame 2 - frame score 17 - total score 30
   assertEquals(game.score(), 30);
 

@@ -20,10 +20,8 @@ export class BowlingGame {
         this.totalPinsKnockedDown += pinsKnockedDown;
         this.twoFramesAgoWasAStrike = true;
       }
-      if (pinsKnockedDown === 10) { // we rolled a strike
-        this.previousFrameWasAStrike = true;
-        this.ball = 1;
-        this.frameScore = 0;
+      if (pinsKnockedDown === 10) {
+        this.handleStrike();
       }
       if (this.previousFrameWasASpare) {
         this.totalPinsKnockedDown += pinsKnockedDown;
@@ -45,19 +43,13 @@ export class BowlingGame {
     }
   }
 
+  private handleStrike(): void {
+    this.previousFrameWasAStrike = true;
+    this.ball = 1;
+    this.frameScore = 0;
+  }
+
   public score(): number {
     return this.totalPinsKnockedDown;
   }
-
-  public debug() {
-    console.log({
-      ball: this.ball,
-      totalPinsKnockedDown: this.totalPinsKnockedDown,
-      frameScore: this.frameScore,
-      previousFrameWasASpare: this.previousFrameWasAStrike,
-      previousFrameWasAStrike: this.previousFrameWasAStrike,
-      twoFramesAgoWasAStrike: this.twoFramesAgoWasAStrike,
-    });
-  }
-
 }
