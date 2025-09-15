@@ -1,4 +1,5 @@
 export class BowlingGame {
+  private frame: number = 1;
   private ball: number = 1;
   private totalPinsKnockedDown: number = 0;
   private frameScore: number = 0;
@@ -40,7 +41,9 @@ export class BowlingGame {
   }
 
   private handleStrike(): void {
-    this.previousFrameWasAStrike = true;
+    if (this.frame != 10) {
+      this.previousFrameWasAStrike = true;
+    }
     this.advanceFrame();
   }
 
@@ -67,6 +70,9 @@ export class BowlingGame {
   }
 
   private advanceFrame(): void {
+    if (this.frame < 10) {
+      this.frame++;
+    }
     this.ball = 1;
     this.frameScore = 0;
   }
