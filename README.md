@@ -33,7 +33,7 @@
 - We practiced the Word Chain Builder kata.
 - We had fun!
 
-2025-04-09.
+2025-04-09
 - 3 of us attended
 - We practiced the FizzBuzz kata.
 - We had fun!
