@@ -1,26 +1,27 @@
 # Global Coding Dojo! 🌎💻
 
-**Join us for a dynamic online coding session where we'll practice pair programming, Test-Driven Development (TDD), and more!**
+**Join us for a dynamic online coding session where we'll practice mob/pair programming, Test-Driven Development (TDD), and more!**
 
 ## What to Expect
 
-- 🎯 Hands-on coding practice with katas like Messaging Client, Roman Numerals, or Gilded Rose
-- 🔄 Introduction to TDD and pair programming techniques
-- 💬 Language options include Python, TypeScript, Java, and more (we'll decide together)
-- 👥 Small group breakout rooms for focused learning
+- 🎯 Hands-on coding practice with katas like Bowling Game, Roman Numerals, or Gilded Rose
+- 🔄 Introduction to TDD and mob/pair programming techniques
+- 💬 We collaborate as a small group and choose our language together (often TypeScript with Deno)
+- ⏱️ Mob programming with timed rotations for everyone to drive and navigate
+- 🚀 Come prepared with tools installed so we can dive straight into coding!
 
 ## What You'll Need
 
 - 💻 A computer with a stable internet connection
-- 🛠️ Your favorite IDE installed (we recommend JetBrains IDEs for refactoring tools)
-- 📹 Webcam and microphone for full participation
+- 🛠️ [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/) installed (for Code With Me real-time collaboration)
+- 📹 [Zoom](https://zoom.us/download) with webcam ON - we love high-bandwidth communication!
 - 🧠 An open mind and willingness to collaborate!
 
 ## Additional Info
 
 - ✅ Free event!
-- 🆕 No prior experience with TDD or pair programming required
-- 🌐 Breakout rooms will be language-specific, allowing for focused practice
+- 🆕 No prior experience with TDD or mob/pair programming required
+- 👥 Small, friendly group focused on learning together
 
 **Don't miss this opportunity to code, learn, and connect with developers from around the world!**
 
