@@ -42,7 +42,7 @@
 
 ### 2025-10-08
 - 7 of us attended.
-- We practiced the Gilded Rose Refactoring Kata in TypeScript.
+- We practiced the [Gilded Rose Refactoring Kata in TypeScript](https://github.com/rkasper/GildedRose-Refactoring-Kata-TypeScript).
 - We had fun!
 
 ### 2025-09-10
