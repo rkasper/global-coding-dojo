@@ -28,12 +28,22 @@
 
 ## Upcoming Events
 
-### 2025-10-08
-- The next dojo will be on Wednesday, October 8.
-    - Online
-    - Register at https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539 .
+### 2025-11-12
+**Wednesday, November 12 | Online**
+
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
+
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
+
+### 2025-10-08
+- 7 of us attended.
+- We practiced the Gilded Rose Refactoring Kata in TypeScript.
+- We had fun!
 
 ### 2025-09-10
 - 2 of us attended.

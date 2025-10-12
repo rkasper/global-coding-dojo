@@ -1,8 +1,8 @@
 - The usual: a coding kata using TDD and mobbing
-- Some sort of intercommunication app using Socket.IO: tic tac toe, collaborative text file editor, chat, ...
+- Some sort of intercommunication app using Socket.IO: tic-tac-toe, collaborative text file editor, chat, ...
 - An easy example mobile app using Expo React Native
 - AI chatbot, probably using DigitalOcean
 - Claude Desktop extension: MCP server for Claude Desktop or API
 - Explore Hono + Deno as a TS-based back-end
-- Global Coding Dojo website
+- Global Coding Dojo! website
 - ...
