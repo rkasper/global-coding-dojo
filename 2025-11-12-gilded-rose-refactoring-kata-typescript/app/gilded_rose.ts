@@ -55,7 +55,7 @@ export class GildedRose {
         return item.name.startsWith('Conjured');
     }
 
-    private updateSulfuras(item: Item): void {
+    private updateSulfuras(_item: Item): void {
         // Sulfuras never changes
     }
 
