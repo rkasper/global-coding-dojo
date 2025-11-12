@@ -32,6 +32,8 @@ export class GildedRose {
             this.updateAgedBrie(item);
         } else if (this.isBackstagePass(item)) {
             this.updateBackstagePass(item);
+        } else if (this.isConjured(item)) {
+            this.updateConjuredItem(item);
         } else {
             this.updateNormalItem(item);
         }
@@ -47,6 +49,10 @@ export class GildedRose {
 
     private isBackstagePass(item: Item): boolean {
         return item.name === 'Backstage passes to a TAFKAL80ETC concert';
+    }
+
+    private isConjured(item: Item): boolean {
+        return item.name.startsWith('Conjured');
     }
 
     private updateSulfuras(item: Item): void {
@@ -85,6 +91,17 @@ export class GildedRose {
         this.decreaseSellIn(item);
 
         if (item.sellIn < 0) {
+            this.decreaseQuality(item);
+        }
+    }
+
+    private updateConjuredItem(item: Item): void {
+        this.decreaseQuality(item);
+        this.decreaseQuality(item);
+        this.decreaseSellIn(item);
+
+        if (item.sellIn < 0) {
+            this.decreaseQuality(item);
             this.decreaseQuality(item);
         }
     }

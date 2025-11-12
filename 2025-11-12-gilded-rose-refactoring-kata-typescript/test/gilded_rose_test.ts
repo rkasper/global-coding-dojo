@@ -195,3 +195,70 @@ Deno.test("Edge case - Aged Brie at quality 49 after sell date increases to 50",
   const items = gildedRose.updateQuality();
   assertEquals(items[0].quality, 50);
 });
+
+Deno.test("Conjured item - quality degrades by 2 before sell date", () => {
+  const gildedRose = new GildedRose([new Item("Conjured Mana Cake", 10, 20)]);
+  const items = gildedRose.updateQuality();
+  assertEquals(items[0].quality, 18);
+  assertEquals(items[0].sellIn, 9);
+});
+
+Deno.test("Conjured item - quality degrades by 4 after sell date", () => {
+  const gildedRose = new GildedRose([new Item("Conjured Mana Cake", 0, 20)]);
+  const items = gildedRose.updateQuality();
+  assertEquals(items[0].quality, 16);
+  assertEquals(items[0].sellIn, -1);
+});
+
+Deno.test("Conjured item - quality degrades by 4 when sell date has passed", () => {
+  const gildedRose = new GildedRose([new Item("Conjured Mana Cake", -1, 20)]);
+  const items = gildedRose.updateQuality();
+  assertEquals(items[0].quality, 16);
+  assertEquals(items[0].sellIn, -2);
+});
+
+Deno.test("Conjured item - quality never goes negative", () => {
+  const gildedRose = new GildedRose([new Item("Conjured Mana Cake", 10, 0)]);
+  const items = gildedRose.updateQuality();
+  assertEquals(items[0].quality, 0);
+  assertEquals(items[0].sellIn, 9);
+});
+
+Deno.test("Conjured item - quality never goes negative even after sell date", () => {
+  const gildedRose = new GildedRose([new Item("Conjured Mana Cake", 0, 3)]);
+  const items = gildedRose.updateQuality();
+  assertEquals(items[0].quality, 0);
+  assertEquals(items[0].sellIn, -1);
+});
+
+Deno.test("Conjured item - quality at 1 degrades to 0 before sell date", () => {
+  const gildedRose = new GildedRose([new Item("Conjured Mana Cake", 10, 1)]);
+  const items = gildedRose.updateQuality();
+  assertEquals(items[0].quality, 0);
+  assertEquals(items[0].sellIn, 9);
+});
+
+Deno.test("Conjured item - quality at 2 degrades to 0 before sell date", () => {
+  const gildedRose = new GildedRose([new Item("Conjured Mana Cake", 10, 2)]);
+  const items = gildedRose.updateQuality();
+  assertEquals(items[0].quality, 0);
+  assertEquals(items[0].sellIn, 9);
+});
+
+Deno.test("Multiple items including Conjured - updates all correctly", () => {
+  const gildedRose = new GildedRose([
+    new Item("Normal Item", 10, 20),
+    new Item("Conjured Mana Cake", 10, 20),
+    new Item("Aged Brie", 10, 20),
+  ]);
+  const items = gildedRose.updateQuality();
+
+  assertEquals(items[0].quality, 19);
+  assertEquals(items[0].sellIn, 9);
+
+  assertEquals(items[1].quality, 18);
+  assertEquals(items[1].sellIn, 9);
+
+  assertEquals(items[2].quality, 21);
+  assertEquals(items[2].sellIn, 9);
+});
