@@ -17,3 +17,6 @@ venv/
 
 # Deno
 deno.lock
+
+# Test coverage
+coverage/
