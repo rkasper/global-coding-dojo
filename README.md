@@ -29,8 +29,8 @@
 
 ## Upcoming Events
 
-### 2025-11-12
-**Wednesday, November 12 | Online**
+### 2025-12-10
+**Wednesday, December 10 | Online**
 
 📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
 
@@ -40,6 +40,11 @@
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
+
+### 2025-11-12
+- 2 of us attended.
+- We practiced using Claude Code as an assistent via the [Gilded Rose Refactoring Kata in TypeScript](https://github.com/rkasper/GildedRose-Refactoring-Kata-TypeScript).
+- We had fun!
 
 ### 2025-10-08
 - 7 of us attended.
