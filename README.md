@@ -30,10 +30,19 @@
 
 ## Upcoming Events
 
-### 2025-12-10
-**Wednesday, December 10 | Online**
+### 2026-01-14
+**Wednesday, January 14 | Mexico City**
 
-📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
+📝 **[Register](https://globalcodingdojo.org)**
+
+**Come prepared:**
+- 💻 **Laptop** - Bring your laptop with [WebStorm](https://www.jetbrains.com/webstorm/download/) installed
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+
+### 2026-02-11
+**Wednesday, February 11 | Online**
+
+📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
 
 **Come prepared:**
 - 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
@@ -41,6 +50,11 @@
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
+
+### 2025-12-10
+- 5 of us attended.
+- We practiced using Claude Code as an assistent via the String Calculator kata.
+- We had fun!
 
 ### 2025-11-12
 - 2 of us attended.
