@@ -53,7 +53,7 @@
 ## Past Events
 
 ### 2026-01-14
-- 5 asistimos, presencial en CDMX.
+- 6 asistimos, presencial en CDMX.
 - Hicimos la kata Generador de Contraseñas (Password Generator).
 - Fue divertido!
 
