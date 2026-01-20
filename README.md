@@ -30,15 +30,6 @@
 
 ## Upcoming Events
 
-### 2026-01-14
-**Wednesday, January 14 | Mexico City**
-
-📝 **[Register](https://globalcodingdojo.org)**
-
-**Come prepared:**
-- 💻 **Laptop** - Bring your laptop with [WebStorm](https://www.jetbrains.com/webstorm/download/) installed
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
-
 ### 2026-02-11
 **Wednesday, February 11 | Online**
 
@@ -49,11 +40,26 @@
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
+### 2026-03-11
+**Wednesday, March 11 | Online**
+
+📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
+
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+
 ## Past Events
+
+### 2026-01-14
+- 5 asistimos, presencial en CDMX.
+- Hicimos la kata Generador de Contraseñas (Password Generator).
+- Fue divertido!
 
 ### 2025-12-10
 - 5 of us attended.
-- We practiced using Claude Code as an assistent via the String Calculator kata.
+- We practiced using Claude Code as an assistant via the String Calculator kata.
 - We had fun!
 
 ### 2025-11-12
