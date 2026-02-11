@@ -3,6 +3,8 @@
 **Join us for a dynamic online coding session where we'll practice mob/pair programming, Test-Driven Development (TDD), and AI-assisted coding with modern tools like Claude Code!**
 
 ## What to Expect
+hello from Ricardo
+Rafael
 
 - 🎯 Hands-on coding practice with katas like Bowling Game, Roman Numerals, or Gilded Rose
 - 🔄 Introduction to TDD and mob/pair programming with timed rotations so everyone gets to drive and navigate
