@@ -4,6 +4,12 @@ import {
 } from "https://deno.land/std@0.224.0/assert/mod.ts";
 import { BowlingGame } from "./bowling.ts";
 
+function rollMany(game: BowlingGame, n: number, pins: number): void {
+  for (let i = 0; i < n; i++) {
+    game.roll(pins);
+  }
+}
+
 Deno.test(function deno_tests_work_properly() {
   assert(true);
   assertEquals(6 * 7, 42);
@@ -11,25 +17,19 @@ Deno.test(function deno_tests_work_properly() {
 
 Deno.test(function gutter_game() {
   const game: BowlingGame = new BowlingGame();
-  for (let i = 0; i < 20; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 20, 0);
   assertEquals(game.score(), 0);
 });
 
 Deno.test(function all_ones_game() {
   const game: BowlingGame = new BowlingGame();
-  for (let i = 0; i < 20; i++) {
-    game.roll(1);
-  }
+  rollMany(game, 20, 1);
   assertEquals(game.score(), 20);
 });
 
 Deno.test(function all_fours_game() {
   const game: BowlingGame = new BowlingGame();
-  for (let i = 0; i < 20; i++) {
-    game.roll(4);
-  }
+  rollMany(game, 20, 4);
   assertEquals(game.score(), 80);
 });
 
@@ -39,9 +39,7 @@ Deno.test(function one_spare_game() {
   game.roll(5);
 
   game.roll(3);
-  for (let i = 0; i < 17; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 17, 0);
   assertEquals(game.score(), 16);
 });
 
@@ -61,9 +59,7 @@ Deno.test(function two_spare_game() {
   game.roll(1);
   assertEquals(game.score(), 31);
 
-  for (let i = 0; i < 13; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 13, 0);
   assertEquals(game.score(), 31);
 });
 
@@ -82,9 +78,7 @@ Deno.test(function two_consecutive_spares_game() {
   game.roll(1);
   assertEquals(game.score(), 27);
 
-  for (let i = 0; i < 15; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 15, 0);
   assertEquals(game.score(), 27);
 });
 
@@ -101,9 +95,7 @@ Deno.test(function one_strike_game() {
   game.roll(4); // End of second frame
   assertEquals(game.score(), 24);
 
-  for (let i = 0; i < 16; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 16, 0);
   assertEquals(game.score(), 24);
 });
 
@@ -125,17 +117,13 @@ Deno.test(function two_strike_game() {
   game.roll(4); // Frame 4, ball 2, end of frame 4
   assertEquals(game.score(), 48);
 
-  for (let i = 0; i < 12; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 12, 0);
   assertEquals(game.score(), 48);
 });
 
 Deno.test(function last_frame_is_a_strike_game() {
   const game: BowlingGame = new BowlingGame();
-  for (let i = 0; i < 18; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 18, 0);
   game.roll(10); // Tenth frame is a strike
   assertEquals(game.score(), 10);
 
@@ -147,9 +135,7 @@ Deno.test(function last_frame_is_a_strike_game() {
 
 Deno.test(function bonus_balls_are_strikes_game() {
   const game: BowlingGame = new BowlingGame();
-  for (let i = 0; i < 18; i++) {
-    game.roll(0);
-  }
+  rollMany(game, 18, 0);
   game.roll(10); // Tenth frame is a strike
   assertEquals(game.score(), 10);
 
@@ -198,51 +184,20 @@ Deno.test(function three_consecutive_strikes_game() {
 Deno.test(function perfect_game() {
   const game: BowlingGame = new BowlingGame();
 
-  // Frame 1
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 10);
+  // Frames 1-9: each completed frame of strikes scores 30 (X + 10 + 10)
+  const expectedScores = [10, 30, 60, 90, 120, 150, 180, 210, 240];
+  for (let i = 0; i < 9; i++) {
+    game.roll(10);
+    assertEquals(game.score(), expectedScores[i]);
+  }
 
-  // Frame 2
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 30);
-
-  // Frame 3
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 60);
-
-  // Frame 4
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 90);
-
-  // Frame 5
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 120);
-
-  // Frame 6
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 150);
-
-  // Frame 7
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 180);
-
-  // Frame 8
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 210);
-
-  // Frame 9
-  game.roll(10); //             X + 10 + 10 = 30
-  assertEquals(game.score(), 240);
-
-  // Frame 10 - first strike
-  game.roll(10); //             X + 10
+  // Frame 10 - first strike + 2 bonus balls
+  game.roll(10);
   assertEquals(game.score(), 270);
 
-  // Frame 10 - bonus ball 1
   game.roll(10);
   assertEquals(game.score(), 290);
 
-  // Frame 10 - bonus ball 2
   game.roll(10);
   assertEquals(game.score(), 300);
 });
