@@ -30,16 +30,6 @@
 
 ## Upcoming Events
 
-### 2026-02-11
-**Wednesday, February 11 | Online**
-
-📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
-
-**Come prepared:**
-- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
-
 ### 2026-03-11
 **Wednesday, March 11 | Online**
 
@@ -50,7 +40,20 @@
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
+### 2026-04-09
+**Thursday, April 9 | Dubai | In-Person**
+
+📝 **[Register for the conference](https://www.meagile.com/event/lean-agile-middle-east-2026/)**
+
+- 🎪 Special event! Join us at Lean and Agile Middle East Summit 2026 in Dubai
+- 🎟️ Use code `speaker_2026_friend` for 15% off conference registration
+
 ## Past Events
+
+### 2026-02-11
+- 5 of us attended.
+- We practiced using Claude Code as an assistant via the Bank Account kata.
+- We had fun!
 
 ### 2026-01-14
 - 6 asistimos, presencial en CDMX.
