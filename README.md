@@ -40,13 +40,15 @@
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
-### 2026-04-09
-**Thursday, April 9 | Dubai | In-Person**
+### 2026-04-08
+**Wednesday, April 8 | Online**
 
-📝 **[Register for the conference](https://www.meagile.com/event/lean-agile-middle-east-2026/)**
+📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
 
-- 🎪 Special event! Join us at Lean and Agile Middle East Summit 2026 in Dubai
-- 🎟️ Use code `speaker_2026_friend` for 15% off conference registration
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
 
