@@ -30,8 +30,8 @@
 
 ## Upcoming Events
 
-### 2026-03-11
-**Wednesday, March 11 | Online**
+### 2026-03-18
+**Wednesday, March 18 | Online**
 
 📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
 
