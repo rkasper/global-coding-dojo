@@ -33,7 +33,7 @@
 ### 2026-03-18
 **Wednesday, March 18 | Online**
 
-📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-march-18-2026-tickets-1984925303014)**
 
 **Come prepared:**
 - 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
