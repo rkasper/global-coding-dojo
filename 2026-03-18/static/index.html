@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Bank Statement Reorderer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      color: #333;
+    }
+    h1 { margin-bottom: 0.5rem; }
+    p.subtitle { color: #666; margin-bottom: 2rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+    input[type="file"], input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button:hover:not(:disabled) { background: #1d4ed8; }
+    #status {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 4px;
+      display: none;
+    }
+    #status.error { display: block; background: #fee2e2; color: #991b1b; }
+    #status.success { display: block; background: #dcfce7; color: #166534; }
+    #status.loading { display: block; background: #dbeafe; color: #1e40af; }
+  </style>
+</head>
+<body>
+  <h1>PDF Bank Statement Reorderer</h1>
+  <p class="subtitle">Reverses the order of statements in a scanned PDF based on "Page X of Y" markers.</p>
+
+  <form id="form">
+    <label for="pdf">PDF File</label>
+    <input type="file" id="pdf" accept=".pdf" required>
+
+    <label for="pattern">Page Pattern (regex)</label>
+    <input type="text" id="pattern" value="Page\s+(\d+)\s+of\s+(\d+)" placeholder="Page\s+(\d+)\s+of\s+(\d+)">
+
+    <button type="submit" id="btn">Reorder PDF</button>
+  </form>
+
+  <div id="status"></div>
+
+  <script>
+    const form = document.getElementById("form");
+    const status = document.getElementById("status");
+    const btn = document.getElementById("btn");
+
+    function showStatus(msg, type) {
+      status.textContent = msg;
+      status.className = type;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fileInput = document.getElementById("pdf");
+      const patternInput = document.getElementById("pattern");
+
+      if (!fileInput.files.length) {
+        showStatus("Please select a PDF file.", "error");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("pdf", fileInput.files[0]);
+      if (patternInput.value.trim()) {
+        formData.append("pattern", patternInput.value.trim());
+      }
+
+      btn.disabled = true;
+      showStatus("Processing... This may take a moment for large files.", "loading");
+
+      try {
+        const resp = await fetch("/api/reorder", { method: "POST", body: formData });
+        if (!resp.ok) {
+          const text = await resp.text();
+          throw new Error(text || `Server error: ${resp.status}`);
+        }
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "reordered_" + fileInput.files[0].name;
+        a.click();
+        URL.revokeObjectURL(url);
+        showStatus("Done! Your reordered PDF has been downloaded.", "success");
+      } catch (err) {
+        showStatus(err.message, "error");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
