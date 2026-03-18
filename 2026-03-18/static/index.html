@@ -95,7 +95,8 @@
         const resp = await fetch("/api/reorder", { method: "POST", body: formData });
         if (!resp.ok) {
           const text = await resp.text();
-          throw new Error(text || `Server error: ${resp.status}`);
+          showStatus(text || `Server error: ${resp.status}`, "error");
+          return;
         }
         const blob = await resp.blob();
         const url = URL.createObjectURL(blob);

@@ -1,8 +1,6 @@
 import { reorderPdf } from "./pdf_reorder.ts";
 
-const port = parseInt(Deno.env.get("PORT") ?? "8000", 10);
-
-Deno.serve({ port }, async (req: Request): Promise<Response> => {
+export async function handler(req: Request): Promise<Response> {
   const url = new URL(req.url);
 
   if (req.method === "GET" && (url.pathname === "/" || url.pathname === "/index.html")) {
@@ -29,7 +27,7 @@ Deno.serve({ port }, async (req: Request): Promise<Response> => {
       const pdfBytes = new Uint8Array(await file.arrayBuffer());
       const result = await reorderPdf(pdfBytes, patternStr ?? undefined);
 
-      return new Response(result, {
+      return new Response(result as Uint8Array<ArrayBuffer>, {
         headers: {
           "content-type": "application/pdf",
           "content-disposition": `attachment; filename="reordered_${file.name}"`,
@@ -43,4 +41,7 @@ Deno.serve({ port }, async (req: Request): Promise<Response> => {
   }
 
   return new Response("Not Found", { status: 404 });
-});
+}
+
+const port = parseInt(Deno.env.get("PORT") ?? "8000", 10);
+Deno.serve({ port }, handler);

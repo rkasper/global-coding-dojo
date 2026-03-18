@@ -1,5 +1,6 @@
 import { assertEquals } from "std/assert";
 import { PDFDocument } from "pdf-lib";
+import { handler } from "./server.ts";
 
 const BASE_URL = "http://localhost:8001";
 
@@ -13,41 +14,10 @@ async function createTestPdf(pageTexts: string[]): Promise<Uint8Array> {
   return doc.save();
 }
 
-// Start a test server instance
 let server: Deno.HttpServer | null = null;
 
 function startServer() {
-  // Dynamic import would be cleaner but for tests we inline a minimal server
-  return import("./pdf_reorder.ts").then(({ reorderPdf }) => {
-    server = Deno.serve({ port: 8001 }, async (req: Request): Promise<Response> => {
-      const url = new URL(req.url);
-      if (req.method === "GET" && url.pathname === "/") {
-        const html = await Deno.readFile("./static/index.html");
-        return new Response(html, {
-          headers: { "content-type": "text/html; charset=utf-8" },
-        });
-      }
-      if (req.method === "POST" && url.pathname === "/api/reorder") {
-        try {
-          const formData = await req.formData();
-          const file = formData.get("pdf");
-          if (!(file instanceof File)) {
-            return new Response("Missing 'pdf' file field", { status: 400 });
-          }
-          const patternStr = formData.get("pattern") as string | null;
-          const pdfBytes = new Uint8Array(await file.arrayBuffer());
-          const result = await reorderPdf(pdfBytes, patternStr ?? undefined);
-          return new Response(result as unknown as BodyInit, {
-            headers: { "content-type": "application/pdf" },
-          });
-        } catch (err: unknown) {
-          const message = err instanceof Error ? err.message : "Unknown error";
-          return new Response(message, { status: 500 });
-        }
-      }
-      return new Response("Not Found", { status: 404 });
-    });
-  });
+  server = Deno.serve({ port: 8001 }, handler);
 }
 
 async function stopServer() {
@@ -62,7 +32,7 @@ Deno.test({
   sanitizeResources: false,
   sanitizeOps: false,
   fn: async (t) => {
-    await startServer();
+    startServer();
 
     await t.step("GET / returns HTML", async () => {
       const resp = await fetch(BASE_URL + "/");
