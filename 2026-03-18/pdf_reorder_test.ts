@@ -1,6 +1,7 @@
 import { assertEquals } from "std/assert";
 import { PDFDocument } from "pdf-lib";
-import { detectStatementGroups, extractPageTexts, reorderPdf } from "./pdf_reorder.ts";
+import { detectStatementGroups } from "./statement_grouping.ts";
+import { extractPageTexts, reorderPdf } from "./pdf_reorder.ts";
 
 /** Create a test PDF where each page contains the given text strings. */
 async function createTestPdf(pageTexts: string[]): Promise<Uint8Array> {
