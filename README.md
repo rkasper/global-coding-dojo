@@ -30,16 +30,6 @@
 
 ## Upcoming Events
 
-### 2026-03-18
-**Wednesday, March 18 | Online**
-
-📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-march-18-2026-tickets-1984925303014)**
-
-**Come prepared:**
-- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
-
 ### 2026-04-08
 **Wednesday, April 8 | Online**
 
@@ -50,7 +40,23 @@
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
+### 2026-05-13
+**Wednesday, May 13 | Online**
+
+📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
+
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+
 ## Past Events
+
+### 2026-03-18
+- 2 of us attended.
+- We built a PDF Bank Statement Reorderer web app using Claude Code as our AI assistant.
+- We deployed it to DigitalOcean App Platform.
+- We had fun!
 
 ### 2026-02-11
 - 5 of us attended.
