@@ -20,3 +20,6 @@ deno.lock
 
 # Test coverage
 coverage/
+
+# Temporary files
+tmp/
