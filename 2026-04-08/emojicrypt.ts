@@ -10,10 +10,16 @@ for (let i = 0; i < 26; i++) {
   emojiToLetter.set(emojiList[i], letter);
 }
 
-export function encrypt(message: string): string {
-  return [...message.toLowerCase()].map(c => letterToEmoji.get(c) ?? c).join("");
+export function encrypt(message: string, alphabet?: string[]): string {
+  const mapping = alphabet
+    ? new Map(alphabet.map((emoji, i) => [String.fromCharCode(97 + i), emoji]))
+    : letterToEmoji;
+  return [...message.toLowerCase()].map(c => mapping.get(c) ?? c).join("");
 }
 
-export function decrypt(encrypted: string): string {
-  return [...encrypted].map(c => emojiToLetter.get(c) ?? c).join("");
+export function decrypt(encrypted: string, alphabet?: string[]): string {
+  const mapping = alphabet
+    ? new Map(alphabet.map((emoji, i) => [emoji, String.fromCharCode(97 + i)]))
+    : emojiToLetter;
+  return [...encrypted].map(c => mapping.get(c) ?? c).join("");
 }
