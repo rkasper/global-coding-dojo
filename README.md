@@ -52,6 +52,13 @@
 
 ## Past Events
 
+### 2026-04-08
+- 3 of us attended.
+- We created and practiced the Emoji Encryption kata using TDD and Claude Code.
+- We completed Levels 1 (simple substitution) and 2 (custom alphabet), including catching a sneaky multi-codepoint emoji bug.
+- Important: Code With Me is being phased out — we need to identify a new real-time collaboration tool for next time.
+- We had fun!
+
 ### 2026-03-18
 - 2 of us attended.
 - We built a PDF Bank Statement Reorderer web app using Claude Code as our AI assistant.
