@@ -107,11 +107,11 @@ Deno.test("Level 2 - Custom Alphabet", async (t) => {
     assertThrows(() => encrypt("a", [..."🔴🟠🟡"]));
   });
 
-  // await t.step("throws error if alphabet has more than 26 emojis", () => {
-  //   assertThrows(() => encrypt("a", [..."🔴🟠🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳🏴🏁◾◽◼◻🟥🟧🟨🟩🟦🟪"]));
-  // });
+  await t.step("throws error if alphabet has more than 26 emojis", () => {
+    assertThrows(() => encrypt("a", [..."🔴🟠🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳🏴🏁◾◽◼◻🟥🟧🟨🟩🟦🟪"]));
+  });
 
-  // await t.step("throws error if alphabet has duplicate emojis", () => {
-  //   assertThrows(() => encrypt("a", [..."🔴🔴🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳🏴🏁◾◽◼◻🟥🟧🟨🟩🟦"]));
-  // });
+  await t.step("throws error if alphabet has duplicate emojis", () => {
+    assertThrows(() => encrypt("a", [..."🔴🔴🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳🏴🏁◾◽◼◻🟥🟧🟨🟩🟦"]));
+  });
 });
