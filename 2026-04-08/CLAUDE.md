@@ -31,6 +31,10 @@ Follow these steps strictly and announce which step you are on:
 
 Then go back to step 1. Never skip a step. Never implement beyond what the current failing test requires. Always run tests to confirm each transition.
 
+## Commits
+
+Use concise one-line commit messages. No co-author trailers.
+
 ## Gotcha
 
 JavaScript string `.length` counts UTF-16 code units, not characters. Emojis are 2 code units. Use `[...str].length` to count emoji as single characters.

@@ -1,4 +1,4 @@
-import {assertEquals} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import {assertEquals, assertThrows} from "https://deno.land/std@0.224.0/assert/mod.ts";
 import {encrypt, decrypt} from "./emojicrypt.ts";
 
 Deno.test("Level 1 - Simple Substitution", async (t) => {
@@ -80,7 +80,7 @@ Deno.test("Level 1 - Simple Substitution", async (t) => {
   });
 });
 
-const customAlphabet = [..."🔴🟠🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳▪️▫️◾◽◼◻🟥🟧🟨🟩🟦🟪"];
+const customAlphabet = [..."🔴🟠🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳🏴🏁◾◽◼◻🟥🟧🟨🟩🟦"];
 
 Deno.test("Level 2 - Custom Alphabet", async (t) => {
   await t.step("encrypt with custom alphabet maps first letter to first emoji", () => {
@@ -95,38 +95,23 @@ Deno.test("Level 2 - Custom Alphabet", async (t) => {
     assertEquals(decrypt(encrypt("hello", customAlphabet), customAlphabet), "hello");
   });
 
-  // await t.step("custom alphabet produces different output than default", () => {
-  //   assertEquals(encrypt("a", customAlphabet) !== encrypt("a"), true);
-  // });
+  await t.step("custom alphabet produces different output than default", () => {
+    assertEquals(encrypt("a", customAlphabet) !== encrypt("a"), true);
+  });
 
-  // await t.step("non-letter characters pass through with custom alphabet", () => {
-  //   assertEquals(encrypt("hi world!", customAlphabet), "🌺🍦 🌊🐙🌹🍋🐶!");
-  // });
+  await t.step("non-letter characters pass through with custom alphabet", () => {
+    assertEquals(encrypt("hi world!", customAlphabet), "⚫⚪ 🟧🔳◾💠🟢!");
+  });
 
-  // await t.step("throws error if alphabet has fewer than 26 emojis", () => {
-  //   try {
-  //     encrypt("a", [..."🔴🟠🟡"]);
-  //     throw new Error("should have thrown");
-  //   } catch (e) {
-  //     assertEquals(e.message !== "should have thrown", true);
-  //   }
-  // });
+  await t.step("throws error if alphabet has fewer than 26 emojis", () => {
+    assertThrows(() => encrypt("a", [..."🔴🟠🟡"]));
+  });
 
   // await t.step("throws error if alphabet has more than 26 emojis", () => {
-  //   try {
-  //     encrypt("a", [..."🔴🟠🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳▪️▫️◾◽◼◻🟥🟧🟨🟩🟦🟪🎯"]);
-  //     throw new Error("should have thrown");
-  //   } catch (e) {
-  //     assertEquals(e.message !== "should have thrown", true);
-  //   }
+  //   assertThrows(() => encrypt("a", [..."🔴🟠🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳🏴🏁◾◽◼◻🟥🟧🟨🟩🟦🟪"]));
   // });
 
   // await t.step("throws error if alphabet has duplicate emojis", () => {
-  //   try {
-  //     encrypt("a", [..."🔴🔴🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳▪️▫️◾◽◼◻🟥🟧🟨🟩🟦"]);
-  //     throw new Error("should have thrown");
-  //   } catch (e) {
-  //     assertEquals(e.message !== "should have thrown", true);
-  //   }
+  //   assertThrows(() => encrypt("a", [..."🔴🔴🟡🟢🔵🟣🟤⚫⚪🔶🔷💠🔘🔲🔳🏴🏁◾◽◼◻🟥🟧🟨🟩🟦"]));
   // });
 });

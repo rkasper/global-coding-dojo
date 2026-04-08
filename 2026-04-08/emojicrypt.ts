@@ -11,6 +11,9 @@ for (let i = 0; i < 26; i++) {
 }
 
 export function encrypt(message: string, alphabet?: string[]): string {
+  if (alphabet && alphabet.length !== 26) {
+    throw new Error("Alphabet must contain exactly 26 emojis");
+  }
   const mapping = alphabet
     ? new Map(alphabet.map((emoji, i) => [String.fromCharCode(97 + i), emoji]))
     : letterToEmoji;
