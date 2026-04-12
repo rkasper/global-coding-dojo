@@ -30,8 +30,8 @@
 
 ## Upcoming Events
 
-### 2026-04-08
-**Wednesday, April 8 | Online**
+### 2026-05-13
+**Wednesday, May 13 | Online**
 
 📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
 
@@ -40,8 +40,8 @@
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
-### 2026-05-13
-**Wednesday, May 13 | Online**
+### 2026-06-10
+**Wednesday, June 10 | Online**
 
 📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
 
