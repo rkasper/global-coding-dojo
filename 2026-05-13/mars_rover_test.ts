@@ -72,3 +72,36 @@ Deno.test("Level 2 - Command Strings", async (t) => {
     assertEquals(execute(start, "RM"), {x: 1, y: 0, heading: "E"});
   });
 });
+
+Deno.test("Level 3 - Bounded Plateau", async (t) => {
+  const plateau = {width: 5, height: 5};
+
+  await t.step("M at north edge is ignored", () => {
+    assertEquals(execute({x: 0, y: 5, heading: "N"}, "M", plateau), {x: 0, y: 5, heading: "N"});
+  });
+
+  await t.step("M at south edge is ignored", () => {
+    assertEquals(execute({x: 0, y: 0, heading: "S"}, "M", plateau), {x: 0, y: 0, heading: "S"});
+  });
+
+  await t.step("M at east edge is ignored", () => {
+    assertEquals(execute({x: 5, y: 0, heading: "E"}, "M", plateau), {x: 5, y: 0, heading: "E"});
+  });
+
+  await t.step("M at west edge is ignored", () => {
+    assertEquals(execute({x: 0, y: 0, heading: "W"}, "M", plateau), {x: 0, y: 0, heading: "W"});
+  });
+
+  await t.step("rotation is not blocked at the edge", () => {
+    assertEquals(execute({x: 0, y: 5, heading: "N"}, "R", plateau), {x: 0, y: 5, heading: "E"});
+  });
+
+  await t.step("commands after a blocked move still execute", () => {
+    // M blocked at north edge, R turns to E, M now moves east legally
+    assertEquals(execute({x: 0, y: 5, heading: "N"}, "MRM", plateau), {x: 1, y: 5, heading: "E"});
+  });
+
+  await t.step("no plateau means no bounds", () => {
+    assertEquals(execute({x: 0, y: 100, heading: "N"}, "M"), {x: 0, y: 101, heading: "N"});
+  });
+});
