@@ -4,6 +4,7 @@ export interface Rover {
   x: number;
   y: number;
   heading: Heading;
+  blocked?: true;
 }
 
 export interface Plateau {
@@ -24,7 +25,10 @@ const leftOf: Record<Heading, Heading> = {N: "W", W: "S", S: "E", E: "N"};
 
 export function execute(rover: Rover, commands: string, plateau?: Plateau): Rover {
   let r = rover;
-  for (const c of commands) r = move(r, c, plateau);
+  for (const c of commands) {
+    r = move(r, c, plateau);
+    if (r.blocked) break;
+  }
   return r;
 }
 
@@ -39,7 +43,7 @@ export function move(rover: Rover, command: string, plateau?: Plateau): Rover {
       return rover;
     }
     if (plateau?.obstacles?.some(o => o.x === nx && o.y === ny)) {
-      return rover;
+      return {...rover, blocked: true};
     }
     return {x: nx, y: ny, heading: rover.heading};
   }
