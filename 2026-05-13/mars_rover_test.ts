@@ -33,6 +33,8 @@ Deno.test("Level 1 - One Command at a Time", async (t) => {
     r = move(r, "R"); assertEquals(r.heading, "S");
     r = move(r, "R"); assertEquals(r.heading, "W");
     r = move(r, "R"); assertEquals(r.heading, "N");
+    r = move(r, "R"); assertEquals(r.x, 0);
+    r = move(r, "R"); assertEquals(r.y, 0);
   });
 
   await t.step("L cycles N → W → S → E → N", () => {
@@ -41,6 +43,8 @@ Deno.test("Level 1 - One Command at a Time", async (t) => {
     r = move(r, "L"); assertEquals(r.heading, "S");
     r = move(r, "L"); assertEquals(r.heading, "E");
     r = move(r, "L"); assertEquals(r.heading, "N");
+    r = move(r, "L"); assertEquals(r.x, 0);
+    r = move(r, "L"); assertEquals(r.y, 0);
   });
 
   await t.step("unknown command throws", () => {
