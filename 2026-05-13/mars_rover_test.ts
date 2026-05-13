@@ -105,3 +105,36 @@ Deno.test("Level 3 - Bounded Plateau", async (t) => {
     assertEquals(execute({x: 0, y: 100, heading: "N"}, "M"), {x: 0, y: 101, heading: "N"});
   });
 });
+
+Deno.test("Level 4 - Obstacles", async (t) => {
+  await t.step("M toward an obstacle one square ahead is ignored", () => {
+    const plateau = {width: 5, height: 5, obstacles: [{x: 0, y: 1}]};
+    assertEquals(execute({x: 0, y: 0, heading: "N"}, "M", plateau), {x: 0, y: 0, heading: "N"});
+  });
+
+  await t.step("MMM with obstacle 2 squares ahead moves once then stops", () => {
+    const plateau = {width: 5, height: 5, obstacles: [{x: 1, y: 2}]};
+    assertEquals(execute({x: 1, y: 0, heading: "N"}, "MMM", plateau), {x: 1, y: 1, heading: "N"});
+  });
+
+  await t.step("rotation is not blocked by an obstacle ahead", () => {
+    const plateau = {width: 5, height: 5, obstacles: [{x: 0, y: 1}]};
+    assertEquals(execute({x: 0, y: 0, heading: "N"}, "R", plateau), {x: 0, y: 0, heading: "E"});
+  });
+
+  await t.step("commands after a blocked move still execute", () => {
+    // Obstacle directly north blocks M; R then turns east; M moves east legally
+    const plateau = {width: 5, height: 5, obstacles: [{x: 0, y: 1}]};
+    assertEquals(execute({x: 0, y: 0, heading: "N"}, "MRM", plateau), {x: 1, y: 0, heading: "E"});
+  });
+
+  await t.step("obstacle on the side does not block forward movement", () => {
+    const plateau = {width: 5, height: 5, obstacles: [{x: 1, y: 0}]};
+    assertEquals(execute({x: 0, y: 0, heading: "N"}, "M", plateau), {x: 0, y: 1, heading: "N"});
+  });
+
+  await t.step("empty obstacles list behaves like a plain plateau", () => {
+    const plateau = {width: 5, height: 5, obstacles: []};
+    assertEquals(execute({x: 0, y: 0, heading: "N"}, "M", plateau), {x: 0, y: 1, heading: "N"});
+  });
+});

@@ -9,6 +9,7 @@ export interface Rover {
 export interface Plateau {
   width: number;
   height: number;
+  obstacles?: {x: number; y: number}[];
 }
 
 const deltas: Record<Heading, {dx: number; dy: number}> = {
@@ -35,6 +36,9 @@ export function move(rover: Rover, command: string, plateau?: Plateau): Rover {
     const nx = rover.x + dx;
     const ny = rover.y + dy;
     if (plateau && (nx < 0 || ny < 0 || nx > plateau.width || ny > plateau.height)) {
+      return rover;
+    }
+    if (plateau?.obstacles?.some(o => o.x === nx && o.y === ny)) {
       return rover;
     }
     return {x: nx, y: ny, heading: rover.heading};
