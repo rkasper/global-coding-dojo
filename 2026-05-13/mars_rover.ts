@@ -16,6 +16,12 @@ const deltas: Record<Heading, {dx: number; dy: number}> = {
 const rightOf: Record<Heading, Heading> = {N: "E", E: "S", S: "W", W: "N"};
 const leftOf: Record<Heading, Heading> = {N: "W", W: "S", S: "E", E: "N"};
 
+export function execute(rover: Rover, commands: string): Rover {
+  let r = rover;
+  for (const c of commands) r = move(r, c);
+  return r;
+}
+
 export function move(rover: Rover, command: string): Rover {
   if (command === "R") return {...rover, heading: rightOf[rover.heading]};
   if (command === "L") return {...rover, heading: leftOf[rover.heading]};
