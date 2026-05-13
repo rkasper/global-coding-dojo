@@ -25,6 +25,22 @@ const deltas: Record<Heading, {dx: number; dy: number}> = {
 const rightOf: Record<Heading, Heading> = {N: "E", E: "S", S: "W", W: "N"};
 const leftOf: Record<Heading, Heading> = {N: "W", W: "S", S: "E", E: "N"};
 
+export function runMission(input: string): string {
+  const lines = input.split("\n");
+  const [width, height] = lines[0].split(" ").map(Number);
+  const plateau: Plateau = {width, height};
+
+  const outputs: string[] = [];
+  for (let i = 1; i + 1 < lines.length; i += 2) {
+    const [x, y, heading] = lines[i].split(" ");
+    const start: Rover = {x: Number(x), y: Number(y), heading: heading as Heading};
+    const commands = lines[i + 1];
+    const end = execute(start, commands, plateau);
+    outputs.push(`${end.x} ${end.y} ${end.heading}`);
+  }
+  return outputs.join("\n");
+}
+
 export function execute(rover: Rover, commands: string, plateau?: Plateau): Rover {
   let r = rover;
   for (const c of commands) {

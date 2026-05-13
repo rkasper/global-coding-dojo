@@ -1,5 +1,5 @@
 import {assert, assertEquals, assertThrows} from "https://deno.land/std@0.224.0/assert/mod.ts";
-import {execute, move, type Rover} from "./mars_rover.ts";
+import {execute, move, runMission, type Rover} from "./mars_rover.ts";
 
 Deno.test(function deno_tests_work_properly() {
   assert(true);
@@ -154,5 +154,33 @@ Deno.test("Level 4 - Obstacles", async (t) => {
     const plateau = {width: 5, height: 5, obstacles: [{x: 0, y: 1}]};
     const result = execute({x: 0, y: 0, heading: "N"}, "R", plateau);
     assertEquals(result.blocked, undefined);
+  });
+});
+
+Deno.test("Level 5 - Mission Control", async (t) => {
+  await t.step("mission with only a plateau and no rovers returns empty output", () => {
+    assertEquals(runMission("5 5"), "");
+  });
+
+  await t.step("one rover with no commands returns its starting position", () => {
+    const input = ["5 5", "1 2 N", ""].join("\n");
+    assertEquals(runMission(input), "1 2 N");
+  });
+
+  await t.step("one rover with commands returns its final position", () => {
+    const input = ["5 5", "1 2 N", "LMLMLMLMM"].join("\n");
+    assertEquals(runMission(input), "1 3 N");
+  });
+
+  await t.step("canonical two-rover mission from the README", () => {
+    const input = [
+      "5 5",
+      "1 2 N",
+      "LMLMLMLMM",
+      "3 3 E",
+      "MMRMMRMRRM",
+    ].join("\n");
+    const expected = ["1 3 N", "5 1 E"].join("\n");
+    assertEquals(runMission(input), expected);
   });
 });
