@@ -137,4 +137,22 @@ Deno.test("Level 4 - Obstacles", async (t) => {
     const plateau = {width: 5, height: 5, obstacles: []};
     assertEquals(execute({x: 0, y: 0, heading: "N"}, "M", plateau), {x: 0, y: 1, heading: "N"});
   });
+
+  await t.step("successful M does not set blocked", () => {
+    const plateau = {width: 5, height: 5, obstacles: [{x: 4, y: 4}]};
+    const result = execute({x: 0, y: 0, heading: "N"}, "M", plateau);
+    assertEquals(result.blocked, undefined);
+  });
+
+  await t.step("edge-blocked M does not set blocked (only obstacles do)", () => {
+    const plateau = {width: 5, height: 5};
+    const result = execute({x: 0, y: 5, heading: "N"}, "M", plateau);
+    assertEquals(result.blocked, undefined);
+  });
+
+  await t.step("rotation near an obstacle does not set blocked", () => {
+    const plateau = {width: 5, height: 5, obstacles: [{x: 0, y: 1}]};
+    const result = execute({x: 0, y: 0, heading: "N"}, "R", plateau);
+    assertEquals(result.blocked, undefined);
+  });
 });

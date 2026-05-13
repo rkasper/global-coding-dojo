@@ -4,6 +4,8 @@ export interface Rover {
   x: number;
   y: number;
   heading: Heading;
+  // Set only when an obstacle blocks an M; absence === not blocked.
+  // Always check via truthiness (`if (r.blocked)`), not `=== false`.
   blocked?: true;
 }
 
