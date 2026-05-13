@@ -28,15 +28,16 @@ const leftOf: Record<Heading, Heading> = {N: "W", W: "S", S: "E", E: "N"};
 export function runMission(input: string): string {
   const lines = input.split("\n");
   const [width, height] = lines[0].split(" ").map(Number);
-  const plateau: Plateau = {width, height};
+  const obstacles: {x: number; y: number}[] = [];
 
   const outputs: string[] = [];
   for (let i = 1; i + 1 < lines.length; i += 2) {
     const [x, y, heading] = lines[i].split(" ");
     const start: Rover = {x: Number(x), y: Number(y), heading: heading as Heading};
     const commands = lines[i + 1];
-    const end = execute(start, commands, plateau);
+    const end = execute(start, commands, {width, height, obstacles});
     outputs.push(`${end.x} ${end.y} ${end.heading}`);
+    obstacles.push({x: end.x, y: end.y});
   }
   return outputs.join("\n");
 }

@@ -183,4 +183,41 @@ Deno.test("Level 5 - Mission Control", async (t) => {
     const expected = ["1 3 N", "5 1 E"].join("\n");
     assertEquals(runMission(input), expected);
   });
+
+  await t.step("parked rover blocks the next rover's path", () => {
+    // Rover 1 parks at (1,1,N). Rover 2 tries to move from (1,0,N) into (1,1) and is blocked.
+    const input = [
+      "5 5",
+      "1 1 N",
+      "",
+      "1 0 N",
+      "M",
+    ].join("\n");
+    const expected = ["1 1 N", "1 0 N"].join("\n");
+    assertEquals(runMission(input), expected);
+  });
+
+  await t.step("six-rover mission on a 10x10 plateau with two collisions", () => {
+    // R1 parks at (3,5). R2 from (3,0) heading N walks straight into it -> blocked at (3,4).
+    // R3 cruises down the east side. R4 walks east then hits the south edge harmlessly.
+    // R5 cruises west across the middle. R6 from (0,5) heading E walks into R1 -> blocked at (2,5).
+    const input = [
+      "10 10",
+      "3 3 N", "MM",
+      "3 0 N", "MMMMMMM",
+      "9 9 S", "MMMMMM",
+      "0 0 E", "MMMMMRMM",
+      "7 7 W", "MMMM",
+      "0 5 E", "MMM",
+    ].join("\n");
+    const expected = [
+      "3 5 N",
+      "3 4 N",
+      "9 3 S",
+      "5 0 S",
+      "3 7 W",
+      "2 5 E",
+    ].join("\n");
+    assertEquals(runMission(input), expected);
+  });
 });
