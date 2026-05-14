@@ -30,16 +30,6 @@
 
 ## Upcoming Events
 
-### 2026-05-13
-**Wednesday, May 13 | Online**
-
-📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
-
-**Come prepared:**
-- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
-
 ### 2026-06-10
 **Wednesday, June 10 | Online**
 
@@ -50,7 +40,24 @@
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
+### 2026-07-08
+**Wednesday, July 8 | Online**
+
+📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
+
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+
 ## Past Events
+
+### 2026-05-13
+- 4 of us attended.
+- We practiced the Mars Rover kata using TDD and Claude Code.
+- We completed Levels 1–5, finishing with multi-rover missions where parked rovers act as obstacles.
+- We added an animated ASCII visualization of a 6-rover mission.
+- We had fun!
 
 ### 2026-04-08
 - 3 of us attended.
