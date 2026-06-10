@@ -18,3 +18,19 @@ export function score(player1Points: number, player2Points: number): string {
 
   return `${POINT_NAMES[player1Points]}-${POINT_NAMES[player2Points]}`;
 }
+
+type Player = 1 | 2;
+
+// Level 5: play the game one point at a time instead of passing in final totals.
+// `Player` is typed as `1 | 2`, so `pointTo(3)` won't even compile.
+export class Game {
+  #points: Record<Player, number> = { 1: 0, 2: 0 };
+
+  pointTo(player: Player): void {
+    this.#points[player]++;
+  }
+
+  score(): string {
+    return score(this.#points[1], this.#points[2]);
+  }
+}
