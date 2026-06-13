@@ -30,18 +30,18 @@
 
 ## Upcoming Events
 
-### 2026-06-10
-**Wednesday, June 10 | Online**
+### 2026-07-08
+**Wednesday, July 8 | Online _or_ in-person in CDMX — to be confirmed**
 
-📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
+📝 **[Register on Eventbrite](https://globalcodingdojo.org)** — sign up now and we'll confirm the format soon. Heads-up: this session will be **either** online **or** in-person in Mexico City — not hybrid. If you're planning to join remotely, watch for our final announcement before it's set.
 
 **Come prepared:**
 - 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
-### 2026-07-08
-**Wednesday, July 8 | Online**
+### 2026-08-12
+**Wednesday, August 12 | Online**
 
 📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
 
@@ -51,6 +51,12 @@
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
+
+### 2026-06-10
+- 2 of us attended — an awesome pair programming session.
+- We did the Tennis Scoring Kata, which was super fun.
+- As a bonus, we built a simple UI for a tennis judge to use to score games.
+- We had fun!
 
 ### 2026-05-13
 - 4 of us attended.
