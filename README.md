@@ -1,6 +1,6 @@
 # Global Coding Dojo! 🌎💻
 
-**Join us for a dynamic online coding session where we'll practice mob/pair programming, Test-Driven Development (TDD), and AI-assisted coding with modern tools like Claude Code!**
+**Join us for a dynamic coding session where we'll practice mob/pair programming, Test-Driven Development (TDD), and AI-assisted coding with modern tools like Claude Code! We meet online most months, and in person in Mexico City when we can.**
 
 ## What to Expect
 
@@ -31,24 +31,32 @@
 ## Upcoming Events
 
 ### 2026-07-08
-**Wednesday, July 8 | Online _or_ in-person in CDMX — to be confirmed**
+**Wednesday, July 8 | In-person in Mexico City 🇲🇽 (presencial)**
 
-📝 **[Register on Eventbrite](https://globalcodingdojo.org)** — sign up now and we'll confirm the format soon. Heads-up: this session will be **either** online **or** in-person in Mexico City — not hybrid. If you're planning to join remotely, watch for our final announcement before it's set.
+Join us live in **Hipódromo-Condesa, CDMX** for a face-to-face dojo! Spanish-primary, English welcome. Space is limited to ~10 people.
+
+- 🕕 **6:00 PM** — Doors open / llegada
+- 🎯 **6:30 PM** — Kata begins
+- 🕗 **8:30 PM** — We wrap up
+
+_(all times Mexico City / CST)_
+
+📝 **[Register on Eventbrite](https://globalcodingdojo.org)** — the exact address is shared with registrants. Please only register if you can really attend, so someone else can take your spot if your plans change.
 
 **Come prepared:**
-- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
+- 💻 **Laptop** with your favorite IDE installed (we recommend [JetBrains](https://www.jetbrains.com/toolbox-app/)) and Node.js/Deno ready
+- 🤖 **[Claude Code](https://claude.com/claude-code)** (or your AI assistant of choice) — modern AI-assisted development
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+- 🧠 **An open mind** and willingness to collaborate
 
 ### 2026-08-12
-**Wednesday, August 12 | Online**
+**Wednesday, August 12 | Likely in-person in Mexico City — to be confirmed (may be online)**
+
+We expect another in-person CDMX session, but it might be online — to be confirmed. Watch for our final announcement before it's set.
 
 📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
 
-**Come prepared:**
-- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - Download before the session for seamless Code With Me mob programming
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+**Come prepared:** What to bring depends on the final format — we'll confirm soon. Either way: an open mind, willingness to collaborate, and [Claude Code](https://claude.com/claude-code) (or your AI assistant of choice).
 
 ## Past Events
 
