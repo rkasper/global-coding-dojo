@@ -31,23 +31,16 @@
 ## Upcoming Events
 
 ### 2026-07-08
-**Wednesday, July 8 | In-person in Mexico City 🇲🇽 (presencial)**
+**Wednesday, July 8 | In-person in Ciudad de México 🇲🇽 (presencial)**
 
 Join us live in **Hipódromo-Condesa, CDMX** for a face-to-face dojo! Spanish-primary, English welcome. Space is limited to ~10 people.
 
-- 🕕 **6:00 PM** — Doors open / llegada
-- 🎯 **6:30 PM** — Kata begins
-- 🕗 **8:30 PM** — We wrap up
+- A face-to-face dojo in Hipódromo-Condesa, CDMX: doors open 6:00 PM, kata begins 6:30 PM, we finish at 8:30 PM (Mexico City / CST). Spanish-primary, English welcome, all levels.
 
-_(all times Mexico City / CST)_
-
-📝 **[Register on Eventbrite](https://globalcodingdojo.org)** — the exact address is shared with registrants. Please only register if you can really attend, so someone else can take your spot if your plans change.
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-ciudad-de-mexico-presencial-julio-2026-tickets-1992794266295)** — the exact address is shared with registrants. Please only register if you can really attend, so someone else can take your spot if your plans change.
 
 **Come prepared:**
-- 💻 **Laptop** with your favorite IDE installed (we recommend [JetBrains](https://www.jetbrains.com/toolbox-app/)) and Node.js/Deno ready
-- 🤖 **[Claude Code](https://claude.com/claude-code)** (or your AI assistant of choice) — modern AI-assisted development
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
-- 🧠 **An open mind** and willingness to collaborate
+- 🧠 Just bring an open mind and willingness to collaborate — nothing else! No laptop needed; we mob together on the big screen.
 
 ### 2026-08-12
 **Wednesday, August 12 | Likely in-person in Mexico City — to be confirmed (may be online)**
