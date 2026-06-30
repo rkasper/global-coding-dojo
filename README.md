@@ -43,13 +43,16 @@ Join us live in **Hipódromo-Condesa, CDMX** for a face-to-face dojo! Spanish-pr
 - 🧠 Just bring an open mind and willingness to collaborate — nothing else! No laptop needed; we mob together on the big screen.
 
 ### 2026-08-12
-**Wednesday, August 12 | Likely in-person in Mexico City — to be confirmed (may be online)**
+**Wednesday, August 12 | Online — a Mexico City edition is still possible (TBD)**
 
-We expect another in-person CDMX session, but it might be online — to be confirmed. Watch for our final announcement before it's set.
+Register for the online session now. We may move this one to an in-person CDMX dojo instead — watch for our final announcement before it's set.
 
-📝 **[Register on Eventbrite](https://globalcodingdojo.org)**
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
 
-**Come prepared:** What to bring depends on the final format — we'll confirm soon. Either way: an open mind, willingness to collaborate, and [Claude Code](https://claude.com/claude-code) (or your AI assistant of choice).
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - For real-time collaboration and AI-assisted coding
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
 
