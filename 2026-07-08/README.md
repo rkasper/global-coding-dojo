@@ -74,9 +74,11 @@ entre parejas de *pair programming*.
 ### 🟠 Avanzado
 - [ ] **Compartir por link:** codifica la lista en la URL para pasarla por WhatsApp.
 - [ ] **Cercanía:** usa `navigator.geolocation` + un mapa/link a Google Maps.
-- [ ] **Tiempo real:** que varias personas voten desde su teléfono y se sincronice
-      (Supabase Realtime o Firebase).
 - [ ] Ruleta animada girando entre los lugares antes de revelar la elección.
+- [x] **Tiempo real / multi-dispositivo:** implementado en `../2026-07-08-live/`
+      — servidor Deno con WebSockets nativos desplegado en DigitalOcean, cada
+      quien vota desde su celular compartiendo una URL de sala. Ver el plan
+      completo en [`MULTIDEVICE-PLAN.md`](./MULTIDEVICE-PLAN.md).
 
 ## Despliegue a producción 🚀
 
