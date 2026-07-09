@@ -48,7 +48,7 @@
       border-radius: 18px;
       padding: 1.75rem 1rem;
       text-align: center;
-      margin-bottom: 1.25rem;
+      margin-bottom: .5rem;
       min-height: 96px;
       display: flex;
       align-items: center;
@@ -59,6 +59,13 @@
     }
     .result.spin { animation: pop .4s ease; }
     @keyframes pop { 0% { transform: scale(.9); opacity: .4; } 100% { transform: scale(1); opacity: 1; } }
+    .progress {
+      text-align: center;
+      color: var(--muted);
+      font-size: .85rem;
+      margin-bottom: 1.25rem;
+      min-height: 1.2em;
+    }
     button {
       font: inherit;
       cursor: pointer;
@@ -78,6 +85,7 @@
     }
     .decide:active { transform: translateY(1px); }
     .add { display: flex; gap: .5rem; margin-bottom: 1rem; }
+    .add[hidden] { display: none; }
     .add input {
       flex: 1;
       font: inherit;
@@ -138,6 +146,7 @@
       font-weight: 700;
       padding: .35rem .8rem;
     }
+    li .vote.voted { background: var(--good); color: #fff; }
     li .actions { display: flex; align-items: center; gap: .5rem; }
     .reset {
       width: 100%;
@@ -147,13 +156,25 @@
       margin-top: .5rem;
     }
 
-    /* Registro de usuarios */
+    /* Identidad / registro */
     section.users { margin-bottom: 1.5rem; }
     section.users h2 {
       font-size: 1rem;
       color: var(--muted);
       margin: 0 0 .5rem;
     }
+    .me {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--card);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: .7rem .9rem;
+    }
+    .me[hidden] { display: none; }
+    .me strong { font-size: 1.05rem; }
+    .me span.hint { color: var(--muted); font-size: .8rem; }
     .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
     .chip {
       display: inline-flex;
@@ -162,27 +183,10 @@
       background: var(--card);
       border: 2px solid var(--line);
       border-radius: 999px;
-      padding: .4rem .5rem .4rem .9rem;
+      padding: .4rem .9rem;
       font-weight: 600;
     }
-    .chip button {
-      background: transparent;
-      color: var(--muted);
-      padding: 0 .3rem;
-      line-height: 1;
-    }
-    .voter-picker { margin-bottom: 1rem; }
-    .voter-picker p { margin: 0 0 .5rem; color: var(--muted); font-size: .9rem; }
-    .voter-chip {
-      border: 2px solid var(--line);
-      background: var(--card);
-      color: var(--ink);
-      border-radius: 999px;
-      padding: .5rem 1rem;
-      font-weight: 600;
-    }
-    .voter-chip.picked { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .voter-chip.done { opacity: .55; }
+    .chip.is-me { border-color: var(--accent); color: var(--accent); }
 
     /* Pantalla "Crear sala" */
     .create-screen { max-width: 420px; margin: 3rem auto; text-align: center; }
@@ -259,10 +263,17 @@
 
     <section class="users">
       <h2>👥 ¿Quién viene?</h2>
+
       <form class="add" id="userForm">
-        <input id="userInput" placeholder="Tu nombre…" autocomplete="off" />
+        <input id="userInput" placeholder="Tu nombre…" autocomplete="off" required />
         <button type="submit">Registrarse</button>
       </form>
+
+      <div class="me" id="meBox" hidden>
+        <span>Votando como</span>
+        <strong id="meName"></strong>
+      </div>
+
       <div class="chips" id="userChips"></div>
     </section>
 
@@ -272,15 +283,11 @@
     </div>
 
     <div class="result" id="result">Presiona «¡Decide por mí!»</div>
+    <div class="progress" id="progress"></div>
 
     <button class="decide" id="decide">🎲 ¡Decide por mí!</button>
     <button class="decide" id="winner" hidden>🏆 Ver ganador</button>
     <button class="reset" id="resetVotes" hidden>Reiniciar votos</button>
-
-    <div class="voter-picker" id="voterPicker" hidden>
-      <p>¿Quién vota ahora?</p>
-      <div class="chips" id="voterChips"></div>
-    </div>
 
     <form class="add" id="addForm">
       <input id="addInput" placeholder="Agregar un lugar…" autocomplete="off" />
@@ -294,6 +301,8 @@
 
   <script type="module">
     import { tallyVotes, votedFor } from "./decide.js";
+
+    const NAME_KEY = "cdmx-mi-nombre";
 
     // --- SALA ---
     // Sin ?room= en la URL: se muestra la pantalla "Crear sala" y no se
@@ -323,22 +332,24 @@
 
     function startApp(roomId) {
       // --- ESTADO ---
-      // Todo el estado (places/users/mode/votes/runoffPlaces/lastPick) es un
-      // espejo del último snapshot recibido del servidor — no hay
-      // localStorage ni mutación local; cada acción del usuario se manda por
-      // WebSocket y el render se dispara cuando llega la respuesta.
+      // places/users/mode/votes/runoffPlaces/lastPick/myName son un espejo
+      // del último snapshot recibido del servidor — no hay mutación local.
+      // myName es la identidad que EL SERVIDOR confirmó para esta conexión
+      // (puede diferir de lo que escribiste si tu nombre ya estaba tomado
+      // por otro dispositivo: te asignan una variante, ej. "Ana 2").
       let places = [];
       let users = [];
       let mode = "random";
       let votes = {};
       let runoffPlaces = null;
       let lastPick = null;
-      let currentVoter = null;
+      let myName = localStorage.getItem(NAME_KEY); // valor optimista hasta que el server confirme
       let lastBannerText = null;
 
       // --- REFERENCIAS AL DOM ---
       const listEl = document.getElementById("list");
       const resultEl = document.getElementById("result");
+      const progressEl = document.getElementById("progress");
       const form = document.getElementById("addForm");
       const input = document.getElementById("addInput");
       const decideBtn = document.getElementById("decide");
@@ -349,8 +360,8 @@
       const userForm = document.getElementById("userForm");
       const userInput = document.getElementById("userInput");
       const userChipsEl = document.getElementById("userChips");
-      const voterPickerEl = document.getElementById("voterPicker");
-      const voterChipsEl = document.getElementById("voterChips");
+      const meBox = document.getElementById("meBox");
+      const meName = document.getElementById("meName");
       const connEl = document.getElementById("conn");
       const connTextEl = document.getElementById("connText");
       const shareUrlEl = document.getElementById("shareUrl");
@@ -393,6 +404,10 @@
         ws.onopen = () => {
           backoff = 1000;
           setConnStatus("is-open", "Conectado");
+          // Cada conexión nueva empieza sin identidad reclamada en el
+          // servidor — si ya nos habíamos registrado antes en este
+          // dispositivo, reclamamos el mismo nombre de inmediato.
+          if (myName) send({ type: "claimIdentity", name: myName });
         };
         ws.onmessage = (e) => {
           const msg = JSON.parse(e.data);
@@ -432,12 +447,17 @@
         votes = s.votes;
         runoffPlaces = s.runoffPlaces;
         lastPick = s.lastPick;
-        if (currentVoter && !users.includes(currentVoter)) currentVoter = null;
+
+        if (s.myName) {
+          myName = s.myName;
+          localStorage.setItem(NAME_KEY, myName); // puede ser una variante ("Ana 2")
+        }
 
         renderModeButtons();
+        renderIdentity();
         renderUsers();
-        renderVoterChips();
         renderBanner();
+        renderProgress();
         render();
       }
 
@@ -448,7 +468,15 @@
         decideBtn.hidden = isVote;
         winnerBtn.hidden = !isVote;
         resetBtn.hidden = !isVote;
-        voterPickerEl.hidden = !isVote;
+      }
+
+      // Muestra el formulario de registro o "Votando como: X", según si el
+      // servidor ya nos confirmó una identidad para esta conexión.
+      function renderIdentity() {
+        const registered = users.includes(myName);
+        userForm.hidden = registered;
+        meBox.hidden = !registered;
+        if (registered) meName.textContent = myName;
       }
 
       // Dibuja la lista de lugares. En modo votación muestra contador + "Votar";
@@ -468,6 +496,7 @@
         }
 
         const { counts } = tallyVotes(Object.values(votes));
+        const myPick = votedFor(votes, myName ?? "");
 
         for (const place of votablePlaces) {
           const li = document.createElement("li");
@@ -485,16 +514,11 @@
             count.textContent = counts[place] ?? 0;
 
             const voteBtn = document.createElement("button");
-            voteBtn.className = "vote";
-            voteBtn.textContent = "Votar";
-            voteBtn.disabled = !currentVoter;
-            voteBtn.addEventListener("click", () => {
-              if (!currentVoter) {
-                showResult("Selecciona quién eres arriba 👆");
-                return;
-              }
-              send({ type: "castVote", user: currentVoter, place });
-            });
+            const alreadyVotedHere = myPick === place;
+            voteBtn.className = "vote" + (alreadyVotedHere ? " voted" : "");
+            voteBtn.textContent = alreadyVotedHere ? "Tu voto ✓" : "Votar";
+            voteBtn.disabled = !users.includes(myName);
+            voteBtn.addEventListener("click", () => send({ type: "castVote", place }));
 
             actions.append(count, voteBtn);
           } else {
@@ -512,57 +536,30 @@
         }
       }
 
-      // Dibuja los chips de personas registradas (siempre visibles).
+      // Dibuja los chips de personas registradas (siempre visibles, sin
+      // botón para borrar a nadie más — cada quien solo controla su propia
+      // identidad).
       function renderUsers() {
         userChipsEl.innerHTML = "";
         for (const user of users) {
           const chip = document.createElement("span");
-          chip.className = "chip";
-
-          const name = document.createElement("span");
-          name.textContent = user;
-
-          const del = document.createElement("button");
-          del.textContent = "✕";
-          del.setAttribute("aria-label", `Quitar a ${user}`);
-          del.addEventListener("click", () => {
-            if (currentVoter === user) currentVoter = null;
-            send({ type: "removeUser", name: user });
-          });
-
-          chip.append(name, del);
+          chip.className = "chip" + (user === myName ? " is-me" : "");
+          chip.textContent = user === myName ? `${user} (tú)` : user;
           userChipsEl.appendChild(chip);
         }
       }
 
-      // Dibuja los chips "¿quién vota ahora?" (solo en modo votación).
-      function renderVoterChips() {
-        voterChipsEl.innerHTML = "";
-
-        if (users.length === 0) {
-          const empty = document.createElement("span");
-          empty.className = "empty";
-          empty.textContent = "Regístrense arriba primero";
-          voterChipsEl.appendChild(empty);
+      // Cuántos de los registrados ya votaron — visible siempre en modo
+      // votación, para que quede claro por qué no hay ganador todavía.
+      function renderProgress() {
+        if (mode !== "vote") {
+          progressEl.textContent = "";
           return;
         }
-
-        for (const user of users) {
-          const chip = document.createElement("button");
-          chip.className = "voter-chip";
-          const already = votedFor(votes, user);
-          if (user === currentVoter) chip.classList.add("picked");
-          if (already) chip.classList.add("done");
-          chip.textContent = already ? `${user} ✓` : user;
-
-          chip.addEventListener("click", () => {
-            currentVoter = user;
-            renderVoterChips();
-            render();
-          });
-
-          voterChipsEl.appendChild(chip);
-        }
+        const votedCount = users.filter((u) => votedFor(votes, u) !== null).length;
+        progressEl.textContent = users.length === 0
+          ? "Regístrense arriba para poder votar"
+          : `Votos: ${votedCount} de ${users.length}`;
       }
 
       // El banner de resultado se calcula siempre a partir del estado
@@ -608,9 +605,8 @@
 
       userForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        send({ type: "addUser", name: userInput.value });
+        send({ type: "claimIdentity", name: userInput.value });
         userInput.value = "";
-        userInput.focus();
       });
 
       form.addEventListener("submit", (e) => {
@@ -623,8 +619,13 @@
       decideBtn.addEventListener("click", () => send({ type: "randomPick" }));
 
       winnerBtn.addEventListener("click", () => {
-        if (Object.keys(votes).length === 0) {
-          showResult("Nadie ha votado todavía 🗳️", true);
+        const votedCount = users.filter((u) => votedFor(votes, u) !== null).length;
+        if (users.length === 0) {
+          showResult("Regístrense arriba primero 👆", true);
+          return;
+        }
+        if (votedCount < users.length) {
+          showResult(`Faltan ${users.length - votedCount} de ${users.length} por votar`, true);
           return;
         }
         send({ type: "requestWinner" });

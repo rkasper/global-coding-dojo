@@ -192,21 +192,32 @@ Cliente → servidor (todos los mensajes son `{ type: string, ...payload }`):
 |---|---|---|
 | `addPlace` | `{ name }` | `decide.addPlace` |
 | `removePlace` | `{ name }` | `decide.removePlace` |
-| `addUser` | `{ name }` | `decide.addUser` |
-| `removeUser` | `{ name }` | `decide.removeUser` |
-| `castVote` | `{ user, place }` | `decide.castVote` |
+| `claimIdentity` | `{ name }` | reclama un nombre para ESTA conexión — ver nota abajo |
+| `castVote` | `{ place }` | vota como la identidad reclamada por esta conexión (no por lo que mande el cliente) |
 | `resetVotes` | `{}` | limpia votos + runoff |
 | `setMode` | `{ mode }` | cambia el modo para todos |
 | `randomPick` | `{}` | `pickRandom` en el servidor — todos ven el mismo resultado |
-| `requestWinner` | `{}` | corre `tallyVotes`/`topChoices` en el servidor; si hay empate, arma `runoffPlaces` y limpia votos |
+| `requestWinner` | `{}` | si TODOS los registrados ya votaron: corre `tallyVotes`/`topChoices`; si hay empate, arma `runoffPlaces` y limpia votos. Si falta alguien por votar, no hace nada |
 
 **Importante:** `requestWinner` (el botón "Ver ganador" actual, incluida la
 lógica de desempate/runoff) se decide **en el servidor**, no en cada cliente
 por separado — así dos personas no pueden disparar rondas de desempate en
 conflicto al mismo tiempo.
 
+> **Nota de implementación (post-plan):** al construirse, `addUser`/`removeUser`
+> se reemplazaron por `claimIdentity`, y `requestWinner` se endureció para
+> esperar a que todos los registrados voten antes de resolver — dos
+> refinamientos pedidos después de desplegar la primera versión. El servidor
+> guarda qué conexión "es" cada nombre (`room.claims`) y **siempre** vota
+> como esa identidad, ignorando cualquier `user` que mande el cliente — así
+> nadie puede votar por otra persona. Si el nombre pedido ya está reclamado
+> por otra conexión viva, se asigna una variante ("Ana" → "Ana 2"). Detalle
+> completo en `../2026-07-08-live/README.md`.
+
 Servidor → cliente: **un solo tipo de mensaje**, snapshot completo del
-estado, transmitido a todos los sockets de la sala después de cada mutación:
+estado, transmitido a todos los sockets de la sala después de cada mutación
+— con un campo extra, `myName`, **distinto para cada socket** (la identidad
+que esa conexión tiene reclamada, o `null`):
 
 ```json
 {
@@ -216,7 +227,8 @@ estado, transmitido a todos los sockets de la sala después de cada mutación:
   "mode": "vote",
   "votes": { "Ana": "Tacos al pastor" },
   "runoffPlaces": null,
-  "lastPick": null
+  "lastPick": null,
+  "myName": "Ana"
 }
 ```
 

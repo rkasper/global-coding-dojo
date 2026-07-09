@@ -1,4 +1,7 @@
-// copiado verbatim de ../2026-07-08/decide.js — mantener sincronizado a mano
+// basado en ../2026-07-08/decide.js — mantener la lógica de lugares/votos
+// sincronizada a mano; findCanonical/uniqueName son exclusivas de esta
+// versión (identidad por dispositivo), no existen en la versión de un solo
+// dispositivo.
 //
 // ¿Dónde comemos en CDMX? — Lógica pura (sin DOM, fácil de probar)
 //
@@ -29,18 +32,30 @@ export function removePlace(list, name) {
 }
 
 /**
- * Registra un usuario por nombre. Misma regla que los lugares: ignora
- * vacíos y no duplica (sin distinguir mayúsculas/acentos).
+ * Busca si `name` ya existe en la lista (sin distinguir mayúsculas/acentos)
+ * y devuelve la forma EXACTA ya registrada, o null si no existe.
  */
-export function addUser(list, name) {
-  return addItem(list, name);
+export function findCanonical(list, name) {
+  const person = normalize(name);
+  return list.find((item) => sameName(item, person)) ?? null;
 }
 
 /**
- * Da de baja a un usuario registrado.
+ * Genera un nombre que no choque con ninguno de `list`: si `name` ya está
+ * en uso, prueba "name 2", "name 3", etc. hasta encontrar uno libre.
+ * `list` es la lista de nombres A EVITAR (no necesariamente todos los
+ * registrados: el llamador decide qué cuenta como "ocupado").
  */
-export function removeUser(list, name) {
-  return removeItem(list, name);
+export function uniqueName(list, name) {
+  const base = normalize(name);
+  if (base === "") return "";
+  // Si ya existe con otra mayúscula/acento, el sufijo se basa en la forma
+  // YA establecida ("Ana" + "ana" nuevo => "Ana 2", no "ana 2").
+  const existing = findCanonical(list, base);
+  if (!existing) return base;
+  let n = 2;
+  while (list.some((item) => sameName(item, `${existing} ${n}`))) n++;
+  return `${existing} ${n}`;
 }
 
 /**

@@ -4,13 +4,44 @@ import {
   broadcast,
   getOrCreateRoom,
   removeSocket,
-  snapshot,
+  snapshotFor,
 } from "./room.ts";
 
 const MAX_MESSAGE_LENGTH = 2000;
-const MIN_MESSAGE_INTERVAL_MS = 50;
 
-const lastMessageAt = new WeakMap<WebSocket, number>();
+// Cubeta de tokens por socket: permite ráfagas cortas de acciones legítimas
+// y seguidas (ej. "registrarme" → "votar" en el mismo segundo) pero frena
+// un flujo sostenido de mensajes (cliente roto o malicioso). Un límite
+// estricto de "mínimo N ms entre mensajes" resultó demasiado agresivo: hasta
+// dos acciones humanas normales en rápida sucesión chocaban con él.
+const BURST_CAPACITY = 8;
+const REFILL_MS = 200; // 1 token cada 200ms => 5 mensajes/seg sostenidos
+
+interface Bucket {
+  tokens: number;
+  lastRefill: number;
+}
+
+const buckets = new WeakMap<WebSocket, Bucket>();
+
+function allowMessage(socket: WebSocket): boolean {
+  const now = Date.now();
+  let bucket = buckets.get(socket);
+  if (!bucket) {
+    bucket = { tokens: BURST_CAPACITY, lastRefill: now };
+    buckets.set(socket, bucket);
+  }
+
+  const refillCount = Math.floor((now - bucket.lastRefill) / REFILL_MS);
+  if (refillCount > 0) {
+    bucket.tokens = Math.min(BURST_CAPACITY, bucket.tokens + refillCount);
+    bucket.lastRefill = now;
+  }
+
+  if (bucket.tokens <= 0) return false;
+  bucket.tokens--;
+  return true;
+}
 
 export async function handler(req: Request): Promise<Response> {
   const url = new URL(req.url);
@@ -26,7 +57,7 @@ export async function handler(req: Request): Promise<Response> {
 
     socket.onopen = () => {
       addSocket(room, socket);
-      socket.send(JSON.stringify({ type: "state", ...snapshot(room) }));
+      socket.send(JSON.stringify({ type: "state", ...snapshotFor(room, socket) }));
     };
 
     socket.onmessage = (event) => {
@@ -35,17 +66,14 @@ export async function handler(req: Request): Promise<Response> {
         return;
       }
 
-      const now = Date.now();
-      const last = lastMessageAt.get(socket) ?? 0;
-      if (now - last < MIN_MESSAGE_INTERVAL_MS) {
-        return; // se ignora silenciosamente: limita la frecuencia por socket
+      if (!allowMessage(socket)) {
+        return; // se ignora silenciosamente: sin tokens disponibles ahora mismo
       }
-      lastMessageAt.set(socket, now);
 
       try {
         const action = JSON.parse(event.data);
         if (action.type === "ping") return; // heartbeat: mantiene viva la conexión
-        applyAction(room, action);
+        applyAction(room, socket, action);
         broadcast(room);
       } catch {
         socket.send(JSON.stringify({ type: "error", message: "bad message" }));

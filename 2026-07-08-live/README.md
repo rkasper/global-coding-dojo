@@ -30,14 +30,34 @@ que la abra entra a la misma sala.
   atiende `/ws?room=<id>` con `Deno.upgradeWebSocket`. Cada mutación se
   transmite como snapshot completo a todos los sockets de esa sala.
 - `static/index.html` — el cliente: se conecta por WebSocket, manda acciones
-  (`addPlace`, `castVote`, `requestWinner`, etc.) y vuelve a dibujar la UI
-  cada vez que llega un snapshot del servidor.
+  (`addPlace`, `claimIdentity`, `castVote`, `requestWinner`, etc.) y vuelve a
+  dibujar la UI cada vez que llega un snapshot del servidor.
 
 El desempate sigue funcionando igual que en la versión de un solo
 dispositivo: si hay empate, se abre una ronda de votación **solo entre los
 lugares empatados** — nunca se decide al azar. Ahora esa decisión la toma el
 servidor (no cada cliente), para que dos personas no puedan disparar rondas
 de desempate en conflicto al mismo tiempo.
+
+### Identidad por dispositivo
+
+Cada conexión reclama un nombre con `claimIdentity` y el servidor guarda qué
+socket "es" cada nombre (`room.claims`). Un voto siempre se registra como
+quien está conectado — el servidor ignora cualquier otro nombre que un
+cliente intente mandar en `castVote`, así nadie puede votar por otra
+persona. Si el nombre pedido ya está reclamado por OTRA conexión viva, se
+asigna una variante ("Ana" → "Ana 2"); si es la misma conexión reconectando
+(o el dueño original ya se desconectó), recupera su propio nombre tal cual.
+El nombre confirmado se guarda en `localStorage` del navegador para que un
+recargo de página vuelva a reclamar la misma identidad automáticamente.
+
+### Esperar a que todos voten
+
+`requestWinner` (el botón "🏆 Ver ganador") no resuelve nada — ni gana nadie,
+ni se abre una ronda de desempate — hasta que **cada persona registrada**
+tenga un voto puesto. Mientras tanto la UI muestra "Faltan X de Y por
+votar". Si alguien se registra a mitad de una votación, también tiene que
+votar antes de que se pueda declarar un resultado.
 
 ## Persistencia
 
