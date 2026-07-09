@@ -11,6 +11,32 @@ function once(socket: WebSocket, type: "open" | "message"): Promise<MessageEvent
   });
 }
 
+// Abre `count` sockets a la misma sala y drena el snapshot inicial de cada
+// uno. Los listeners de "message" se registran en el MISMO tick que la
+// construcción del socket — si se registraran después de "open", el
+// snapshot inicial podría llegar antes de empezar a escuchar y perderse
+// para siempre (addEventListener solo ve eventos despachados después de
+// engancharse), colgando el siguiente await.
+async function connectSockets(roomId: string, count: number) {
+  const sockets = Array.from({ length: count }, () => new WebSocket(`${WS_URL}/ws?room=${roomId}`));
+  const firstMessages = sockets.map((s) => once(s, "message"));
+  await Promise.all(sockets.map((s) => once(s, "open")));
+  const initial = (await Promise.all(firstMessages)).map((e) => JSON.parse(e.data));
+  return { sockets, initial };
+}
+
+// Manda `action` desde `sender` y espera a que el broadcast resultante
+// llegue a TODOS los `sockets` indicados (cada acción se transmite a todos
+// los sockets de la sala, no solo a quien la manda — hay que drenarlos
+// todos antes de la siguiente acción, o el listener del siguiente paso
+// puede atrapar por error un broadcast viejo sin consumir). Devuelve los
+// mensajes ya parseados, en el mismo orden que `sockets`.
+async function sendAndDrain(sender: WebSocket, sockets: WebSocket[], action: unknown) {
+  const pending = Promise.all(sockets.map((s) => once(s, "message")));
+  sender.send(typeof action === "string" ? action : JSON.stringify(action));
+  return (await pending).map((e) => JSON.parse(e.data));
+}
+
 Deno.test({
   name: "integration tests",
   sanitizeResources: false,
@@ -49,9 +75,7 @@ Deno.test({
 
       await t.step("connecting sends an initial state snapshot", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        await once(a, "open");
-        const first = JSON.parse((await once(a, "message")).data);
+        const { sockets: [a], initial: [first] } = await connectSockets(roomId, 1);
         assertEquals(first.type, "state");
         assertEquals(first.places.includes("Tacos al pastor"), true);
         assertEquals(first.users, []);
@@ -60,21 +84,11 @@ Deno.test({
 
       await t.step("addPlace broadcasts to every socket in the same room", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        const b = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        // Register the "message" listeners in the SAME tick as "open", right
-        // after construction — otherwise the server's initial snapshot can
-        // arrive before we start listening and be dropped forever (addEventListener
-        // only sees events dispatched after it's attached), hanging the next await.
-        const aFirstMsg = once(a, "message");
-        const bFirstMsg = once(b, "message");
-        await Promise.all([once(a, "open"), once(b, "open")]);
-        await Promise.all([aFirstMsg, bFirstMsg]);
+        const { sockets: [a, b] } = await connectSockets(roomId, 2);
 
-        a.send(JSON.stringify({ type: "addPlace", name: "Birria" }));
-        const msg = JSON.parse((await once(b, "message")).data);
-        assertEquals(msg.type, "state");
-        assertEquals(msg.places.includes("Birria"), true);
+        const [, bState] = await sendAndDrain(a, [a, b], { type: "addPlace", name: "Birria" });
+        assertEquals(bState.type, "state");
+        assertEquals(bState.places.includes("Birria"), true);
 
         a.close();
         b.close();
@@ -83,23 +97,13 @@ Deno.test({
       await t.step("two different rooms never mix state", async () => {
         const roomA = `t-a-${crypto.randomUUID()}`;
         const roomB = `t-b-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomA}`);
-        const b = new WebSocket(`${WS_URL}/ws?room=${roomB}`);
-        const aFirstMsg = once(a, "message");
-        const bFirstMsg = once(b, "message");
-        await Promise.all([once(a, "open"), once(b, "open")]);
-        await Promise.all([aFirstMsg, bFirstMsg]);
+        const { sockets: [a] } = await connectSockets(roomA, 1);
+        const { sockets: [b] } = await connectSockets(roomB, 1);
 
-        a.send(JSON.stringify({ type: "addPlace", name: "Solo en A" }));
-        const stateA = JSON.parse((await once(a, "message")).data);
+        const [stateA] = await sendAndDrain(a, [a], { type: "addPlace", name: "Solo en A" });
         assertEquals(stateA.places.includes("Solo en A"), true);
 
-        // b never receives another message because it's a different room —
-        // give the broadcast a moment to (not) arrive, then check b's socket
-        // is still on its original state by sending its own action and
-        // confirming "Solo en A" never appears in b's room.
-        b.send(JSON.stringify({ type: "addPlace", name: "Solo en B" }));
-        const stateB = JSON.parse((await once(b, "message")).data);
+        const [stateB] = await sendAndDrain(b, [b], { type: "addPlace", name: "Solo en B" });
         assertEquals(stateB.places.includes("Solo en A"), false);
         assertEquals(stateB.places.includes("Solo en B"), true);
 
@@ -109,12 +113,9 @@ Deno.test({
 
       await t.step("claimIdentity confirms myName in the reply state", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        await once(a, "open");
-        await once(a, "message"); // initial snapshot, myName: null
+        const { sockets: [a] } = await connectSockets(roomId, 1);
 
-        a.send(JSON.stringify({ type: "claimIdentity", name: "Ana" }));
-        const msg = JSON.parse((await once(a, "message")).data);
+        const [msg] = await sendAndDrain(a, [a], { type: "claimIdentity", name: "Ana" });
         assertEquals(msg.myName, "Ana");
         assertEquals(msg.users, ["Ana"]);
 
@@ -123,26 +124,10 @@ Deno.test({
 
       await t.step("claiming an already-live name from a different socket gets a variant", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        const b = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        const aFirstMsg = once(a, "message");
-        const bFirstMsg = once(b, "message");
-        await Promise.all([once(a, "open"), once(b, "open")]);
-        await Promise.all([aFirstMsg, bFirstMsg]);
+        const { sockets: [a, b] } = await connectSockets(roomId, 2);
 
-        // Cada acción se transmite a TODOS los sockets de la sala, no solo
-        // a quien la manda — hay que drenar el mensaje de ambos en cada
-        // paso, o el listener del siguiente paso puede atrapar por error
-        // un broadcast "viejo" que nunca se consumió (el mismo tipo de
-        // condición de carrera que ya se dio en el paso "addPlace broadcasts").
-        let pending = Promise.all([once(a, "message"), once(b, "message")]);
-        a.send(JSON.stringify({ type: "claimIdentity", name: "Ana" }));
-        await pending;
-
-        pending = Promise.all([once(a, "message"), once(b, "message")]);
-        b.send(JSON.stringify({ type: "claimIdentity", name: "Ana" }));
-        const [, bEvent] = await pending;
-        const bMsg = JSON.parse(bEvent.data);
+        await sendAndDrain(a, [a, b], { type: "claimIdentity", name: "Ana" });
+        const [, bMsg] = await sendAndDrain(b, [a, b], { type: "claimIdentity", name: "Ana" });
         assertEquals(bMsg.myName, "Ana 2");
         assertEquals(bMsg.users, ["Ana", "Ana 2"]);
 
@@ -152,15 +137,10 @@ Deno.test({
 
       await t.step("castVote always votes as the claimed identity, ignoring the payload", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        await once(a, "open");
-        await once(a, "message");
+        const { sockets: [a] } = await connectSockets(roomId, 1);
 
-        a.send(JSON.stringify({ type: "claimIdentity", name: "Ana" }));
-        await once(a, "message");
-
-        a.send(JSON.stringify({ type: "castVote", user: "Beto", place: "Pozole" }));
-        const msg = JSON.parse((await once(a, "message")).data);
+        await sendAndDrain(a, [a], { type: "claimIdentity", name: "Ana" });
+        const [msg] = await sendAndDrain(a, [a], { type: "castVote", user: "Beto", place: "Pozole" });
         assertEquals(msg.votes, { Ana: "Pozole" });
 
         a.close();
@@ -168,43 +148,21 @@ Deno.test({
 
       await t.step("requestWinner waits for every registered user to vote", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        const b = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        const aFirstMsg = once(a, "message");
-        const bFirstMsg = once(b, "message");
-        await Promise.all([once(a, "open"), once(b, "open")]);
-        await Promise.all([aFirstMsg, bFirstMsg]);
+        const { sockets: [a, b] } = await connectSockets(roomId, 2);
+        const both = [a, b];
 
-        // Cada acción se transmite a AMBOS sockets: siempre se drenan los
-        // dos antes de mandar la siguiente acción (ver el comentario del
-        // paso anterior sobre por qué es necesario).
-        let pending = Promise.all([once(a, "message"), once(b, "message")]);
-        a.send(JSON.stringify({ type: "claimIdentity", name: "Ana" }));
-        await pending;
-
-        pending = Promise.all([once(a, "message"), once(b, "message")]);
-        b.send(JSON.stringify({ type: "claimIdentity", name: "Beto" }));
-        await pending;
-
-        pending = Promise.all([once(a, "message"), once(b, "message")]);
-        a.send(JSON.stringify({ type: "castVote", place: "Tacos al pastor" }));
-        await pending;
+        await sendAndDrain(a, both, { type: "claimIdentity", name: "Ana" });
+        await sendAndDrain(b, both, { type: "claimIdentity", name: "Beto" });
+        await sendAndDrain(a, both, { type: "castVote", place: "Tacos al pastor" });
 
         // Solo Ana ha votado hasta ahora — pedir ganador no debe resolver nada.
-        pending = Promise.all([once(a, "message"), once(b, "message")]);
-        a.send(JSON.stringify({ type: "requestWinner" }));
-        const [notYetEvent] = await pending;
-        assertEquals(JSON.parse(notYetEvent.data).lastPick, null);
+        const [notYet] = await sendAndDrain(a, both, { type: "requestWinner" });
+        assertEquals(notYet.lastPick, null);
 
         // Beto también vota — ahora sí debe resolver.
-        pending = Promise.all([once(a, "message"), once(b, "message")]);
-        b.send(JSON.stringify({ type: "castVote", place: "Tacos al pastor" }));
-        await pending;
-
-        pending = Promise.all([once(a, "message"), once(b, "message")]);
-        a.send(JSON.stringify({ type: "requestWinner" }));
-        const [resolvedEvent] = await pending;
-        assertEquals(JSON.parse(resolvedEvent.data).lastPick, "Tacos al pastor");
+        await sendAndDrain(b, both, { type: "castVote", place: "Tacos al pastor" });
+        const [resolved] = await sendAndDrain(a, both, { type: "requestWinner" });
+        assertEquals(resolved.lastPick, "Tacos al pastor");
 
         a.close();
         b.close();
@@ -212,12 +170,9 @@ Deno.test({
 
       await t.step("malformed JSON returns an error message, not a crash", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        await once(a, "open");
-        await once(a, "message"); // initial snapshot
+        const { sockets: [a] } = await connectSockets(roomId, 1);
 
-        a.send("{not valid json");
-        const err = JSON.parse((await once(a, "message")).data);
+        const [err] = await sendAndDrain(a, [a], "{not valid json");
         assertEquals(err.type, "error");
 
         a.close();
@@ -225,13 +180,10 @@ Deno.test({
 
       await t.step("an oversized message is rejected", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        await once(a, "open");
-        await once(a, "message"); // initial snapshot
+        const { sockets: [a] } = await connectSockets(roomId, 1);
 
         const huge = JSON.stringify({ type: "addPlace", name: "x".repeat(3000) });
-        a.send(huge);
-        const err = JSON.parse((await once(a, "message")).data);
+        const [err] = await sendAndDrain(a, [a], huge);
         assertEquals(err.type, "error");
 
         a.close();
@@ -239,9 +191,7 @@ Deno.test({
 
       await t.step("a ping heartbeat does not error and keeps the connection open", async () => {
         const roomId = `t-${crypto.randomUUID()}`;
-        const a = new WebSocket(`${WS_URL}/ws?room=${roomId}`);
-        await once(a, "open");
-        await once(a, "message"); // initial snapshot
+        const { sockets: [a] } = await connectSockets(roomId, 1);
 
         a.send(JSON.stringify({ type: "ping" }));
         // give the event loop a turn; the socket should remain OPEN with no error reply
