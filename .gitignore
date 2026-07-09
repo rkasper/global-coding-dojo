@@ -23,3 +23,6 @@ coverage/
 
 # Temporary files
 tmp/
+
+# Playwright MCP test artifacts
+.playwright-mcp/
