@@ -1,16 +1,16 @@
 import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
 import {
   addPlace,
-  addUser,
   castVote,
+  findCanonical,
   normalize,
   pickRandom,
   removePlace,
-  removeUser,
   tallyVotes,
   topChoices,
+  uniqueName,
   votedFor,
-} from "./decide.js";
+} from "./static/decide.js";
 
 Deno.test("normalize recorta y colapsa espacios", () => {
   assertEquals(normalize("  Tacos   El   Güero "), "Tacos El Güero");
@@ -70,13 +70,23 @@ Deno.test("topChoices devuelve los lugares con más votos", () => {
   assertEquals(topChoices({}), []);
 });
 
-Deno.test("addUser registra un usuario sin duplicar (sin distinguir mayúsculas)", () => {
-  assertEquals(addUser([], "Ana"), ["Ana"]);
-  assertEquals(addUser(["Ana"], "ana"), ["Ana"]);
+Deno.test("findCanonical devuelve la forma exacta ya registrada", () => {
+  assertEquals(findCanonical(["Ana", "Beto"], "ana"), "Ana");
+  assertEquals(findCanonical(["Ana"], "Caro"), null);
 });
 
-Deno.test("removeUser da de baja a un usuario", () => {
-  assertEquals(removeUser(["Ana", "Beto"], "ana"), ["Beto"]);
+Deno.test("uniqueName devuelve el nombre tal cual si no choca", () => {
+  assertEquals(uniqueName([], "Ana"), "Ana");
+  assertEquals(uniqueName(["Beto"], "Ana"), "Ana");
+});
+
+Deno.test("uniqueName agrega un sufijo si el nombre ya está en uso", () => {
+  assertEquals(uniqueName(["Ana"], "ana"), "Ana 2");
+  assertEquals(uniqueName(["Ana", "Ana 2"], "Ana"), "Ana 3");
+});
+
+Deno.test("uniqueName ignora vacíos", () => {
+  assertEquals(uniqueName(["Ana"], "   "), "");
 });
 
 Deno.test("castVote registra el voto de una persona", () => {

@@ -212,7 +212,7 @@ conflicto al mismo tiempo.
 > como esa identidad, ignorando cualquier `user` que mande el cliente — así
 > nadie puede votar por otra persona. Si el nombre pedido ya está reclamado
 > por otra conexión viva, se asigna una variante ("Ana" → "Ana 2"). Detalle
-> completo en `../2026-07-08-live/README.md`.
+> completo en [`README.md`](./README.md).
 
 Servidor → cliente: **un solo tipo de mensaje**, snapshot completo del
 estado, transmitido a todos los sockets de la sala después de cada mutación
@@ -338,6 +338,17 @@ más sutilmente, el contexto de build de App Platform — igual que ya hace
 línea en el archivo copiado señalando su origen (`// copiado verbatim de
 ../2026-07-08/decide.js — mantener sincronizado a mano`).
 
+> **Nota de implementación (2026-07-09):** la versión estática de un solo
+> dispositivo (`2026-07-08/decide.js`, `index.html`, etc.) quedó totalmente
+> superada por esta versión — nadie seguía usándola una vez desplegado el
+> servidor con WebSockets. Se eliminó, y `2026-07-08-live/` se renombró a
+> `2026-07-08/` para que sea la única carpeta del dojo de esa fecha. El
+> comentario de "copiado verbatim" en `decide.js` ya no aplica (es la única
+> copia que existe) y se quitó. Este documento se movió junto con la
+> carpeta y se dejó tal cual como registro histórico del plan original —
+> las rutas de las secciones de abajo (`2026-07-08-live/...`) reflejan cómo
+> se pensó *antes* de esta consolidación, no la estructura final.
+
 ## 11. Plan de pruebas
 
 - `decide_test.ts` se copia **sin cambios** — no hace falta tocar nada, ese es
@@ -427,14 +438,17 @@ services:
       repo: rkasper/global-coding-dojo
       branch: main
       deploy_on_push: true
-    source_dir: /2026-07-08-live
-    dockerfile_path: 2026-07-08-live/Dockerfile
+    source_dir: /2026-07-08
+    dockerfile_path: 2026-07-08/Dockerfile
     http_port: 8000
     instance_count: 1          # DEBE quedarse en 1: estado en memoria, sin sticky sessions para WS
     instance_size_slug: apps-s-1vcpu-0.5gb
     routes:
       - path: /
 ```
+
+(rutas actualizadas tras la consolidación de la sección 10 — el `source_dir`
+real es `/2026-07-08`, no `/2026-07-08-live`.)
 
 `Dockerfile`: prácticamente idéntico a `2026-03-18/Dockerfile` — no hace
 falta ninguna bandera de permiso nueva (el upgrade de WebSocket viaja sobre
@@ -446,11 +460,11 @@ de la nueva carpeta.
 - Vía consola web de DigitalOcean: seleccionar el equipo **TeamAwesomelab**
   en el selector de cuenta/equipo *antes* de darle a "Create App", luego
   apuntar al repo `rkasper/global-coding-dojo` con `source_dir:
-  /2026-07-08-live`.
+  /2026-07-08`.
 - Vía `doctl`: autenticar con un token de la cuenta TeamAwesomelab
   (`doctl auth init --context teamawesomelab` la primera vez, o
   `doctl auth switch --context teamawesomelab` si ya existe ese contexto),
-  y luego `doctl apps create --spec 2026-07-08-live/app-spec.yaml`.
+  y luego `doctl apps create --spec 2026-07-08/app-spec.yaml`.
 
 **Verificación recomendada el día antes del evento** (no solo confiar en este
 documento): desplegar con este `app-spec.yaml`, conectar desde un celular
@@ -511,15 +525,18 @@ factura nueva.
 
 ## 17. Seguimiento al implementarse
 
-Cuando esto se construya, actualizar la línea en
-`2026-07-08/README.md` bajo "🟠 Avanzado" que hoy dice *"Tiempo real: que
-varias personas voten desde su teléfono y se sincronice (Supabase Realtime o
-Firebase)"* para que en su lugar apunte a este documento
-(`2026-07-08/MULTIDEVICE-PLAN.md`) y a la carpeta `2026-07-08-live/`.
+~~Cuando esto se construya, actualizar la línea en `2026-07-08/README.md`
+bajo "🟠 Avanzado"~~ — hecho, y luego superado: la versión estática de un
+solo dispositivo se eliminó por completo (ver la nota de la sección 10) en
+vez de solo actualizarle una línea, porque esta versión multi-dispositivo la
+volvió redundante. El `README.md` que sobrevive (el de esta misma carpeta)
+ya incorpora el contenido dojo-facing del original (arranque rápido,
+requisitos por nivel) junto con la documentación técnica de la versión en
+vivo.
 
 ---
 
 ## Archivos de referencia usados para este plan
 
-- `2026-07-08/decide.js`, `2026-07-08/index.html`, `2026-07-08/decide_test.ts` — base de la app actual.
+- `2026-07-08/decide.js`, `2026-07-08/index.html`, `2026-07-08/decide_test.ts` — base de la app original de un solo dispositivo (eliminada tras la consolidación de la sección 10; recuperable en el historial de git).
 - `2026-03-18/server.ts`, `2026-03-18/server_test.ts`, `2026-03-18/app-spec.yaml`, `2026-03-18/Dockerfile`, `2026-03-18/deno.json` — patrón de despliegue Deno + Docker + DigitalOcean ya probado en este repo, replicado aquí.
