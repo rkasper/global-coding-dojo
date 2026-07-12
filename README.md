@@ -30,22 +30,20 @@
 
 ## Upcoming Events
 
-### 2026-07-08
-**Wednesday, July 8 | In-person in Ciudad de México 🇲🇽 (presencial)**
+### 2026-08-12
+**Wednesday, August 12 | In-person in Ciudad de México 🇲🇽 (presencial)**
 
-Join us live in **Hipódromo-Condesa, CDMX** for a face-to-face dojo! Spanish-primary, English welcome. Space is limited to ~10 people.
+Join us live in CDMX for a face-to-face dojo! Spanish-primary, English welcome.
 
-- A face-to-face dojo in Hipódromo-Condesa, CDMX: doors open 6:00 PM, kata begins 6:30 PM, we finish at 8:30 PM (Mexico City / CST). Spanish-primary, English welcome, all levels.
-
-📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-ciudad-de-mexico-presencial-julio-2026-tickets-1992794266295)** — the exact address is shared with registrants. Please only register if you can really attend, so someone else can take your spot if your plans change.
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/copy-of-global-coding-dojo-ciudad-de-mexico-presencial-agosto-2026-tickets-1993794312460)** — the exact address is shared with registrants. Please only register if you can really attend, so someone else can take your spot if your plans change.
 
 **Come prepared:**
 - 🧠 Just bring an open mind and willingness to collaborate — nothing else! No laptop needed; we mob together on the big screen.
 
-### 2026-08-12
-**Wednesday, August 12 | Online — a Mexico City edition is still possible (TBD)**
+### 2026-09-09
+**Wednesday, September 9 | Online**
 
-Register for the online session now. We may move this one to an in-person CDMX dojo instead — watch for our final announcement before it's set.
+Join us online for a session of mob programming, TDD, and AI-assisted coding!
 
 📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
 
@@ -55,6 +53,12 @@ Register for the online session now. We may move this one to an in-person CDMX d
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
+
+### 2026-07-08
+- 8 of us attended, presencial en CDMX.
+- We built the "¿Dónde comemos?" (Where should we eat?) app full-stack, running live!
+- We did it in Spanish.
+- We had fun!
 
 ### 2026-06-10
 - 2 of us attended — an awesome pair programming session.
