@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Coding Dojo - 2026-08-12</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- reveal.js core CSS (no theme — we style everything ourselves) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --gold: #ffd700;
+    --red: #ff4444;
+    --purple: #9932cc;
+    --green: #2ecc40;
+    --black: black;
+    --white: white;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--black);
+    color: var(--white);
+    font-family: monospace;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── TV static background effect (whole viewport) ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, white, #666, black);
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── reveal.js overrides ── */
+  .reveal {
+    font-family: monospace;
+    color: var(--white);
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  /* Kill the white flash during fade transitions */
+  .reveal-viewport,
+  .reveal .backgrounds,
+  .reveal .slide-background,
+  .reveal .slide-background-content {
+    background: var(--black) !important;
+  }
+  .reveal .slides {
+    text-align: left;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+  .reveal .slides section,
+  .reveal .slides section.present {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    top: 0 !important;
+    left: 0 !important;
+  }
+  .reveal .progress {
+    color: var(--red);
+    height: 4px;
+  }
+  .reveal .slide-number,
+  .reveal .slide-number a {
+    background: transparent;
+    color: #555;
+    font-family: monospace;
+    font-size: 14px;
+    right: 24px;
+    bottom: 14px;
+    text-decoration: none;
+  }
+  /* Strip reveal's default heading + media styles so ours take over */
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .reveal img { margin: 0; border: none; box-shadow: none; background: none; }
+  .reveal ul, .reveal ol { margin: 0; padding: 0; }
+  .reveal a { color: var(--red); text-decoration: underline; text-underline-offset: 4px; }
+  .reveal a:hover { color: var(--gold); }
+  .reveal p { margin: 0; }
+
+  /* ── Slide container (was .slide in the original deck) ── */
+  .slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    background: var(--black);
+    overflow: hidden;
+  }
+
+  /* ── Branding badge (top-right) ── */
+  .slide::after {
+    content: 'AWESOME LAB';
+    position: absolute;
+    top: 28px;
+    right: 36px;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 0.5rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0 var(--red);
+    transform: rotate(-2deg);
+    z-index: 2;
+  }
+
+  /* ── Typography ── */
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Bebas Neue', monospace;
+    color: var(--gold);
+    line-height: 1.1;
+    letter-spacing: 0.3rem;
+    text-shadow: 3px 3px 0 var(--red);
+  }
+  .reveal h1 { font-size: clamp(48px, 7vw, 96px); }
+  .reveal h2 { font-size: clamp(36px, 5vw, 72px); }
+  .reveal h3 { font-size: clamp(24px, 3vw, 42px); }
+
+  .subtitle {
+    font-family: monospace;
+    font-size: clamp(16px, 2vw, 24px);
+    color: var(--red);
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 16px;
+  }
+  .small-text {
+    font-family: monospace;
+    font-size: clamp(14px, 1.6vw, 20px);
+    color: #aaa;
+    margin-top: 8px;
+  }
+
+  /* ── Zap icon ── */
+  .zap {
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: middle;
+    margin: 0 0.3em;
+  }
+  .zap path { fill: var(--red); }
+
+  /* ── Layouts ── */
+  .split {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    align-items: center;
+    gap: 60px;
+    margin: 0 auto;
+  }
+  .split > .left, .split > .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ── Bullet list ── */
+  .bullets {
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
+  }
+  .bullets li {
+    font-family: monospace;
+    font-size: clamp(14px, 1.8vw, 22px);
+    padding: 8px 0 8px 28px;
+    position: relative;
+    color: var(--white);
+    font-weight: bold;
+  }
+  .bullets li::before {
+    content: '\26A1';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-size: 14px;
+  }
+  /* <strong> is invisible in an already-bold list — colour it instead */
+  .bullets li strong { color: var(--gold); }
+  .bullets li.sub {
+    padding-left: 56px;
+    font-size: clamp(13px, 1.5vw, 18px);
+    color: var(--gold);
+  }
+  .bullets li.sub::before {
+    left: 28px;
+    content: '\25B8';
+    color: var(--red);
+  }
+
+  /* ── Big centered text slide ── */
+  .centered {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ── Decorative bar ── */
+  .bar {
+    width: 120px;
+    height: 5px;
+    background: var(--red);
+    margin: 20px 0;
+    border-radius: 3px;
+  }
+
+  /* ── Hero gradient overlay ── */
+  .slide-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--gold), var(--red), var(--purple));
+    opacity: 0.12;
+    z-index: 0;
+  }
+  .slide-hero > * { position: relative; z-index: 1; }
+
+  /* ── Gold card ── */
+  .gold-card {
+    background: var(--gold);
+    border: 4px solid var(--red);
+    border-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .gold-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--gold), var(--red), var(--purple));
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .gold-card h3 {
+    color: var(--red);
+    text-shadow: none;
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.3rem;
+  }
+  .gold-card p {
+    color: var(--black);
+    font-weight: bold;
+    font-size: 0.875rem;
+    font-family: monospace;
+    text-transform: uppercase;
+  }
+
+  /* ── Callout: a standalone aside, NOT a sub-bullet ──
+     Separated from the list by a rule so it reads as its own beat. */
+  .callout {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 32px;
+    padding: 16px 24px;
+    border-left: 6px solid var(--gold);
+    background: rgba(255, 215, 0, 0.08);
+    color: var(--gold);
+    font-family: monospace;
+    font-size: clamp(15px, 1.7vw, 21px);
+    font-weight: bold;
+    text-align: left;
+  }
+  .callout a { color: var(--gold); }
+  .callout a:hover { color: var(--white); }
+
+  /* Invitation variant — a question to the room, louder and warmer */
+  .callout-ask {
+    border-left-color: var(--red);
+    background: rgba(255, 68, 68, 0.12);
+    color: var(--white);
+    font-size: clamp(18px, 2.2vw, 28px);
+    text-align: center;
+    border-left: none;
+    border-top: 4px solid var(--red);
+    border-bottom: 4px solid var(--red);
+    padding: 22px 24px;
+  }
+
+  /* ── TDD cycle cards ── */
+  .tdd-card {
+    border: 4px solid var(--white);
+    border-radius: 0.5rem;
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+  }
+  .tdd-card h3 {
+    text-shadow: none;
+    font-size: clamp(28px, 3vw, 44px);
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.6rem;
+  }
+  .tdd-card p {
+    font-weight: bold;
+    font-size: clamp(13px, 1.3vw, 17px);
+    font-family: monospace;
+    text-transform: uppercase;
+    line-height: 1.45;
+  }
+  .tdd-arrow {
+    color: var(--red);
+    font-size: clamp(28px, 3.5vw, 52px);
+    font-weight: bold;
+    line-height: 1;
+    /* The grid cell is full-height (align-items: stretch), so centre
+       the glyph inside it rather than letting it sit at the top. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Return leg of the cycle: a red rule under the cards with an
+     arrowhead at the left, so refactor visibly feeds back into rojo. */
+  .tdd-return {
+    position: relative;
+    width: 100%;
+    max-width: 1150px;
+    margin-top: 1.1rem;
+    height: 26px;
+  }
+  /* Shaft — starts clear of the head so the two read as one arrow */
+  .tdd-return::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 7px;
+    background: var(--red);
+    border-radius: 4px;
+  }
+  /* Head — a solid triangle, not a glyph, so it scales with the shaft */
+  .tdd-return::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-right: 24px solid var(--red);
+  }
+  .tdd-loop {
+    margin-top: 1.4rem;
+    color: var(--gold);
+    font-family: monospace;
+    font-weight: bold;
+    font-size: clamp(16px, 2vw, 26px);
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
+  }
+  .tdd-rojo { background: var(--red); }
+  .tdd-rojo h3, .tdd-rojo p { color: var(--white); }
+  .tdd-verde { background: var(--green); }
+  .tdd-verde h3, .tdd-verde p { color: var(--black); }
+  .tdd-refactor { background: var(--purple); }
+  .tdd-refactor h3, .tdd-refactor p { color: var(--white); }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ============ SLIDE 1: TITLE ============ -->
+    <section>
+      <div class="slide slide-hero">
+        <div class="split">
+          <div class="left" style="flex:1.5;">
+            <h1 style="transform: rotate(-2deg); white-space: nowrap;">Global Coding Dojo</h1>
+            <div class="subtitle" style="display:flex; align-items:center; gap:0.5rem;">
+              <svg class="zap" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Un lugar seguro para aprender y practicar programaci&oacute;n
+              <svg class="zap" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <p class="small-text" style="margin-top: 24px;">Richard Kasperowski</p>
+            <p class="small-text">Certified Agile Team Building&trade;</p>
+          </div>
+          <div class="right" style="align-items:center;">
+            <img src="linkedin-learning.png" alt="Agile Software Development: Refactoring - with Richard Kasperowski on LinkedIn Learning" style="width:100%; max-width:640px; border-radius:12px; border:3px solid var(--red); box-shadow:0 0 30px rgba(255,68,68,0.3);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 2: BIO ============ -->
+    <section>
+      <div class="slide">
+        <div class="split">
+          <div class="left" style="flex:0.7; align-items:center;">
+            <img src="richard-portrait.png" alt="Richard Kasperowski" style="width:100%; max-width:380px; border-radius:16px;">
+          </div>
+          <div class="right" style="flex:1.3;">
+            <h2>Richard<br>Kasperowski</h2>
+            <div class="bar"></div>
+            <p class="subtitle" style="color:var(--white);">Co-fundador y Director de Tecnolog&iacute;a</p>
+            <p class="subtitle">Alli Connect</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 3: AWESOME LAB ============ -->
+    <section>
+      <div class="slide slide-hero">
+        <div class="centered">
+          <h1 style="font-size:clamp(48px,8vw,120px); transform:rotate(-2deg); margin-bottom:1rem;">Awesome Lab</h1>
+          <div class="subtitle" style="font-size:clamp(20px,3vw,36px); display:flex; align-items:center; gap:0.8rem;">
+            <svg class="zap" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Digital Destruction Zone
+            <svg class="zap" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:2rem; max-width:700px; width:100%;">
+            <div class="gold-card"><h3>Alli Connect</h3><p>AI POWERS HERO WELLNESS ENGINE</p></div>
+            <div class="gold-card"><h3>Team Safety Scanner</h3><p>AI SCANS TEAM POWER LEVELS</p></div>
+            <div class="gold-card"><h3>S&oacute;tano &Eacute;pico</h3><p>PIANO DESTROYS METAL UNIVERSE</p></div>
+            <div class="gold-card"><h3>What Should I?</h3><p>WEATHER BRAIN OBLITERATES INDECISION</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 4: CODING DOJO ============ -->
+    <section>
+      <div class="slide">
+        <div class="split">
+          <div class="left">
+            <h2 style="transform:rotate(-2deg);">El Coding Dojo</h2>
+            <div class="bar"></div>
+            <ul class="bullets">
+              <li>Dojo: un lugar seguro para aprender y practicar tu arte</li>
+              <li>Coding dojo: un lugar seguro para aprender y practicar programaci&oacute;n</li>
+              <li>Seguridad: amabilidad, respeto, TDD, mob programming, etc.</li>
+              <li>Cu&aacute;ndo: normalmente el segundo mi&eacute;rcoles del mes</li>
+              <li>Info en <a href="https://globalcodingdojo.org" target="_blank">globalcodingdojo.org</a></li>
+            </ul>
+          </div>
+          <div class="right" style="align-items:center;">
+            <img src="dojo-photo.png" alt="Dojo" style="width:100%; max-width:520px; border-radius:12px; border:3px solid var(--red); box-shadow:0 0 30px rgba(255,68,68,0.3);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 5: WORKING AGREEMENTS ============ -->
+    <section>
+      <div class="slide">
+        <div class="centered" style="max-width:1100px;">
+          <h2 style="transform:rotate(-2deg);">Acuerdos de Trabajo</h2>
+          <div class="bar"></div>
+          <ul class="bullets" style="text-align:left; width:100%; max-width:900px;">
+            <li><strong>Todo es opcional</strong> &mdash; siempre puedes pasar, sin dar explicaciones</li>
+            <li>Todos pasan por el teclado &mdash; si quieren</li>
+            <li>Preguntar es contribuir: &laquo;no entiendo&raquo; es informaci&oacute;n valiosa</li>
+            <li>Amabilidad y respeto, siempre</li>
+            <li>Aqu&iacute; nadie juzga el nivel de nadie</li>
+          </ul>
+          <div class="callout callout-ask">&iquest;Qu&eacute; m&aacute;s necesitas para sentirte seguro aqu&iacute;?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 6: HOW THE MOB WORKS ============ -->
+    <section>
+      <div class="slide">
+        <div class="centered" style="max-width:1100px;">
+          <h2 style="transform:rotate(-2deg);">C&oacute;mo Funciona el Mob</h2>
+          <div class="bar"></div>
+          <ul class="bullets" style="text-align:left; width:100%; max-width:900px;">
+            <li><strong>El piloto</strong> &mdash; maneja el teclado, no decide qu&eacute; escribir</li>
+            <li><strong>Todos los dem&aacute;s son navegantes</strong> &mdash; el grupo decide, en voz alta</li>
+            <li>Un navegante es el <strong>cronometrista</strong> &mdash; lleva el tiempo en su reloj o celular</li>
+            <li>Rotamos cada 4 minutos: el piloto vuelve al grupo y entra el siguiente</li>
+          </ul>
+          <div class="callout">Consejo: el piloto son las manos del grupo. Suele fluir mejor cuando espera a que la idea se diga en voz alta.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 7: TDD CYCLE ============ -->
+    <section>
+      <div class="slide slide-hero">
+        <div class="centered">
+          <h2 style="transform:rotate(-2deg); margin-bottom:0.5rem;">El Ciclo TDD</h2>
+          <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:1rem; align-items:stretch; margin-top:2.5rem; max-width:1150px; width:100%;">
+            <div class="tdd-card tdd-rojo"><h3>1. Rojo</h3><p>ESCRIBE UNA PRUEBA QUE FALLE</p></div>
+            <div class="tdd-arrow">&rarr;</div>
+            <div class="tdd-card tdd-verde"><h3>2. Verde</h3><p>EL C&Oacute;DIGO M&Aacute;S SIMPLE QUE LA HAGA PASAR</p></div>
+            <div class="tdd-arrow">&rarr;</div>
+            <div class="tdd-card tdd-refactor"><h3>3. Refactor</h3><p>LIMPIA SIN ROMPER NADA</p></div>
+          </div>
+          <div class="tdd-return"></div>
+          <div class="tdd-loop">y otra vez, una prueba a la vez</div>
+          <p class="small-text" style="margin-top:1.2rem;">Nunca escribimos c&oacute;digo sin una prueba que lo pida.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 8: TODAY'S PLAN ============ -->
+    <section>
+      <div class="slide">
+        <div class="split">
+          <div class="left">
+            <h2 style="transform:rotate(-2deg);">El Plan de Hoy</h2>
+            <div class="bar"></div>
+            <ul class="bullets">
+              <li>Mob programming &mdash; en persona, en la pantalla grande</li>
+              <li>Asistencia de IA para escribir c&oacute;digo con Claude Code</li>
+              <li>Le pedimos a Claude que cree un kata</li>
+            </ul>
+          </div>
+          <div class="right" style="align-items:center;">
+            <img src="todays-plan.jpg" alt="El Plan de Hoy" style="width:100%; max-width:520px; border-radius:12px; border:3px solid var(--red); box-shadow:0 0 30px rgba(255,68,68,0.3);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 9: LET'S DO IT! ============ -->
+    <section>
+      <div class="slide slide-hero">
+        <div class="centered">
+          <h1 style="font-size:clamp(72px,12vw,160px); transform:rotate(-2deg);">&iexcl;A<br>Programar!</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 10: FEEDBACK / RETRO ============ -->
+    <section>
+      <div class="slide">
+        <div class="centered" style="max-width:1100px;">
+          <h2 style="transform:rotate(-2deg);">Comentarios</h2>
+          <div class="bar"></div>
+          <ul class="bullets" style="text-align:left; width:100%; max-width:900px;">
+            <li>&iquest;Qu&eacute; funcion&oacute; bien hoy?</li>
+            <li>&iquest;Qu&eacute; cambiar&iacute;amos para la pr&oacute;xima?</li>
+            <li>&iquest;Qu&eacute; aprendiste que no esperabas?</li>
+          </ul>
+          <p class="small-text" style="margin-top:2rem;">Una vuelta completa &mdash; todos hablan, nadie interrumpe.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 11: WHO WANTS TO FACILITATE? ============ -->
+    <section>
+      <div class="slide slide-hero">
+        <div class="centered" style="max-width:1100px;">
+          <h2 style="transform:rotate(-2deg);">&iquest;Qui&eacute;n Quiere Facilitar?</h2>
+          <div class="bar"></div>
+          <ul class="bullets" style="text-align:left; width:100%; max-width:900px;">
+            <li>Viajo seguido &mdash; el dojo presencial de CDMX no deber&iacute;a parar por eso</li>
+            <li>Busco a alguien que lo facilite cuando yo no est&eacute;</li>
+            <li>No necesitas ser el mejor programador: <strong>el mob hace el trabajo</strong></li>
+            <li>Yo te preparo &mdash; slides, kata, log&iacute;stica, todo est&aacute; en GitHub</li>
+          </ul>
+          <div class="callout callout-ask">&iquest;Te interesa? Hablamos al terminar.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 12: AWESOME LAB (repeat) ============ -->
+    <section>
+      <div class="slide slide-hero">
+        <div class="centered">
+          <h1 style="font-size:clamp(48px,8vw,120px); transform:rotate(-2deg); margin-bottom:1rem;">Awesome Lab</h1>
+          <div class="subtitle" style="font-size:clamp(20px,3vw,36px); display:flex; align-items:center; gap:0.8rem;">
+            <svg class="zap" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Digital Destruction Zone
+            <svg class="zap" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:2rem; max-width:700px; width:100%;">
+            <div class="gold-card"><h3>Alli Connect</h3><p>AI POWERS HERO WELLNESS ENGINE</p></div>
+            <div class="gold-card"><h3>Team Safety Scanner</h3><p>AI SCANS TEAM POWER LEVELS</p></div>
+            <div class="gold-card"><h3>S&oacute;tano &Eacute;pico</h3><p>PIANO DESTROYS METAL UNIVERSE</p></div>
+            <div class="gold-card"><h3>What Should I?</h3><p>WEATHER BRAIN OBLITERATES INDECISION</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 13: UPCOMING EVENTS ============ -->
+    <section>
+      <div class="slide">
+        <div class="split">
+          <div class="left">
+            <h2 style="transform:rotate(-2deg);">Pr&oacute;ximos Eventos</h2>
+            <div class="bar"></div>
+            <ul class="bullets">
+              <li>Global Coding Dojo</li>
+              <li class="sub">9 de septiembre &mdash; online</li>
+              <li class="sub">y cada segundo mi&eacute;rcoles del mes</li>
+              <li class="sub"><a href="https://globalcodingdojo.org" target="_blank">globalcodingdojo.org</a></li>
+            </ul>
+          </div>
+          <div class="right" style="align-items:center;">
+            <img src="calendar.jpg" alt="Calendario" style="width:100%; max-width:400px; border-radius:12px; border:3px solid var(--red); box-shadow:0 0 30px rgba(255,68,68,0.3);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 14: CLOSING BIO ============ -->
+    <section>
+      <div class="slide">
+        <div class="split">
+          <div class="left" style="flex:0.7; align-items:center;">
+            <img src="richard-portrait.png" alt="Richard Kasperowski" style="width:100%; max-width:380px; border-radius:16px;">
+          </div>
+          <div class="right" style="flex:1.3;">
+            <h2>Richard<br>Kasperowski</h2>
+            <div class="bar"></div>
+            <p class="subtitle" style="color:var(--white);">Co-fundador y Director de Tecnolog&iacute;a</p>
+            <p class="subtitle">Alli Connect</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: '100%',
+    height: '100%',
+    margin: 0,
+    minScale: 1,
+    maxScale: 1,
+    hash: true,
+    progress: true,
+    slideNumber: 'c/t',
+    controls: false,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    keyboard: true,
+  });
+</script>
+
+</body>
+</html>
