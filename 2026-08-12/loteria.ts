@@ -18,3 +18,7 @@ const BARAJA = [
 export function carta(numero: number): string {
   return BARAJA[numero - 1];
 }
+
+export function crearBaraja(): number[] {
+  return BARAJA.map((_nombre, indice) => indice + 1);
+}

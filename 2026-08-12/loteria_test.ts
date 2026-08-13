@@ -1,5 +1,5 @@
 import {assert, assertEquals} from "https://deno.land/std@0.224.0/assert/mod.ts";
-import {carta} from "./loteria.ts";
+import {carta, crearBaraja} from "./loteria.ts";
 
 Deno.test(function deno_tests_work_properly() {
   assert(true);
@@ -42,4 +42,14 @@ Deno.test(function todas_las_54_cartas_tienen_su_nombre() {
     const numero = indice + 1;
     assertEquals(carta(numero), nombre, `carta(${numero}) debería ser "${nombre}"`);
   });
+});
+
+// Nivel 2 — La baraja completa.
+Deno.test(function la_baraja_tiene_54_cartas() {
+  assertEquals(crearBaraja().length, 54);
+});
+
+Deno.test(function la_baraja_no_tiene_cartas_repetidas() {
+  const baraja = crearBaraja();
+  assertEquals(new Set(baraja).size, 54);
 });
