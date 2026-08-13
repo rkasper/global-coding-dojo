@@ -1,3 +1,5 @@
+import {randomSeeded, shuffle} from "jsr:@std/random@0.1.0";
+
 const BARAJA = [
   "El gallo", "El diablito", "La dama", "El catrín",
   "El paraguas", "La sirena", "La escalera", "La botella",
@@ -21,4 +23,8 @@ export function carta(numero: number): string {
 
 export function crearBaraja(): number[] {
   return BARAJA.map((_nombre, indice) => indice + 1);
+}
+
+export function barajar(baraja: number[], semilla: number): number[] {
+  return shuffle(baraja, {prng: randomSeeded(BigInt(semilla))});
 }

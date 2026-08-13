@@ -1,5 +1,5 @@
-import {assert, assertEquals} from "https://deno.land/std@0.224.0/assert/mod.ts";
-import {carta, crearBaraja} from "./loteria.ts";
+import {assert, assertEquals, assertNotEquals} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import {barajar, carta, crearBaraja} from "./loteria.ts";
 
 Deno.test(function deno_tests_work_properly() {
   assert(true);
@@ -52,4 +52,20 @@ Deno.test(function la_baraja_tiene_54_cartas() {
 Deno.test(function la_baraja_no_tiene_cartas_repetidas() {
   const baraja = crearBaraja();
   assertEquals(new Set(baraja).size, 54);
+});
+
+// Nivel 3 — Barajar.
+Deno.test(function barajar_conserva_las_54_cartas() {
+  const barajada = barajar(crearBaraja(), 42);
+
+  assertEquals(barajada.length, 54);
+  assertEquals(new Set(barajada).size, 54);
+});
+
+Deno.test(function la_misma_semilla_produce_el_mismo_orden() {
+  assertEquals(barajar(crearBaraja(), 42), barajar(crearBaraja(), 42));
+});
+
+Deno.test(function barajar_cambia_el_orden() {
+  assertNotEquals(barajar(crearBaraja(), 42), crearBaraja());
 });
