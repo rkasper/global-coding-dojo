@@ -28,3 +28,26 @@ export function crearBaraja(): number[] {
 export function barajar(baraja: number[], semilla: number): number[] {
   return shuffle(baraja, {prng: randomSeeded(BigInt(semilla))});
 }
+
+// Las marcas van en paralelo a las cartas: marcadas[i] dice si cartas[i]
+// ya fue cantada.
+export type Tabla = {
+  cartas: number[];
+  marcadas: boolean[];
+};
+
+export function crearTabla(cartas: number[]): Tabla {
+  return {
+    cartas: [...cartas],
+    marcadas: cartas.map(() => false),
+  };
+}
+
+export function marcar(tabla: Tabla, numero: number): Tabla {
+  const posicion = tabla.cartas.indexOf(numero);
+
+  return {
+    ...tabla,
+    marcadas: tabla.marcadas.map((marcada, i) => marcada || i === posicion),
+  };
+}
