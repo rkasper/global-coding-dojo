@@ -30,16 +30,6 @@
 
 ## Upcoming Events
 
-### 2026-08-12
-**Wednesday, August 12 | In-person in Ciudad de México 🇲🇽 (presencial)**
-
-Join us live in CDMX for a face-to-face dojo! Spanish-primary, English welcome.
-
-📝 **[Register on Eventbrite](https://www.eventbrite.com/e/copy-of-global-coding-dojo-ciudad-de-mexico-presencial-agosto-2026-tickets-1993794312460)** — the exact address is shared with registrants. Please only register if you can really attend, so someone else can take your spot if your plans change.
-
-**Come prepared:**
-- 🧠 Just bring an open mind and willingness to collaborate — nothing else! No laptop needed; we mob together on the big screen.
-
 ### 2026-09-09
 **Wednesday, September 9 | Online**
 
@@ -52,7 +42,26 @@ Join us online for a session of mob programming, TDD, and AI-assisted coding!
 - 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - For real-time collaboration and AI-assisted coding
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
+### 2026-10-14
+**Wednesday, October 14 | Online**
+
+Join us online for a session of mob programming, TDD, and AI-assisted coding!
+
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
+
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - For real-time collaboration and AI-assisted coding
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+
 ## Past Events
+
+### 2026-08-12
+- 5 of us attended, presencial en CDMX.
+- We built the Cantar la Lotería kata in TypeScript/Deno with TDD, completing Levels 1–4: naming cards, building the full 54-card deck, shuffling with a seeded PRNG, and building a player's board with marking.
+- Level 3 (shuffling) stayed simple — using a seeded PRNG from @std/random directly meant we never had to write or test our own shuffle algorithm.
+- Lo hicimos en español.
+- We had fun!
 
 ### 2026-07-08
 - 8 of us attended, presencial en CDMX.
