@@ -59,7 +59,7 @@ Join us online for a session of mob programming, TDD, and AI-assisted coding!
 ### 2026-08-12
 - 5 of us attended, presencial en CDMX.
 - We built the Cantar la Lotería kata in TypeScript/Deno with TDD, completing Levels 1–4: naming cards, building the full 54-card deck, shuffling with a seeded PRNG, and building a player's board with marking.
-- Level 3 (shuffling) stayed simple — using a seeded PRNG from @std/random directly meant we never had to write or test our own shuffle algorithm.
+- Lesson from Level 3 (shuffling): reach for the simplest random function that already works — `@std/random`'s seeded PRNG + `shuffle` meant we never had to write or test our own shuffle algorithm.
 - Lo hicimos en español.
 - We had fun!
 
