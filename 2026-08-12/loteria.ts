@@ -1,6 +1,6 @@
 import {randomSeeded, shuffle} from "jsr:@std/random@0.1.0";
 
-const BARAJA = [
+export const BARAJA = [
   "El gallo", "El diablito", "La dama", "El catrín",
   "El paraguas", "La sirena", "La escalera", "La botella",
   "El barril", "El árbol", "El melón", "El valiente",
