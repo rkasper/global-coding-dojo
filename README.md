@@ -14,7 +14,7 @@
 ## What You'll Need
 
 - 💻 A computer with a stable internet connection
-- 🛠️ [CodeTogether](https://www.codetogether.com/) for real-time collaboration — join from your browser, or from [WebStorm](https://www.jetbrains.com/webstorm/) (recommended, free for non-commercial use) with the CodeTogether plugin — plus Claude Code AI assistant
+- 🛠️ [Visual Studio Code](https://code.visualstudio.com/) with [Live Share](https://visualstudio.microsoft.com/services/live-share/) for real-time collaboration — plus Claude Code AI assistant
 - 📹 [Zoom](https://zoom.us/download) with webcam ON - we love high-bandwidth communication!
 - 🧠 An open mind and willingness to collaborate!
 
@@ -30,18 +30,6 @@
 
 ## Upcoming Events
 
-### 2026-09-09
-**Wednesday, September 9 | Online**
-
-Join us online for a session of mob programming, TDD, and AI-assisted coding!
-
-📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
-
-**Come prepared:**
-- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[CodeTogether](https://www.codetogether.com/)** - Join from your browser, or from [WebStorm](https://www.jetbrains.com/webstorm/) (recommended, free for non-commercial use) with the CodeTogether plugin
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
-
 ### 2026-10-14
 **Wednesday, October 14 | Online**
 
@@ -51,10 +39,17 @@ Join us online for a session of mob programming, TDD, and AI-assisted coding!
 
 **Come prepared:**
 - 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[CodeTogether](https://www.codetogether.com/)** - Join from your browser, or from [WebStorm](https://www.jetbrains.com/webstorm/) (recommended, free for non-commercial use) with the CodeTogether plugin
+- 🤝 **[Visual Studio Code](https://code.visualstudio.com/) with [Live Share](https://visualstudio.microsoft.com/services/live-share/)** for real-time collaboration
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
+
+### 2026-09-09
+- 6 of us attended, online from all over the world.
+- We built the Travel Assistant kata in TypeScript/Deno with TDD: a DST-aware time zone converter (Level 1) with input validation, and normalizing a day's itinerary to UTC (Level 2).
+- Important: Code With Me stopped working entirely — JetBrains disabled it. We switched to Visual Studio Code with Live Share, and it worked well.
+- One attendee mentioned they've been using this dojo style in their own university course, and their students love it.
+- This may have been the most fun online session we've ever done!
 
 ### 2026-08-12
 - 5 of us attended, presencial en CDMX.
