@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Assistant — Time Zone Converter</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    max-width: 480px;
+    margin: 48px auto;
+    padding: 0 20px;
+    color: #1a1a1a;
+  }
+  h1 { font-size: 1.4rem; }
+  label { display: block; margin-top: 16px; font-weight: 600; }
+  input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+  }
+  button {
+    margin-top: 24px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  #result {
+    margin-top: 24px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+  }
+  #result.ok { background: #e6f4ea; color: #1e7a34; }
+  #result.error { background: #fce8e6; color: #b3261e; }
+  #result:empty { display: none; }
+</style>
+</head>
+<body>
+  <h1>✈️ Time Zone Converter</h1>
+  <p>Level 1 of the <a href="./README.md">Travel Assistant kata</a>.</p>
+
+  <form id="convert-form">
+    <label for="time">Date &amp; time</label>
+    <input type="datetime-local" id="time" step="1" required>
+
+    <label for="from">From time zone</label>
+    <select id="from" required></select>
+
+    <label for="to">To time zone</label>
+    <select id="to" required></select>
+
+    <button type="submit">Convert</button>
+  </form>
+
+  <div id="result"></div>
+
+<script>
+  const ZONES = [
+    "UTC",
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Phoenix",
+    "America/Los_Angeles",
+    "Europe/London",
+    "Europe/Paris",
+    "Asia/Kolkata",
+    "Asia/Tokyo",
+    "Australia/Sydney",
+    "Pacific/Auckland",
+  ];
+
+  const fromSelect = document.getElementById("from");
+  const toSelect = document.getElementById("to");
+  for (const zone of ZONES) {
+    fromSelect.add(new Option(zone, zone));
+    toSelect.add(new Option(zone, zone));
+  }
+  fromSelect.value = "America/New_York";
+  toSelect.value = "Europe/Paris";
+
+  const form = document.getElementById("convert-form");
+  const result = document.getElementById("result");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    result.className = "";
+    result.textContent = "Converting…";
+
+    let time = document.getElementById("time").value;
+    // <input type="datetime-local"> omits seconds if the user doesn't set them
+    if (time.length === 16) time += ":00";
+
+    const params = new URLSearchParams({
+      time,
+      from: fromSelect.value,
+      to: toSelect.value,
+    });
+
+    try {
+      const response = await fetch(`/convert?${params}`);
+      const data = await response.json();
+      if (!response.ok) {
+        result.className = "error";
+        result.textContent = data.error;
+        return;
+      }
+      result.className = "ok";
+      result.textContent = `${data.result} (${toSelect.value})`;
+    } catch (err) {
+      result.className = "error";
+      result.textContent = "Could not reach the server.";
+    }
+  });
+</script>
+</body>
+</html>
