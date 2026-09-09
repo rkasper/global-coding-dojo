@@ -7,7 +7,7 @@ Deno.test(function deno_tests_work_properly() {
 });
 
 Deno.test(function deno_test_convert() {
-  let converted_time = convert(
+  const converted_time = convert(
     "2026-09-09T12:00:00",
     "America/New_York",
     "America/New_York",
@@ -16,7 +16,7 @@ Deno.test(function deno_test_convert() {
 });
 
 Deno.test(function deno_test_convert_across_zones() {
-  let converted_time = convert(
+  const converted_time = convert(
     "2026-09-09T14:30:00",
     "America/New_York",
     "Europe/Paris",
