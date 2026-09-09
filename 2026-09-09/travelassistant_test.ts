@@ -1,5 +1,5 @@
 import {assert, assertEquals, assertThrows} from "https://deno.land/std@0.224.0/assert/mod.ts";
-import {convert} from "./travelassistant.ts";
+import {convert, normalize} from "./travelassistant.ts";
 
 Deno.test(function deno_tests_work_properly() {
   assert(true);
@@ -119,6 +119,59 @@ Deno.test(function deno_test_convert_handles_arizona_never_observing_dst() {
   assertEquals(
     convert("2026-07-15T10:00:00", "America/Phoenix", "America/Denver"),
     "2026-07-15T11:00:00",
+  );
+});
+
+Deno.test(function deno_test_normalize_adds_utc_and_sorts_chronologically() {
+  // Input order is deliberately reversed from chronological UTC order,
+  // to prove normalize() sorts rather than preserving input order.
+  const result = normalize([
+    {
+      name: "Client meeting",
+      start: "2026-09-09T15:00:00",
+      end: "2026-09-09T16:00:00",
+      zone: "Europe/Paris",
+    },
+    {
+      name: "Flight AA100",
+      start: "2026-09-09T08:00:00",
+      end: "2026-09-09T11:15:00",
+      zone: "America/New_York",
+    },
+  ]);
+
+  assertEquals(result, [
+    {
+      name: "Flight AA100",
+      start: "2026-09-09T08:00:00",
+      end: "2026-09-09T11:15:00",
+      zone: "America/New_York",
+      startUTC: "2026-09-09T12:00:00",
+      endUTC: "2026-09-09T15:15:00",
+    },
+    {
+      name: "Client meeting",
+      start: "2026-09-09T15:00:00",
+      end: "2026-09-09T16:00:00",
+      zone: "Europe/Paris",
+      startUTC: "2026-09-09T13:00:00",
+      endUTC: "2026-09-09T14:00:00",
+    },
+  ]);
+});
+
+Deno.test(function deno_test_normalize_handles_empty_list() {
+  assertEquals(normalize([]), []);
+});
+
+Deno.test(function deno_test_normalize_rejects_invalid_time() {
+  assertThrows(
+    () =>
+      normalize([
+        { name: "Bad", start: "not-a-time", end: "2026-09-09T10:00:00", zone: "UTC" },
+      ]),
+    Error,
+    "Invalid time",
   );
 });
 

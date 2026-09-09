@@ -71,3 +71,29 @@ export function convert(time_of_day: string, initial_tz: string, final_tz: strin
   return partsInZone(new Date(utcMillis), final_tz);
 }
 
+export interface TripEvent {
+  name: string;
+  start: string;
+  end: string;
+  zone: string;
+}
+
+export interface NormalizedTripEvent extends TripEvent {
+  startUTC: string;
+  endUTC: string;
+}
+
+export function normalize(events: TripEvent[]): NormalizedTripEvent[] {
+  const normalized = events.map((event) => {
+    validateWallTime(event.start);
+    validateWallTime(event.end);
+    return {
+      ...event,
+      startUTC: partsInZone(new Date(wallTimeToUtcMillis(event.start, event.zone)), "UTC"),
+      endUTC: partsInZone(new Date(wallTimeToUtcMillis(event.end, event.zone)), "UTC"),
+    };
+  });
+  // startUTC's "YYYY-MM-DDTHH:mm:ss" shape sorts lexically the same as chronologically.
+  return normalized.sort((a, b) => a.startUTC.localeCompare(b.startUTC));
+}
+

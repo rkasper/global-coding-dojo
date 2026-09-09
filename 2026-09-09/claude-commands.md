@@ -5,3 +5,5 @@ Have you taken care of Arizona time zones?
 Generate an ui for uthis functionality
 I hate the names of our files - they're the template names. Make the file names better.
 Commit what we've done today. One-liner, no attribution.
+From the README.md file, implement Level 2, including tests.
+Commit and push theh latest.
