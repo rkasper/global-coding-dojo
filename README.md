@@ -14,7 +14,7 @@
 ## What You'll Need
 
 - 💻 A computer with a stable internet connection
-- 🛠️ [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/) (for Code With Me real-time collaboration & Claude Code AI assistant)
+- 🛠️ [CodeTogether](https://www.codetogether.com/) for real-time collaboration — join from your browser, or from [WebStorm](https://www.jetbrains.com/webstorm/) (recommended, free for non-commercial use) with the CodeTogether plugin — plus Claude Code AI assistant
 - 📹 [Zoom](https://zoom.us/download) with webcam ON - we love high-bandwidth communication!
 - 🧠 An open mind and willingness to collaborate!
 
@@ -39,7 +39,7 @@ Join us online for a session of mob programming, TDD, and AI-assisted coding!
 
 **Come prepared:**
 - 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - For real-time collaboration and AI-assisted coding
+- 🤝 **[CodeTogether](https://www.codetogether.com/)** - Join from your browser, or from [WebStorm](https://www.jetbrains.com/webstorm/) (recommended, free for non-commercial use) with the CodeTogether plugin
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ### 2026-10-14
@@ -51,7 +51,7 @@ Join us online for a session of mob programming, TDD, and AI-assisted coding!
 
 **Come prepared:**
 - 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)** - For real-time collaboration and AI-assisted coding
+- 🤝 **[CodeTogether](https://www.codetogether.com/)** - Join from your browser, or from [WebStorm](https://www.jetbrains.com/webstorm/) (recommended, free for non-commercial use) with the CodeTogether plugin
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
 ## Past Events
