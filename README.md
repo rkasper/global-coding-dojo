@@ -42,6 +42,18 @@ Join us online for a session of mob programming, TDD, and AI-assisted coding!
 - 🤝 **[Visual Studio Code](https://code.visualstudio.com/) with [Live Share](https://visualstudio.microsoft.com/services/live-share/)** for real-time collaboration
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
+### 2026-11-11
+**Wednesday, November 11 | Online**
+
+Join us online for a session of mob programming, TDD, and AI-assisted coding!
+
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
+
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[Visual Studio Code](https://code.visualstudio.com/) with [Live Share](https://visualstudio.microsoft.com/services/live-share/)** for real-time collaboration
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+
 ## Past Events
 
 ### 2026-09-09
