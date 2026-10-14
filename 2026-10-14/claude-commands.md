@@ -29,3 +29,6 @@ We'll push later. Don't worry about pushing.
 Yes, let's build what you proposed.
 Implement planSet.
 Cool. Commit that.
+Oh, by the way, our commit messages are always one-liners with no attribution.
+There is a Problem the deno linter has identified, please fix it
+Commit that last bit of stuff.
