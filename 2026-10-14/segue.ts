@@ -79,3 +79,51 @@ function stepsAroundWheel(from: number, to: number): number {
   const clockwise = Math.abs(from - to);
   return Math.min(clockwise, WHEEL_SIZE - clockwise);
 }
+
+export type Track = {title: string; bpm: number; key: string};
+
+type Candidate = {track: Track; pitchPercent: number; sameKey: boolean};
+
+// Picks the track from the crate that mixes best after the current one:
+// it must beatmatch and have a compatible key. The smallest pitch change
+// wins; on a tie, the same key beats a neighbouring key.
+export function nextTrack(current: Track, crate: Track[]): Track | null {
+  const candidates: Candidate[] = [];
+
+  for (const track of crate) {
+    const tempo = beatmatch(current.bpm, track.bpm);
+    if (!tempo.compatible) continue;
+    if (!keysCompatible(current.key, track.key)) continue;
+    candidates.push({
+      track,
+      pitchPercent: tempo.pitchPercent,
+      sameKey: current.key === track.key,
+    });
+  }
+
+  candidates.sort(bestMixFirst);
+  return candidates[0]?.track ?? null;
+}
+
+function bestMixFirst(a: Candidate, b: Candidate): number {
+  const pitchDifference = Math.abs(a.pitchPercent) - Math.abs(b.pitchPercent);
+  if (pitchDifference !== 0) return pitchDifference;
+  return Number(b.sameKey) - Number(a.sameKey);
+}
+
+// Builds a set starting with the opener, repeatedly mixing into the best
+// next track from the crate. Each track plays at most once; the set ends
+// when nothing left in the crate can follow the last track.
+export function planSet(opener: Track, crate: Track[]): Track[] {
+  const set = [opener];
+  let remaining = crate.filter((track) => track !== opener);
+
+  let next = nextTrack(opener, remaining);
+  while (next) {
+    set.push(next);
+    remaining = remaining.filter((track) => track !== next);
+    next = nextTrack(next, remaining);
+  }
+
+  return set;
+}

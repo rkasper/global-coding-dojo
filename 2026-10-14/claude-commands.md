@@ -22,3 +22,10 @@ Please use the existing two functions and see if the two songs Smoke on the wate
 Please use the existing two functions and see if the two songs We will rock you and we are the champions are compatible, please also give us the meta data
 Please use the existing two functions and see if the two songs Let'stay together and go all the way
 Let's find two songs that are compatible
+If we ask you to implement the next Level from the readme but there are pending changes not yet committed and pushed, don't implement anything new without asking us first
+For the uncommitted changes in this file, don't warn us
+Let's do a subset of level 5, using the two song matching functions that we've completed.
+We'll push later. Don't worry about pushing.
+Yes, let's build what you proposed.
+Implement planSet.
+Cool. Commit that.
