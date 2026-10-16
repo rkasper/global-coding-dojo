@@ -23,6 +23,7 @@
 - ✅ Free event!
 - 🆕 No prior experience with TDD or mob/pair programming required
 - 👥 Small, friendly group focused on learning together
+- 🛠️ Curious how we host it? See [HOWTO.md](HOWTO.md) for the tech setup, online and in person
 
 **Don't miss this opportunity to code, learn, and connect with developers from around the world!**
 
