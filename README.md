@@ -31,18 +31,6 @@
 
 ## Upcoming Events
 
-### 2026-10-14
-**Wednesday, October 14 | Online**
-
-Join us online for a session of mob programming, TDD, and AI-assisted coding!
-
-📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
-
-**Come prepared:**
-- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
-- 🤝 **[Visual Studio Code](https://code.visualstudio.com/) with [Live Share](https://visualstudio.microsoft.com/services/live-share/)** for real-time collaboration
-- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
-
 ### 2026-11-11
 **Wednesday, November 11 | Online**
 
@@ -55,7 +43,25 @@ Join us online for a session of mob programming, TDD, and AI-assisted coding!
 - 🤝 **[Visual Studio Code](https://code.visualstudio.com/) with [Live Share](https://visualstudio.microsoft.com/services/live-share/)** for real-time collaboration
 - ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
 
+### 2026-12-09
+**Wednesday, December 9 | Online**
+
+Join us online for a session of mob programming, TDD, and AI-assisted coding!
+
+📝 **[Register on Eventbrite](https://www.eventbrite.com/e/global-coding-dojo-tickets-1114576240539)**
+
+**Come prepared:**
+- 📹 **[Zoom](https://zoom.us/download)** - Cameras on! We value high-bandwidth communication through facial expressions and body language
+- 🤝 **[Visual Studio Code](https://code.visualstudio.com/) with [Live Share](https://visualstudio.microsoft.com/services/live-share/)** for real-time collaboration
+- ⏱️ **Mob timer** - We'll use https://mobtime.hadrienmp.fr (inspired by [Paris Coding Dojo](https://github.com/dojo-developpement-paris/dojo-developpement-paris.github.io))
+
 ## Past Events
+
+### 2026-10-14
+- 7 of us attended, online.
+- We picked our kata by dot-voting on ideas from the group, and the winner was a live DJ tool. Claude wrote the kata on the spot: the [Live DJ Segue Assistant](2026-10-14/).
+- We built it in TypeScript/Deno with TDD: beatmatching two tracks (Level 1), harmonic mixing with the Camelot Wheel (Level 2), and part of Level 5, planning a whole set from the two song-matching functions.
+- We had fun!
 
 ### 2026-09-09
 - 6 of us attended, online from all over the world.
