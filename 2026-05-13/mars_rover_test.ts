@@ -1,4 +1,4 @@
-import {assert, assertEquals, assertThrows} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import {assert, assertEquals, assertThrows} from "@std/assert";
 import {execute, move, runMission, type Rover} from "./mars_rover.ts";
 
 Deno.test(function deno_tests_work_properly() {

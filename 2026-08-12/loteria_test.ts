@@ -1,4 +1,4 @@
-import {assert, assertEquals, assertNotEquals} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import {assert, assertEquals, assertNotEquals} from "@std/assert";
 import {BARAJA, barajar, carta, crearBaraja, crearTabla, marcar} from "./loteria.ts";
 
 Deno.test(function deno_tests_work_properly() {

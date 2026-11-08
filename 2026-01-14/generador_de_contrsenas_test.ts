@@ -1,4 +1,4 @@
-import {assert, assertEquals, assertNotEquals} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import {assert, assertEquals, assertNotEquals} from "@std/assert";
 import {crea_contrasena} from "./generador_de_contrsenas.ts";
 
 Deno.test(function deno_tests_work_properly() {

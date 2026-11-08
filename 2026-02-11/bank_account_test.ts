@@ -1,4 +1,4 @@
-import {assert, assertEquals, assertThrows} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import {assert, assertEquals, assertThrows} from "@std/assert";
 import {BankAccount} from "./bank_account.ts";
 
 Deno.test(function deno_tests_work_properly() {

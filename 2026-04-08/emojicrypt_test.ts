@@ -1,4 +1,4 @@
-import {assertEquals, assertThrows} from "https://deno.land/std@0.224.0/assert/mod.ts";
+import {assertEquals, assertThrows} from "@std/assert";
 import {encrypt, decrypt} from "./emojicrypt.ts";
 
 Deno.test("Level 1 - Simple Substitution", async (t) => {

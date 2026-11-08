@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
+import { assertEquals } from "@std/assert";
 import { Game, score } from "./tennis.ts";
 
 // Level 1 — first points. (0-0 is handled by the Level 2 "Love-All" test below,
