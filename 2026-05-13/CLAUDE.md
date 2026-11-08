@@ -13,7 +13,7 @@ deno test            # Run all tests
 deno test --watch    # Run tests in watch mode (re-runs on save)
 ```
 
-No build step, no linter configured, no `deno.json` — tests import directly from `deno.land/std@0.224.0`.
+No build step, no linter configured. `deno.json` only maps `@std/assert` to `jsr:@std/assert@1.0.19`, which the tests import.
 
 ## Architecture
 
