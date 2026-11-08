@@ -1,4 +1,4 @@
-import {assertEquals, assertThrows} from "std/assert";
+import {assertEquals, assertThrows} from "@std/assert";
 import {beatmatch, keysCompatible, nextTrack, planSet, type Track} from "./segue.ts";
 
 Deno.test(function same_bpm_needs_no_pitch_change() {

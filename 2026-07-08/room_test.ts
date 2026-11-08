@@ -1,4 +1,4 @@
-import { assertEquals, assertNotEquals } from "std/assert";
+import { assertEquals, assertNotEquals } from "@std/assert";
 import { applyAction, getOrCreateRoom, removeSocket, snapshot, snapshotFor } from "./room.ts";
 
 // Las pruebas de identidad no necesitan un WebSocket real: applyAction solo

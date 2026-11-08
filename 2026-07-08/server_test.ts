@@ -1,4 +1,4 @@
-import { assertEquals } from "std/assert";
+import { assertEquals } from "@std/assert";
 import { handler } from "./server.ts";
 
 const PORT = 8099;

@@ -1,4 +1,4 @@
-import { assertEquals } from "std/assert";
+import { assertEquals } from "@std/assert";
 import { PDFDocument } from "pdf-lib";
 import { handler } from "./server.ts";
 

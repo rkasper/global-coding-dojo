@@ -1,4 +1,4 @@
-import {assert, assertEquals} from "std/assert";
+import {assert, assertEquals} from "@std/assert";
 // import {projectname} from "./projectname.ts";
 
 Deno.test(function deno_tests_work_properly() {

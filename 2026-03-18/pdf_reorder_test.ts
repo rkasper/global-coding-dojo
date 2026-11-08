@@ -1,4 +1,4 @@
-import { assertEquals } from "std/assert";
+import { assertEquals } from "@std/assert";
 import { PDFDocument } from "pdf-lib";
 import { detectStatementGroups } from "./statement_grouping.ts";
 import { extractPageTexts, reorderPdf } from "./pdf_reorder.ts";
