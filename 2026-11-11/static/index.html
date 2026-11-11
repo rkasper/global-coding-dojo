@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dot Vote</title>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --panel: #ffffff;
+    --ink: #1f2328;
+    --muted: #6b6f76;
+    --line: #ddd7cc;
+    --accent: #2f6fdf;
+    --win: #e0a200;
+    --bar: #8fb2f0;
+    --machine: #c9d3df;
+    --machine-dark: #8796a8;
+    --machine-edge: #5a6878;
+    --screen: #0f2d1e;
+    --screen-text: #5cff9d;
+    --paper: #fffdf6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181c;
+      --panel: #20232a;
+      --ink: #e8e6e1;
+      --muted: #9aa0a8;
+      --line: #343842;
+      --accent: #6d9cff;
+      --win: #ffc53d;
+      --bar: #3d5f9e;
+      --machine: #56606e;
+      --machine-dark: #3c4450;
+      --machine-edge: #262b33;
+      --screen: #08160f;
+      --paper: #f3efe4;
+    }
+  }
+  /* Inside a VS Code webview: follow the editor theme, not the OS. */
+  body.vscode-light, body.vscode-high-contrast-light {
+    --bg: #f4f1ea; --panel: #ffffff; --ink: #1f2328; --muted: #6b6f76; --line: #ddd7cc;
+    --accent: #2f6fdf; --win: #e0a200; --bar: #8fb2f0; --machine: #c9d3df;
+    --machine-dark: #8796a8; --machine-edge: #5a6878; --screen: #0f2d1e; --paper: #fffdf6;
+  }
+  body.vscode-dark, body.vscode-high-contrast {
+    --bg: #16181c; --panel: #20232a; --ink: #e8e6e1; --muted: #9aa0a8; --line: #343842;
+    --accent: #6d9cff; --win: #ffc53d; --bar: #3d5f9e; --machine: #56606e;
+    --machine-dark: #3c4450; --machine-edge: #262b33; --screen: #08160f; --paper: #f3efe4;
+  }
+  body.in-vscode #editor-card { display: none; }
+  body.in-vscode main { grid-template-columns: 1fr; max-width: 560px; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  header { padding: 24px 16px 8px; max-width: 1100px; margin: 0 auto; }
+  h1 { margin: 0; font-size: 28px; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  main {
+    max-width: 1100px; margin: 0 auto; padding: 16px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  @media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px;
+  }
+  .card h2 { margin: 0 0 8px; font-size: 17px; }
+  textarea {
+    width: 100%; min-height: 320px; resize: vertical;
+    font: 14px/1.5 ui-monospace, "SF Mono", Menlo, monospace;
+    background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 8px; padding: 10px;
+  }
+  .hint { color: var(--muted); font-size: 13px; margin: 6px 0 12px; }
+  .hint code { background: var(--bg); padding: 1px 4px; border-radius: 4px; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+  button {
+    font: inherit; font-size: 14px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+    padding: 8px 14px; border-radius: 8px;
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .machine { display: flex; justify-content: center; }
+  .machine svg { width: 100%; max-width: 340px; height: auto; }
+  #ballot { opacity: 0; }
+  .voting #ballot { animation: drop 0.9s ease-in forwards; }
+  @keyframes drop {
+    0% { opacity: 1; transform: translateY(-30px); }
+    70% { opacity: 1; transform: translateY(38px); }
+    100% { opacity: 0; transform: translateY(52px); }
+  }
+  #lever { transform-origin: 292px 196px; transition: transform 0.25s; }
+  .voting #lever { animation: pull 0.9s ease-in-out; }
+  @keyframes pull { 40% { transform: rotate(38deg); } 100% { transform: rotate(0); } }
+  .voting .lamp { animation: blink 0.3s steps(2) 3; }
+  .lamp.b { animation-delay: 0.1s !important; }
+  .lamp.c { animation-delay: 0.2s !important; }
+  @keyframes blink { 50% { opacity: 0.25; } }
+
+  #results { margin-top: 12px; }
+  .round { margin: 14px 0; }
+  .round h3 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
+  .row { display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: center; margin: 4px 0; }
+  .row .n { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .track { position: relative; min-height: 26px; border-radius: 6px; background: var(--bg); overflow: hidden; }
+  .fill { position: absolute; inset: 0 auto 0 0; background: var(--bar); border-radius: 6px; transition: width 0.6s ease; }
+  .row.win .fill { background: var(--win); }
+  .label { position: relative; padding: 3px 8px; font-size: 14px; overflow-wrap: anywhere; }
+  .tag { font-size: 11px; padding: 1px 6px; border-radius: 10px; margin-left: 6px; border: 1px solid var(--line); color: var(--muted); }
+  .verdict { margin-top: 14px; font-size: 18px; font-weight: 700; }
+  .empty { color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Dot Vote 🗳️</h1>
+  <p id="subtitle">Paste a vote file, then pull the lever.</p>
+</header>
+
+<main>
+  <section class="card" id="editor-card">
+    <h2>Votes</h2>
+    <textarea id="input" spellcheck="false" aria-label="Vote file">- a game X X x X
+- logic game, e.g. sudoku   X
+- autonomous agents tool XXx
+- VSCode extension to vote on ideas   XXxxx
+</textarea>
+    <p class="hint">
+      Dot votes: <code>- idea XXX</code> &nbsp;·&nbsp;
+      Ranked ballots: <code>Name: 1st &gt; 2nd</code>
+    </p>
+    <div class="buttons">
+      <button class="primary" id="count">Count votes</button>
+      <button data-sample="sample-votes.md">Load dot sample</button>
+      <button data-sample="ranked-votes.md">Load ranked sample</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="machine" id="machine">
+      <svg viewBox="0 0 340 380" role="img" aria-labelledby="machine-title">
+        <title id="machine-title">Voting machine</title>
+        <!-- legs -->
+        <rect x="70" y="330" width="16" height="40" fill="var(--machine-edge)"/>
+        <rect x="234" y="330" width="16" height="40" fill="var(--machine-edge)"/>
+        <rect x="50" y="364" width="220" height="8" rx="4" fill="var(--machine-edge)"/>
+
+        <!-- ballot dropping into the slot -->
+        <g id="ballot">
+          <rect x="125" y="6" width="70" height="52" rx="3" fill="var(--paper)" stroke="var(--machine-edge)"/>
+          <line x1="134" y1="18" x2="186" y2="18" stroke="#c9c2b2" stroke-width="2"/>
+          <line x1="134" y1="28" x2="176" y2="28" stroke="#c9c2b2" stroke-width="2"/>
+          <line x1="134" y1="38" x2="180" y2="38" stroke="#c9c2b2" stroke-width="2"/>
+          <path d="M168 40 l12 12 M180 40 l-12 12" stroke="#d64545" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- body -->
+        <rect x="40" y="72" width="240" height="262" rx="18" fill="var(--machine)" stroke="var(--machine-edge)" stroke-width="3"/>
+        <rect x="40" y="72" width="240" height="30" rx="14" fill="var(--machine-dark)"/>
+        <!-- slot (drawn over the ballot so it disappears inside) -->
+        <rect x="108" y="58" width="104" height="24" fill="var(--bg)"/>
+        <rect x="112" y="78" width="96" height="10" rx="5" fill="var(--machine-edge)"/>
+
+        <!-- screen -->
+        <rect x="62" y="112" width="196" height="84" rx="10" fill="var(--machine-edge)"/>
+        <rect x="68" y="118" width="184" height="72" rx="6" fill="var(--screen)"/>
+        <text id="screen1" x="160" y="150" text-anchor="middle" fill="var(--screen-text)"
+              font-family="ui-monospace, Menlo, monospace" font-size="17" font-weight="700">READY</text>
+        <text id="screen2" x="160" y="174" text-anchor="middle" fill="var(--screen-text)" opacity="0.75"
+              font-family="ui-monospace, Menlo, monospace" font-size="12">PULL THE LEVER</text>
+
+        <!-- lamps -->
+        <circle class="lamp a" cx="120" cy="222" r="9" fill="#e5484d"/>
+        <circle class="lamp b" cx="160" cy="222" r="9" fill="#ffb224"/>
+        <circle class="lamp c" cx="200" cy="222" r="9" fill="#30a46c"/>
+
+        <!-- name plate + counter -->
+        <rect x="86" y="246" width="148" height="26" rx="5" fill="var(--machine-dark)"/>
+        <text x="160" y="264" text-anchor="middle" fill="var(--paper)"
+              font-family="system-ui, sans-serif" font-size="12" font-weight="700" letter-spacing="2">DOT VOTE 3000</text>
+        <rect x="112" y="284" width="96" height="24" rx="4" fill="var(--screen)"/>
+        <text id="counter" x="160" y="301" text-anchor="middle" fill="var(--screen-text)"
+              font-family="ui-monospace, Menlo, monospace" font-size="13">0000</text>
+
+        <!-- lever -->
+        <g id="lever">
+          <rect x="284" y="110" width="8" height="90" rx="4" fill="var(--machine-edge)"/>
+          <circle cx="288" cy="106" r="13" fill="#d64545" stroke="var(--machine-edge)" stroke-width="2"/>
+        </g>
+        <rect x="278" y="188" width="22" height="22" rx="4" fill="var(--machine-dark)" stroke="var(--machine-edge)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div id="results" aria-live="polite"></div>
+  </section>
+</main>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const input = $("input");
+  const machine = $("machine");
+
+  function screen(line1, line2) {
+    const fit = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
+    $("screen1").textContent = fit(line1.toUpperCase(), 17);
+    $("screen2").textContent = fit(line2.toUpperCase(), 24);
+  }
+
+  function esc(s) {
+    return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  }
+
+  function rows(entries, max, winners, dropped = new Set()) {
+    return entries.map(([idea, n]) => {
+      const pct = max ? (n / max) * 100 : 0;
+      const win = winners.includes(idea);
+      const tag = win ? '<span class="tag">winner</span>' : dropped.has(idea) ? '<span class="tag">dropped</span>' : "";
+      return `<div class="row${win ? " win" : ""}">
+        <span class="n">${n}</span>
+        <div class="track"><div class="fill" style="width:${pct}%"></div>
+        <div class="label">${esc(idea)}${tag}</div></div></div>`;
+    }).join("");
+  }
+
+  function render(data) {
+    const out = $("results");
+    if (data.kind === "empty") {
+      screen("NO VOTES", "CHECK YOUR FILE");
+      $("counter").textContent = "0000";
+      out.innerHTML = '<p class="empty">No ideas or ballots found. Ideas look like <code>- idea XX</code>, ballots like <code>Name: A &gt; B</code>.</p>';
+      return;
+    }
+
+    if (data.kind === "dot") {
+      const total = data.ranking.reduce((s, i) => s + i.votes, 0);
+      $("counter").textContent = String(total).padStart(4, "0");
+      const max = data.ranking[0]?.votes ?? 0;
+      const entries = data.ranking.map((i) => [i.idea, i.votes]);
+      let verdict;
+      if (data.winners.length === 0) { screen("NO WINNER", "NOBODY VOTED"); verdict = "No winner: nobody voted."; }
+      else if (data.winners.length === 1) { screen(data.winners[0], `WINNER · ${data.votes} VOTES`); verdict = `🏆 ${esc(data.winners[0])}`; }
+      else { screen(`${data.winners.length}-WAY TIE`, `${data.votes} VOTES EACH`); verdict = `🤝 Tie: ${data.winners.map(esc).join(" · ")}`; }
+      out.innerHTML = `<div class="round"><h3>Dot votes</h3>${rows(entries, max, data.winners)}</div><div class="verdict">${verdict}</div>`;
+      return;
+    }
+
+    // ranked
+    $("counter").textContent = String(data.ballots).padStart(4, "0");
+    const winners = data.winner ? [data.winner] : [];
+    const html = data.rounds.map((round, i) => {
+      const next = data.rounds[i + 1];
+      const dropped = new Set(next ? Object.keys(round).filter((k) => !(k in next)) : data.winner ? [] : Object.keys(round));
+      const entries = Object.entries(round).sort((a, b) => b[1] - a[1]);
+      const isLast = i === data.rounds.length - 1;
+      return `<div class="round"><h3>Round ${i + 1}</h3>${rows(entries, data.ballots, isLast ? winners : [], dropped)}</div>`;
+    }).join("");
+    if (data.winner) screen(data.winner, `WINS IN ROUND ${data.rounds.length}`);
+    else screen("NO WINNER", "TIE FOR LAST");
+    out.innerHTML = html + `<div class="verdict">${data.winner ? "🏆 " + esc(data.winner) : "No winner."}</div>`;
+  }
+
+  function animate() {
+    machine.classList.remove("voting");
+    void machine.offsetWidth; // restart the animation
+    machine.classList.add("voting");
+    screen("COUNTING…", "");
+    return new Promise((r) => setTimeout(r, 900));
+  }
+
+  // Two hosts, one page: in VS Code the extension counts the open file and
+  // posts the results here; in a browser we ask the Deno server.
+  const vscode = typeof acquireVsCodeApi === "function" ? acquireVsCodeApi() : null;
+
+  async function count() {
+    if (vscode) {
+      vscode.postMessage({ type: "recount" });
+      return;
+    }
+    const [res] = await Promise.all([
+      fetch("/api/count", { method: "POST", body: input.value }),
+      animate(),
+    ]);
+    render(await res.json());
+  }
+
+  if (vscode) {
+    document.body.classList.add("in-vscode");
+    window.addEventListener("message", async ({ data: msg }) => {
+      if (msg.type !== "results") return;
+      $("subtitle").textContent = `Counting ${msg.file}. Edit the file and the tally follows.`;
+      if (msg.animate) await animate();
+      render(msg.data);
+    });
+    vscode.postMessage({ type: "ready" });
+  }
+
+  $("count").addEventListener("click", count);
+  $("lever").addEventListener("click", count);
+  $("lever").style.cursor = "pointer";
+  document.querySelectorAll("[data-sample]").forEach((btn) =>
+    btn.addEventListener("click", async () => {
+      input.value = await (await fetch(`/samples/${btn.dataset.sample}`)).text();
+      count();
+    })
+  );
+</script>
+</body>
+</html>

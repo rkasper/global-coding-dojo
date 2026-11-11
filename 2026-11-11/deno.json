@@ -1,5 +1,14 @@
 {
+  "tasks": {
+    "vote": "deno run --allow-read main.ts",
+    "ui": "deno run --allow-net --allow-read server.ts",
+    "extension": "mkdir -p vscode-extension/out && deno bundle -q --format cjs --platform browser -o vscode-extension/out/vote.js vote.ts && cp vscode-extension/src/extension.js static/index.html vscode-extension/out/",
+    "extension:run": "deno task extension && code --extensionDevelopmentPath=\"$(pwd)/vscode-extension\" \"$(pwd)\""
+  },
   "imports": {
     "@std/assert": "jsr:@std/assert@1.0.19"
-  }
+  },
+  "exclude": [
+    "vscode-extension/out"
+  ]
 }

@@ -1,0 +1,40 @@
+{
+  "name": "dot-vote",
+  "displayName": "Dot Vote",
+  "description": "Count the X votes (or ranked ballots) in a Markdown file, with a voting machine.",
+  "version": "0.0.1",
+  "publisher": "global-coding-dojo",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Other"],
+  "main": "./out/extension.js",
+  "activationEvents": ["onLanguage:markdown"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "dotVote.count",
+        "title": "Count Votes",
+        "category": "Dot Vote",
+        "icon": "$(checklist)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "dotVote.count",
+          "when": "resourceLangId == markdown",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "dotVote.count",
+          "when": "editorIsOpen"
+        }
+      ]
+    }
+  }
+}
