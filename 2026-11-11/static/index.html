@@ -206,6 +206,8 @@
   const $ = (id) => document.getElementById(id);
   const input = $("input");
   const machine = $("machine");
+  const counter = $("counter");
+  const lever = $("lever");
 
   function screen(line1, line2) {
     const fit = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
@@ -233,14 +235,14 @@
     const out = $("results");
     if (data.kind === "empty") {
       screen("NO VOTES", "CHECK YOUR FILE");
-      $("counter").textContent = "0000";
+      counter.textContent = "0000";
       out.innerHTML = '<p class="empty">No ideas or ballots found. Ideas look like <code>- idea XX</code>, ballots like <code>Name: A &gt; B</code>.</p>';
       return;
     }
 
     if (data.kind === "dot") {
       const total = data.ranking.reduce((s, i) => s + i.votes, 0);
-      $("counter").textContent = String(total).padStart(4, "0");
+      counter.textContent = String(total).padStart(4, "0");
       const max = data.ranking[0]?.votes ?? 0;
       const entries = data.ranking.map((i) => [i.idea, i.votes]);
       let verdict;
@@ -252,7 +254,7 @@
     }
 
     // ranked
-    $("counter").textContent = String(data.ballots).padStart(4, "0");
+    counter.textContent = String(data.ballots).padStart(4, "0");
     const winners = data.winner ? [data.winner] : [];
     const html = data.rounds.map((round, i) => {
       const next = data.rounds[i + 1];
@@ -302,12 +304,12 @@
   }
 
   $("count").addEventListener("click", count);
-  $("lever").addEventListener("click", count);
-  $("lever").style.cursor = "pointer";
+  lever.addEventListener("click", count);
+  lever.style.cursor = "pointer";
   document.querySelectorAll("[data-sample]").forEach((btn) =>
     btn.addEventListener("click", async () => {
       input.value = await (await fetch(`/samples/${btn.dataset.sample}`)).text();
-      count();
+      await count();
     })
   );
 </script>

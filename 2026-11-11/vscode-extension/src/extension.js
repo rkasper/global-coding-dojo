@@ -9,10 +9,8 @@ const fs = require("fs");
 const path = require("path");
 const { countVotes } = require("./vote.js");
 
-/** @type {vscode.WebviewPanel | undefined} */
-let panel;
-/** @type {vscode.TextDocument | undefined} */
-let doc;
+let panel; // the voting machine webview, while it is open
+let doc; // the document being counted
 let pending;
 
 function activate(context) {
