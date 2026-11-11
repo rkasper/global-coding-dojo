@@ -1,6 +1,6 @@
 let wordSet = new Set<string>();
 
-async function loadWordList(filePath: string): Promise<void> {
+async function loadWordList(filePath: string | URL): Promise<void> {
   try {
     const text = await Deno.readTextFile(filePath);
     const words = text.split("\n")
@@ -18,7 +18,7 @@ async function loadWordList(filePath: string): Promise<void> {
   }
 }
 
-await loadWordList("./words_alpha.txt");
+await loadWordList(new URL("./words_alpha.txt", import.meta.url));
 
 // Returns a word chain from 'start' to 'end'. Or returns empty list if there is no chain, or if there's an error.
 export function word_chain_builder(start: string, end: string): string[] {

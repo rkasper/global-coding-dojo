@@ -4,7 +4,7 @@ export async function handler(req: Request): Promise<Response> {
   const url = new URL(req.url);
 
   if (req.method === "GET" && (url.pathname === "/" || url.pathname === "/index.html")) {
-    const html = await Deno.readFile("./static/index.html");
+    const html = await Deno.readFile(new URL("./static/index.html", import.meta.url));
     return new Response(html, {
       headers: { "content-type": "text/html; charset=utf-8" },
     });

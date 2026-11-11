@@ -86,12 +86,12 @@ export async function handler(req: Request): Promise<Response> {
   }
 
   if (req.method === "GET" && (url.pathname === "/" || url.pathname === "/index.html")) {
-    const html = await Deno.readFile("./static/index.html");
+    const html = await Deno.readFile(new URL("./static/index.html", import.meta.url));
     return new Response(html, { headers: { "content-type": "text/html; charset=utf-8" } });
   }
 
   if (req.method === "GET" && url.pathname === "/decide.js") {
-    const js = await Deno.readFile("./static/decide.js");
+    const js = await Deno.readFile(new URL("./static/decide.js", import.meta.url));
     return new Response(js, { headers: { "content-type": "application/javascript; charset=utf-8" } });
   }
 
